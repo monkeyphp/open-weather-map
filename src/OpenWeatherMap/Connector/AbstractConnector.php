@@ -115,6 +115,13 @@ abstract class AbstractConnector
     const PARAM_UNITS = 'units';
     
     /**
+     * Url param for app id
+     * 
+     * @var string
+     */
+    const PARAM_APPID = 'APPID';
+    
+    /**
      * Xml
      * 
      * @var string
@@ -213,6 +220,13 @@ abstract class AbstractConnector
      * @var string
      */
     protected $endPoint = '';
+    
+    /**
+     * The api key
+     * 
+     * @var string|null
+     */
+    protected $apiKey;
     
     /**
      * Return the api endpoint uri
@@ -395,6 +409,30 @@ abstract class AbstractConnector
             'units'    => $this->getDefaultUnits()
         );
     }
+    
+    /**
+     * Return the api key
+     * 
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * Set the api key
+     * 
+     * @param string|null $apiKey
+     * 
+     * @return AbstractConnector
+     */
+    public function setApiKey($apiKey = null)
+    {
+        $this->apiKey = $apiKey;
+        return $this;
+    }
+
     
     /**
      * Return the instance of Reader specified by the supplied parameter
