@@ -411,30 +411,6 @@ abstract class AbstractConnector
     }
     
     /**
-     * Return the api key
-     * 
-     * @return string
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * Set the api key
-     * 
-     * @param string|null $apiKey
-     * 
-     * @return AbstractConnector
-     */
-    public function setApiKey($apiKey = null)
-    {
-        $this->apiKey = $apiKey;
-        return $this;
-    }
-
-    
-    /**
      * Return the instance of Reader specified by the supplied parameter
      * 
      * @param string $mode

@@ -2,7 +2,10 @@
 // require
 require_once 'vendor/autoload.php';
 
-$openWeatherMap = new OpenWeatherMap\OpenWeatherMap();
+$openWeatherMap = new OpenWeatherMap\OpenWeatherMap(array(
+    'query' => 'Harrogate,uk',
+    'mode'  => 'xml'
+));
 
 //$weather = $openWeatherMap->getWeather(array(
 //    'query' => 'London',
@@ -19,10 +22,7 @@ $openWeatherMap = new OpenWeatherMap\OpenWeatherMap();
 //));
 
 
-$weatherData = $openWeatherMap->getForecast(array(
-    'query' => 'Harrogate,uk',
-    'mode'  => 'xml'
-));
+$weatherData = $openWeatherMap->getForecast();
 
 
 echo '<pre>';

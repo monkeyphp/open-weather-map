@@ -173,7 +173,7 @@ class DailyConnector extends AbstractConnector implements DailyConnectorInterfac
             self::PARAM_UNITS    => $options['units'],
             self::PARAM_LANGUAGE => $options['language'],
             self::PARAM_COUNT    => $options['count'],
-            self::PARAM_APPID    => $this->getApiKey(),
+            self::PARAM_APPID    => $options['apiKey'],
         );
         
         if (isset($options['query'])) {
