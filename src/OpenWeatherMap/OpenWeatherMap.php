@@ -69,6 +69,79 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     protected $forecastConnector;
     
     /**
+     * An array of options that are supplied to Connector instances when then
+     * are created
+     * 
+     * @var array
+     */
+    protected $options;
+    
+    /**
+     * Constructor
+     * 
+     * @param array $options Array of default options
+     * 
+     * @return void
+     */
+    public function __construct($options = array())
+    {
+        $this->setOptions($options);
+    }
+    
+    /**
+     * Return the options value
+     * 
+     * @return array
+     */
+    public function getOptions()
+    {
+        if (! isset($this->options)) {
+            $this->options = array();
+        }
+        return $this->options;
+    }
+    
+    /**
+     * Set the options values
+     * 
+     * @param array $options
+     * 
+     * @return OpenWeatherMap
+     */
+    public function setOptions($options = array())
+    {
+        $this->options = $options;
+        return $this;
+    }
+    
+    public function mergeOptions($options = array())
+    {
+        $defaultOptions = $this->getOptions();
+        
+        // query
+        if (isset($options['query'])) {
+            unset($defaultOptions['latitude']);
+            unset($defaultOptions['longitude']);
+            unset($defaultOptions['id']);
+        }
+        
+        // latitude & longitude
+        if ( isset($options['longitude']) && isset($options['latitude'])) {
+            unset($defaultOptions['id']);
+            unset($defaultOptions['query']);
+        }
+        
+        // id
+        if (isset($options['id'])) {
+            unset($defaultOptions['query']);
+            unset($defaultOptions['latitude']);
+            unset($defaultOptions['longitude']);
+        }
+        
+        return $defaultOptions + $options;
+    }
+    
+    /**
      * Set the ConnectorFactory instance
      * 
      * @param ConnectorFactoryInterface $connectorFactory
@@ -142,6 +215,7 @@ class OpenWeatherMap implements OpenWeatherMapInterface
      */
     public function getWeather($options = array())
     {
+        $options = $this->mergeOptions($options);
         return $this->getWeatherConnector()->getWeather($options);
     }
     
@@ -154,6 +228,7 @@ class OpenWeatherMap implements OpenWeatherMapInterface
      */
     public function getDaily($options = array())
     {
+        $options = $this->mergeOptions($options);
         return $this->getDailyConnector()->getDaily($options);
     }
     
@@ -166,6 +241,7 @@ class OpenWeatherMap implements OpenWeatherMapInterface
      */
     public function getForecast($options = array())
     {
+        $options = $this->mergeOptions($options);
         return $this->getForecastConnector()->getForecast($options);
     }
 }
