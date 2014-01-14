@@ -53,7 +53,21 @@ supply an array of options when you make the call.
         'query' => 'London,uk',
         'mode'  => 'xml' 
     );
-    $weather = $openWeatherMap->getWeather($options);
+    $current = $openWeatherMap->getWeather($options);
+
+OpenWeatherMap::getWeather() will return an instance of OpenWeatherMap\Entity\Current
+which can then be queried for the details about the current weather.
+
+    $city        = $current->getCity();
+    $weather     = $current->getWeather();
+    $temperature = $current->getTemperature();
+
+    echo <<<EOT
+    The weather in {$city->getName()},{$city->getCountry()} will
+    be {$weather->getValue()}.
+    The temperature will be between {$temperature->getMin()}
+    and {$temperature->getMax()} {$temperature->getUnit()}.
+    EOT;
 
 
 
