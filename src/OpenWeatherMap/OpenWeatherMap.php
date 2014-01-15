@@ -118,20 +118,17 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     {
         $defaultOptions = $this->getOptions();
         
-        // query
         if (isset($options['query'])) {
             unset($defaultOptions['latitude']);
             unset($defaultOptions['longitude']);
             unset($defaultOptions['id']);
         }
         
-        // latitude & longitude
         if ( isset($options['longitude']) && isset($options['latitude'])) {
             unset($defaultOptions['id']);
             unset($defaultOptions['query']);
         }
         
-        // id
         if (isset($options['id'])) {
             unset($defaultOptions['query']);
             unset($defaultOptions['latitude']);

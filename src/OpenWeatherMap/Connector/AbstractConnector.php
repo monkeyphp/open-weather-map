@@ -25,6 +25,9 @@
 namespace OpenWeatherMap\Connector;
 
 use InvalidArgumentException as InvalidArgumentException2;
+use OpenWeatherMap\Exception\LockException;
+use OpenWeatherMap\Lock\LockInterface;
+use RuntimeException;
 use Zend\Config\Reader\Json;
 use Zend\Config\Reader\Xml;
 use Zend\Filter\Int;
@@ -51,6 +54,13 @@ use Zend\Validator\StringLength;
  */
 abstract class AbstractConnector
 {
+    /**
+     * Result class name
+     * 
+     * @var string
+     */
+    protected $resultClassname;
+    
     /**
      * Instance of InputFilter used to validate supplied parameters
      * 
@@ -228,6 +238,43 @@ abstract class AbstractConnector
      */
     protected $apiKey;
     
+    /**
+     * Instance of LockInterface
+     * 
+     * @var LockInterface
+     */
+    protected $lock;
+    
+    /**
+     * Return an instance of \Zend\Stdlib\Hydrator\HydratorInterface
+     * 
+     * @return HydratorInterface
+     */
+    abstract public function getHydrator();
+    
+    /**
+     * Instance of LockInterface
+     * 
+     * @return LockInterface|null
+     */
+    public function getLock()
+    {
+        return $this->lock;
+    }
+
+    /**
+     * Set the LockInterface instance
+     * 
+     * @param LockInterface $lock
+     * 
+     * @return AbstractConnector
+     */
+    public function setLock(LockInterface $lock)
+    {
+        $this->lock = $lock;
+        return $this;
+    }
+        
     /**
      * Return the api endpoint uri
      * 
@@ -464,11 +511,103 @@ abstract class AbstractConnector
     }
     
     /**
-     * Return an instance of \Zend\Stdlib\Hydrator\HydratorInterface
+     * Parse the options into an array of api parameters
      * 
-     * @return HydratorInterface
+     * @param array $options
+     * 
+     * @return array
      */
-    abstract public function getHydrator();
+    protected function parseParams($options = array())
+    {
+        $params = array();
+        
+        if (isset($options['mode'])) {
+            $params[self::PARAM_MODE] = $options['mode'];
+        }
+        
+        if (isset($options['units'])) {
+            $params[self::PARAM_UNITS] = $options['units'];
+        }
+        
+        if (isset($options['language'])) {
+            $params[self::PARAM_LANGUAGE] = $options['language'];
+        }
+        
+        if (isset($options['apiKey'])) {
+            $params[self::PARAM_APPID] = $options['apiKey'];
+        }
+        
+        return $params;
+    }
+    
+    /**
+     * Return the name of the result class
+     * 
+     * @return string
+     * @throws RuntimeException
+     */
+    protected function getResultClassname()
+    {
+        if (! isset($this->resultClassname)) {
+            throw new RuntimeException('Did you set the result class name?');
+        }
+        return $this->resultClassname;
+    }
+    
+    /**
+     * Make a call to the OpenWeatherMap api
+     * 
+     * @param array $options
+     * 
+     * @return AbstractConnector
+     * @throws Exception
+     * @throws LockException
+     */
+    protected function query($options = array())
+    {
+        $options = array_merge($this->getDefaultOptions(), $options);
+        $inputFilter = $this->getInputFilter()->setData($options);
+        
+        if (! $inputFilter->isValid($options)) {
+            return $inputFilter->getMessages();
+        }
+        
+        $options = $inputFilter->getValues();
+        
+        $params = $this->parseParams($options);
+        
+        if (isset($options['query'])) {
+            $params[self::PARAM_QUERY] = $options['query'];
+        } elseif (isset($options['latitude']) && isset($options['longitude'])) {
+            $params[self::PARAM_LATITUDE]  = $options['latitude'];
+            $params[self::PARAM_LONGITUDE] = $options['longitude'];
+        } else if (isset($options['id'])) {
+            $params[self::PARAM_ID] = $options['id'];
+        } else {
+            throw new RuntimeException('A required value was not supplied');
+        }
+        
+        $request = $this->getRequest($this->getUri(), $params);
+        
+        if ($this->getLock()->lock()) {
+            $response = $this->getHttpClient()->dispatch($request);
+            $this->getLock()->unlock();
+        } else {
+            throw new LockException('Could not obtain the lock');
+        }
+        
+        $body = $response->getBody();
+        
+        $data = $this->getReader($options['mode'])->fromString($body);
+        
+        $resultClassname = $this->getResultClassname();
+        
+        $resultClass = new $resultClassname;
+                
+        $this->getHydrator()->hydrate($data, $resultClass);
+        
+        return $resultClass;
+    }
     
     /**
      * Return an instance of InputFilter

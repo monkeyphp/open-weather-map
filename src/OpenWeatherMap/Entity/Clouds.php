@@ -46,10 +46,15 @@ class Clouds
      */
     protected $name;
     
+    /**
+     * 
+     */
     protected $all;
     
+    /**
+     *
+     */
     protected $unit;
-
 
     /**
      * Return the value

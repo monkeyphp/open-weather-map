@@ -24,7 +24,6 @@
  */
 namespace OpenWeatherMap\Connector;
 
-use Exception;
 use OpenWeatherMap\Entity\Current;
 use OpenWeatherMap\Hydrator\Strategy\CityStrategy;
 use OpenWeatherMap\Hydrator\Strategy\CloudsStrategy;
@@ -35,7 +34,6 @@ use OpenWeatherMap\Hydrator\Strategy\PressureStrategy;
 use OpenWeatherMap\Hydrator\Strategy\TemperatureStrategy;
 use OpenWeatherMap\Hydrator\Strategy\WeatherStrategy;
 use OpenWeatherMap\Hydrator\Strategy\WindStrategy;
-use Zend\InputFilter\InputFilter;
 use Zend\Stdlib\Hydrator\ClassMethods;
 
 /**
@@ -48,8 +46,17 @@ use Zend\Stdlib\Hydrator\ClassMethods;
  */
 class WeatherConnector extends AbstractConnector implements WeatherConnectorInterface
 {
-    
+    /**
+     *
+     * @var string
+     */
     protected $endPoint = 'weather';
+    
+    /**
+     *
+     * @var string
+     */
+    protected $resultClassname = 'OpenWeatherMap\Entity\Current';
     
     /**
      * Return an instance of ClassMethods
@@ -75,29 +82,6 @@ class WeatherConnector extends AbstractConnector implements WeatherConnectorInte
     }
     
     /**
-     * Return the instance of InputFilter
-     * 
-     * @return InputFilter
-     */
-    public function getInputFilter()
-    {
-        if (! isset($this->inputFilter)) {
-            $inputFilter = parent::getInputFilter();
-            $this->inputFilter = $inputFilter;
-        }
-        return $this->inputFilter;
-    }
-    
-    /**
-     * Allowed options are
-     * 
-     * - id
-     * - query
-     * - latitude
-     * - longitude
-     * - mode
-     * - units
-     * - language
      * 
      * @param array $options
      * 
@@ -105,46 +89,6 @@ class WeatherConnector extends AbstractConnector implements WeatherConnectorInte
      */
     public function getWeather($options = array())
     {
-        $options = array_merge($this->getDefaultOptions(), $options);
-        
-        $inputFilter = $this->getInputFilter()->setData($options);
-        
-        if (! $inputFilter->isValid($options)) {
-            return $inputFilter->getMessages();
-        }
-        
-        $options = $inputFilter->getValues();
-        
-        $params = array(
-            self::PARAM_MODE     => $options['mode'],
-            self::PARAM_UNITS    => $options['units'],
-            self::PARAM_LANGUAGE => $options['language'],
-            self::PARAM_APPID    => $options['apiKey'],
-        );
-        
-        if (isset($options['query'])) {
-            $params[self::PARAM_QUERY] = $options['query'];
-        } elseif (isset($options['latitude']) && isset($options['longitude'])) {
-            $params[self::PARAM_LATITUDE]  = $options['latitude'];
-            $params[self::PARAM_LONGITUDE] = $options['longitude'];
-        } else if (isset($options['id'])) {
-            $params[self::PARAM_ID] = $options['id'];
-        } else {
-            throw new Exception('A required value was not supplied');
-        }
-        
-        $request = $this->getRequest($this->getUri(), $params);
-        
-        $response = $this->getHttpClient()->dispatch($request);
-        
-        $body = $response->getBody();
-        
-        $data = $this->getReader($options['mode'])->fromString($body);
-        
-        $current = new Current();
-        
-        $this->getHydrator()->hydrate($data, $current);
-        
-        return $current;
+        return parent::query($options);
     }
 }

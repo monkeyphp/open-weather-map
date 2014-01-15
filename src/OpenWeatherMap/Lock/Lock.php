@@ -41,7 +41,9 @@ class Lock implements LockInterface
      */
     protected $locked;
     
-    protected $maxLockLifetime = 10; // seconds
+    protected $maxLockLifetime = 1200; // seconds
+    
+    protected $minLockLifetime = 600; // seconds
     
     protected $lockCreatedTime;
     
@@ -77,15 +79,22 @@ class Lock implements LockInterface
     
     public function lock()
     {   
+        //echo __METHOD__ . PHP_EOL;
         if (! isset($this->handle)) {
             if (false === ($this->handle = fopen($this->lockFile, 'a'))) {
                 return false;
             }
         }
         
-        $currentTime = microtime(true);
+        $currentTime = time();
         
         $lockAge = $currentTime - $this->lockCreatedTime;
+        
+        //echo 'Age: ' . $lockAge . PHP_EOL;
+        
+        if ($lockAge < $this->minLockLifetime) {
+            return false;
+        }
         
         if ($this->locked && ($this->maxLockLifetime < $lockAge)) {
             $this->unlock();
@@ -104,6 +113,8 @@ class Lock implements LockInterface
 
     public function unlock()
     {
+        //echo __METHOD__ . PHP_EOL;
+        
         if ($this->locked) {
             $this->locked = !flock($this->handle, LOCK_UN);
         }
@@ -124,8 +135,5 @@ class Lock implements LockInterface
     {
         // no wakeup here
     }
-    
-    
-
     
 }

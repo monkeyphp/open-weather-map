@@ -30,6 +30,8 @@ use OpenWeatherMap\Connector\ForecastConnector;
 use OpenWeatherMap\Connector\ForecastConnectorInterface;
 use OpenWeatherMap\Connector\WeatherConnector;
 use OpenWeatherMap\Connector\WeatherConnectorInterface;
+use OpenWeatherMap\Lock\Lock;
+use OpenWeatherMap\Lock\LockInterface;
 
 /**
  * ConnectorFactory
@@ -41,6 +43,13 @@ use OpenWeatherMap\Connector\WeatherConnectorInterface;
  */
 class ConnectorFactory implements ConnectorFactoryInterface
 {
+    /**
+     * Instance of Lock
+     * 
+     * @var LockInterface
+     */
+    protected $lock;
+    
     /**
      * Instance of WeatherConnectorInterface
      * 
@@ -60,7 +69,39 @@ class ConnectorFactory implements ConnectorFactoryInterface
      * 
      * @var ForecastConnectorInterface
      */
-    protected $forecaseConnector;
+    protected $forecastConnector;
+    
+    /**
+     * Return an instance of Lock
+     * 
+     * If the LockInterface has not been provided, this method will create
+     * an instance of Lock and set the $lock property before returning the 
+     * Lock
+     * 
+     * @return LockInterface
+     */
+    public function getLock()
+    {
+        if (! isset($this->lock)) {
+            $lock = Lock::getInstance();
+            $lock->setLockFile('./my.lock');
+            $this->lock = $lock;
+        }
+        return $this->lock;
+    }
+    
+    /**
+     * Set the instance of LockInterface
+     * 
+     * @param LockInterface $lock
+     * 
+     * @return ConnectorFactory
+     */
+    public function setLock(LockInterface $lock)
+    {
+        $this->lock = $lock;
+        return $this;
+    }
     
     /**
      * Return an instance of WeatherConnectorInterface
@@ -70,7 +111,9 @@ class ConnectorFactory implements ConnectorFactoryInterface
     public function getWeatherConnector()
     {
         if (! isset($this->weatherConnector)) {
-            $this->weatherConnector = new WeatherConnector;
+            $weatherConnector = new WeatherConnector();
+            $weatherConnector->setLock($this->getLock());
+            $this->weatherConnector = $weatherConnector;
         }
         return $this->weatherConnector;
     }
@@ -83,7 +126,9 @@ class ConnectorFactory implements ConnectorFactoryInterface
     public function getDailyConnector()
     {
         if (! isset($this->dailyConnector)) {
-            $this->dailyConnector = new DailyConnector();
+            $dailyConnector = new DailyConnector();
+            $dailyConnector->setLock($this->getLock());
+            $this->dailyConnector = $dailyConnector;
         }
         return $this->dailyConnector;
     }
@@ -95,8 +140,10 @@ class ConnectorFactory implements ConnectorFactoryInterface
      */
     public function getForecastConnector()
     {
-        if (! isset($this->forecaseConnectot)) {
-            $this->forecastConnector = new ForecastConnector();
+        if (! isset($this->forecastConnectot)) {
+            $forecastConnector = new ForecastConnector();
+            $forecastConnector->setLock($this->getLock());
+            $this->forecastConnector = $forecastConnector;
         }
         return $this->forecastConnector;
     }

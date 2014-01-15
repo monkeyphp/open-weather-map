@@ -24,7 +24,6 @@
  */
 namespace OpenWeatherMap\Connector;
 
-use Exception;
 use OpenWeatherMap\Entity\WeatherData;
 use OpenWeatherMap\Hydrator\Strategy\CreditStrategy;
 use OpenWeatherMap\Hydrator\Strategy\ForecastStrategy;
@@ -68,6 +67,13 @@ class DailyConnector extends AbstractConnector implements DailyConnectorInterfac
      * @var string
      */
     protected $endPoint = 'forecast/daily';
+    
+    /**
+     * The name of the result class
+     * 
+     * @var string
+     */
+    protected $resultClassname = 'OpenWeatherMap\Entity\WeatherData';
     
     /**
      * Return an instance of HydratorInterface
@@ -151,6 +157,24 @@ class DailyConnector extends AbstractConnector implements DailyConnectorInterfac
     }
     
     /**
+     * Parse the supplied options into an array of url params
+     * 
+     * @param array $options
+     * 
+     * @return array
+     */
+    protected function parseParams($options = array())
+    {
+        $params = parent::parseParams($options);
+        
+        if (isset($options['count'])) {
+            $params[self::PARAM_COUNT] = $options['count'];
+        }
+        
+        return $params;
+    }
+    
+    /**
      * Return an instance of WeatherData
      * 
      * @param array $options
@@ -159,46 +183,6 @@ class DailyConnector extends AbstractConnector implements DailyConnectorInterfac
      */
     public function getDaily($options = array())
     {
-        $options = array_merge($this->getDefaultOptions(), $options);
-        $inputFilter = $this->getInputFilter()->setData($options);
-        
-        if (! $inputFilter->isValid($options)) {
-            return $inputFilter->getMessages();
-        }
-        
-        $options = $inputFilter->getValues();
-        
-        $params = array(
-            self::PARAM_MODE     => $options['mode'],
-            self::PARAM_UNITS    => $options['units'],
-            self::PARAM_LANGUAGE => $options['language'],
-            self::PARAM_COUNT    => $options['count'],
-            self::PARAM_APPID    => $options['apiKey'],
-        );
-        
-        if (isset($options['query'])) {
-            $params[self::PARAM_QUERY] = $options['query'];
-        } elseif (isset($options['latitude']) && isset($options['longitude'])) {
-            $params[self::PARAM_LATITUDE]  = $options['latitude'];
-            $params[self::PARAM_LONGITUDE] = $options['longitude'];
-        } else if (isset($options['id'])) {
-            $params[self::PARAM_ID] = $options['id'];
-        } else {
-            throw new Exception('A required value was not supplied');
-        }
-        
-        $request = $this->getRequest($this->getUri(), $params);
-        
-        $response = $this->getHttpClient()->dispatch($request);
-        
-        $body = $response->getBody();
-        
-        $data = $this->getReader($options['mode'])->fromString($body);
-        
-        $weatherData = new WeatherData();
-        
-        $this->getHydrator()->hydrate($data, $weatherData);
-        
-        return $weatherData;
+        return parent::query($options);
     }
 }

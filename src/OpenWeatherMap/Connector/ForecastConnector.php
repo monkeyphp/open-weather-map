@@ -24,7 +24,8 @@
  */
 namespace OpenWeatherMap\Connector;
 
-use Exception;
+use OpenWeatherMap\Connector\AbstractConnector;
+use OpenWeatherMap\Connector\ForecastConnectorInterface;
 use OpenWeatherMap\Entity\WeatherData;
 use OpenWeatherMap\Hydrator\Strategy\CreditStrategy;
 use OpenWeatherMap\Hydrator\Strategy\ForecastStrategy;
@@ -33,7 +34,6 @@ use OpenWeatherMap\Hydrator\Strategy\MetaStrategy;
 use OpenWeatherMap\Hydrator\Strategy\SunStrategy;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Stdlib\Hydrator\HydratorInterface;
-
 /**
  * ForecastConnector
  * 
@@ -50,7 +50,13 @@ class ForecastConnector extends AbstractConnector implements ForecastConnectorIn
      * @var string
      */
     protected $endPoint = 'forecast';
-        
+    
+    /**
+     *
+     * @var string
+     */
+    protected $resultClassname = 'OpenWeatherMap\Entity\WeatherData';
+    
     /**
      * Return an instance of HydratorInterface
      * 
@@ -79,45 +85,6 @@ class ForecastConnector extends AbstractConnector implements ForecastConnectorIn
      */
     public function getForecast($options = array())
     {
-        $options = array_merge($this->getDefaultOptions(), $options);
-        $inputFilter = $this->getInputFilter()->setData($options);
-        
-        if (! $inputFilter->isValid($options)) {
-            return $inputFilter->getMessages();
-        }
-        
-        $options = $inputFilter->getValues();
-        
-        $params = array(
-            self::PARAM_MODE     => $options['mode'],
-            self::PARAM_UNITS    => $options['units'],
-            self::PARAM_LANGUAGE => $options['language'],
-            self::PARAM_APPID    => $options['apiKey'],
-        );
-        
-        if (isset($options['query'])) {
-            $params[self::PARAM_QUERY] = $options['query'];
-        } elseif (isset($options['latitude']) && isset($options['longitude'])) {
-            $params[self::PARAM_LATITUDE]  = $options['latitude'];
-            $params[self::PARAM_LONGITUDE] = $options['longitude'];
-        } else if (isset($options['id'])) {
-            $params[self::PARAM_ID] = $options['id'];
-        } else {
-            throw new Exception('A required value was not supplied');
-        }
-        
-        $request = $this->getRequest($this->getUri(), $params);
-        
-        $response = $this->getHttpClient()->dispatch($request);
-        
-        $body = $response->getBody();
-        
-        $data = $this->getReader($options['mode'])->fromString($body);
-        
-        $weatherData = new WeatherData();
-        
-        $this->getHydrator()->hydrate($data, $weatherData);
-        
-        return $weatherData;
+        return parent::query($options);
     }
 }
