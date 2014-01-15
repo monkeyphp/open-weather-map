@@ -66,4 +66,69 @@ class OpenWeatherMapTest extends PHPUnit_Framework_TestCase
         
         $this->assertSame($openWeatherMap, $openWeatherMap->setOptions($options));
     }
+    
+    /**
+     * Test that calling getOptions will return an array if the options value 
+     * has not already been set
+     */
+    public function testGetOptionsReturnsEmptyArray()
+    {
+        $openWeatherMap = new OpenWeatherMap();
+        $this->assertInternalType('array', $openWeatherMap->getOptions());
+    }
+    
+    /**
+     * Test that supplying 'query' in the array to mergeOptions will unset 
+     * the 'latitude' key in the default options passed to OpenWeatherMap
+     * constructor
+     */
+    public function testMergeOptionsWithQuery()
+    {
+        $defaults = array('latitude' => 10.0);
+        $options = array('query' => 'London,UK');
+        $openWeatherMap = new OpenWeatherMap($defaults);
+        
+        $this->assertSame($defaults, $openWeatherMap->getOptions());
+        $this->assertArrayNotHasKey('latitude', $openWeatherMap->mergeOptions($options));
+    }
+    
+    /**
+     * Test that calling getConnectorFactory will return an instance
+     * of ConnectorFactoryInterface
+     */
+    public function testGetConnectorFactory()
+    {
+        $openWeatherMap = new OpenWeatherMap();
+        $this->assertInstanceOf('\OpenWeatherMap\Connector\Factory\ConnectorFactoryInterface', $openWeatherMap->getConnectorFactory());
+    }
+    
+    /**
+     * Test that we can set the connector factory instance
+     */
+    public function testSetConnectorFactory()
+    {
+        $openWeatherMap = new OpenWeatherMap();
+        $mockConnectorFactory = $this->getMock('\OpenWeatherMap\Connector\Factory\ConnectorFactoryInterface');
+        
+        $this->assertSame($openWeatherMap, $openWeatherMap->setConnectorFactory($mockConnectorFactory));
+        $this->assertSame($mockConnectorFactory, $openWeatherMap->getConnectorFactory());
+    }
+    
+    /**
+     * Test that calling getWeatherConnector will return an instance of
+     * WeatherConnectorInterface
+     */
+    public function testGetWeatherConnector()
+    {
+        $openWeatherMap = new OpenWeatherMap();
+        $mockConnectorFactory = $this->getMock('\OpenWeatherMap\Connector\Factory\ConnectorFactoryInterface');
+        $mockWeatherConnector = $this->getMock('\OpenWeatherMap\Connector\WeatherConnectorInterface');
+        $openWeatherMap->setConnectorFactory($mockConnectorFactory);
+                
+        $mockConnectorFactory->expects($this->once())
+            ->method('getWeatherConnector')
+            ->will($this->returnValue($mockWeatherConnector));
+        
+        $this->assertSame($mockWeatherConnector, $openWeatherMap->getWeatherConnector());
+    }
 }

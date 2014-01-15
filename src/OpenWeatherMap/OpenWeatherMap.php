@@ -114,6 +114,14 @@ class OpenWeatherMap implements OpenWeatherMapInterface
         return $this;
     }
     
+    /**
+     * Merge the supplied options with the 
+     * previously set options
+     * 
+     * @param array $options
+     * 
+     * @return array
+     */
     public function mergeOptions($options = array())
     {
         $defaultOptions = $this->getOptions();
@@ -124,7 +132,9 @@ class OpenWeatherMap implements OpenWeatherMapInterface
             unset($defaultOptions['id']);
         }
         
-        if ( isset($options['longitude']) && isset($options['latitude'])) {
+        if (isset($options['longitude']) && 
+            isset($options['latitude'])
+        ) {
             unset($defaultOptions['id']);
             unset($defaultOptions['query']);
         }
