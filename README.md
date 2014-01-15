@@ -2,6 +2,8 @@
 
 Client library for accessing the OpenWeatherMap Api.
 
+[![Build Status](https://travis-ci.org/monkeyphp/open-weather-map.png?branch=develop)](https://travis-ci.org/monkeyphp/open-weather-map)
+
 ## Links
 
 - http://openweathermap.org/
