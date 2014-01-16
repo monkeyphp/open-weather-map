@@ -88,5 +88,75 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $mockConnector->getDefaultMode());
     }
     
+    /**
+     * Test that we can set the default mode
+     */
+    public function testSetDefaultMode()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $mode = 'json';
+        
+        $this->assertSame($mockConnector, $mockConnector->setDefaultMode($mode));
+        $this->assertEquals($mode, $mockConnector->getDefaultMode());
+    }
     
+    /**
+     * Test that supplying an invalid value to setDefaultMode results in an exception
+     * being thrown
+     */
+    public function testSetDefaultModeThrowsException()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $mode = 'foo';
+        
+        $this->setExpectedException('InvalidArgumentException');
+        
+        $mockConnector->setDefaultMode($mode);
+    }
+    
+    /**
+     * Test that we can call getModes and retrieve an array of valid modes
+     */
+    public function testGetModes()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        
+        $this->assertInternalType('array', $mockConnector->getModes());
+    }
+    
+    /**
+     * Test that we can call getUnits and retrieve an array of valid units
+     */
+    public function testGetUnits()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        
+        $this->assertInternalType('array', $mockConnector->getUnits());
+    }
+    
+    /**
+     * Test that we can set the default language
+     */
+    public function testSetDefaultLanguage()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $language = 'it';
+        
+        $this->assertSame($mockConnector, $mockConnector->setDefaultLanguage($language));
+        $this->assertEquals($language, $mockConnector->getDefaultLanguage());
+    }
+    
+    /**
+     * Test that attempting to set the default language to an invalid value
+     * results in an exception being thrown
+     */
+    public function testSetDefaultLanguageThrowsException()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $language = 'foo';
+        
+        $this->setExpectedException('InvalidArgumentException');
+        
+        $mockConnector->setDefaultLanguage($language);
+    }
 }
