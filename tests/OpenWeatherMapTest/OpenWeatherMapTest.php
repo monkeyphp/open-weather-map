@@ -149,4 +149,22 @@ class OpenWeatherMapTest extends PHPUnit_Framework_TestCase
         
         $this->assertSame($mockDailyConnector, $openWeatherMap->getDailyConnector());
     }
+    
+    /**
+     * Test that calling getForecaseConnector will return an instanc of 
+     * ForecastConnectorInterface
+     */
+    public function testGetForecaseConnector()
+    {
+        $openWeatherMap = new OpenWeatherMap();
+        $mockConnectorFactory = $this->getMock('\OpenWeatherMap\Connector\Factory\ConnectorFactoryInterface');
+        $mockForecastConnector = $this->getMock('\OpenWeatherMap\Connector\ForecastConnectorInterface');
+        $openWeatherMap->setConnectorFactory($mockConnectorFactory);
+                
+        $mockConnectorFactory->expects($this->once())
+            ->method('getForecastConnector')
+            ->will($this->returnValue($mockForecastConnector));
+        
+        $this->assertSame($mockForecastConnector, $openWeatherMap->getForecastConnector());
+    }
 }

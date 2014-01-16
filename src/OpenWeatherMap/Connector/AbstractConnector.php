@@ -24,7 +24,7 @@
  */
 namespace OpenWeatherMap\Connector;
 
-use InvalidArgumentException as InvalidArgumentException2;
+use InvalidArgumentException;
 use OpenWeatherMap\Exception\LockException;
 use OpenWeatherMap\Lock\LockInterface;
 use RuntimeException;
@@ -39,7 +39,6 @@ use Zend\InputFilter\InputFilter;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Validator\Callback;
 use Zend\Validator\Digits;
-use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\InArray;
 use Zend\Validator\Regex;
 use Zend\Validator\StringLength;
@@ -475,7 +474,7 @@ abstract class AbstractConnector
             case self::MODE_HTML:
                 break;
             default:
-                throw new InvalidArgumentException2(sprintf('Supplied value %s is invalid', $mode));
+                throw new InvalidArgumentException(sprintf('Supplied value %s is invalid', $mode));
         }
     }
     
