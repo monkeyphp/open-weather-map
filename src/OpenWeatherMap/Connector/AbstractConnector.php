@@ -447,7 +447,7 @@ abstract class AbstractConnector
      * 
      * @return array
      */
-    protected function getDefaultOptions()
+    public function getDefaultOptions()
     {
         return array(
             'mode'     => $this->getDefaultMode(),

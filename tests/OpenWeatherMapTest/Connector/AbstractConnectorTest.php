@@ -159,4 +159,60 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         
         $mockConnector->setDefaultLanguage($language);
     }
+    
+    /**
+     * Test that we can retrieve the default language
+     */
+    public function testGetDefaultLanguage()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        
+        $this->assertInternalType('string', $mockConnector->getDefaultLanguage());
+    }
+    
+    /**
+     * Test that we can retrieve the default units
+     */
+    public function testGetDefaultUnits()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        
+        $this->assertInternalType('string', $mockConnector->getDefaultUnits());
+    }
+    
+    /**
+     * Test that we can set the default units
+     */
+    public function testSetDefaultUnits()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $units = 'imperial';
+        
+        $this->assertSame($mockConnector, $mockConnector->setDefaultUnits($units));
+        $this->assertSame($units, $mockConnector->getDefaultUnits());
+    }
+    
+    /**
+     * Test that attempting to set the default units to an invalid value results
+     * in an exception being thrown
+     */
+    public function testSetDefaultUnitsThrowsException()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $units = 'foo';
+        
+        $this->setExpectedException('InvalidArgumentException');
+        
+        $mockConnector->setDefaultUnits($units);
+    }
+    
+    /**
+     * Test that we can get the default options
+     */
+    public function testGetDefaultOptions()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        
+        $this->assertInternalType('array', $mockConnector->getDefaultOptions());
+    }
 }
