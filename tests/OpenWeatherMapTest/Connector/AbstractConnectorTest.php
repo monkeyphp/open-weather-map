@@ -24,6 +24,7 @@
  */
 namespace OpenWeatherMapTest\Connector;
 
+use OpenWeatherMap\Connector\AbstractConnector;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -214,5 +215,92 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         
         $this->assertInternalType('array', $mockConnector->getDefaultOptions());
+    }
+    
+    /**
+     * Test that we can retrieve an instance of Xml when we pass the xml mode 
+     * to the getReader method
+     */
+    public function testGetReaderXml()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $mode = AbstractConnector::MODE_XML;
+        
+        $reader = $mockConnector->getReader($mode);
+        
+        $this->assertInstanceOf('\Zend\Config\Reader\Xml', $reader);
+    }
+    
+    /**
+     * Test that we can retrieve an instance of a JSON reader when we pass
+     * the json mode to the getReader method
+     */
+    public function testGetReaderJson()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $mode = AbstractConnector::MODE_JSON;
+        
+        $reader = $mockConnector->getReader($mode);
+        
+        $this->assertInstanceOf('\Zend\Config\Reader\Json', $reader);
+    }
+    
+    /**
+     * Test that we can retrieve an instance of Http Client
+     */
+    public function testGetHttpClient()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        
+        $this->assertInstanceOf('\Zend\Http\Client', $mockConnector->getHttpClient());
+    }
+    
+    /**
+     * Test that we can get an instance of Request
+     */
+    public function testGetRequest()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $uri = 'http://example.com';
+        $params = array();
+        
+        $request = $mockConnector->getRequest($uri, $params);
+        
+        $this->assertInstanceOf('\Zend\http\Request', $request);
+    }
+    
+    /**
+     * Test that we can correctly parse the supplied options in a params array
+     */
+    public function testParseParams()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $mode = AbstractConnector::MODE_XML;
+        $units = AbstractConnector::UNITS_METRIC;
+        $language = AbstractConnector::LANGUAGE_FINNISH;
+        $apiKey = '123123123';
+        $options = compact("mode", "units", "language", "apiKey");
+        
+        $params = $mockConnector->parseParams($options);
+        
+        $this->assertInternalType('array', $params);
+        $this->assertArrayHasKey(AbstractConnector::PARAM_MODE, $params);
+        $this->assertArrayHasKey(AbstractConnector::PARAM_UNITS, $params);
+        $this->assertArrayHasKey(AbstractConnector::PARAM_LANGUAGE, $params);
+        $this->assertArrayHasKey(AbstractConnector::PARAM_APPID, $params);
+    }
+    
+    // getResultClassname
+    
+    // query
+    
+    /**
+     * Test that we can get an InputFilter instance
+     */
+    public function testGetInputFilter()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        
+        $this->assertInstanceOf('\Zend\InputFilter\InputFilter', $mockConnector->getInputFilter());
     }
 }

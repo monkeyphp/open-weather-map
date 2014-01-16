@@ -516,7 +516,7 @@ abstract class AbstractConnector
      * 
      * @return array
      */
-    protected function parseParams($options = array())
+    public function parseParams($options = array())
     {
         $params = array();
         
