@@ -273,7 +273,15 @@ abstract class AbstractConnector
         $this->lock = $lock;
         return $this;
     }
-        
+     
+    public function getEndPoint()
+    {
+        if (! isset($this->endPoint)) {
+            throw new \RuntimeException('Endpoint not set');
+        }
+        return $this->endPoint;
+    }
+    
     /**
      * Return the api endpoint uri
      * 
@@ -492,6 +500,19 @@ abstract class AbstractConnector
     }
     
     /**
+     * Set the instance of Client to use
+     * 
+     * @param Client $client
+     * 
+     * @return AbstractConnector
+     */
+    public function setHttpClient(Client $client = null)
+    {
+        $this->httpClient = $client;
+        return $this;
+    }
+    
+    /**
      * Return an instance of Request
      * 
      * @param string $uri    Uri instance
@@ -545,7 +566,7 @@ abstract class AbstractConnector
      * @return string
      * @throws RuntimeException
      */
-    protected function getResultClassname()
+    public function getResultClassname()
     {
         if (! isset($this->resultClassname)) {
             throw new RuntimeException('Did you set the result class name?');

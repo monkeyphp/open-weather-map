@@ -57,4 +57,67 @@ class WeatherConnectorTest extends PHPUnit_Framework_TestCase
         
         $this->assertInstanceOf('\Zend\Stdlib\Hydrator\ClassMethods', $weatherConnector->getHydrator());
     }
+    
+    /**
+     * Test that we can get the end point
+     */
+    public function testGetEndPoint()
+    {
+        $weatherConnector = new WeatherConnector();
+        
+        $this->assertInternalType('string', $weatherConnector->getEndPoint());
+    }
+    
+    /**
+     * Test that we can get the result classname
+     */
+    public function testGetResultClassname()
+    {
+        $weatherConnector = new WeatherConnector();
+        
+        $this->assertInternalType('string', $weatherConnector->getResultClassname());
+    }
+    
+    /**
+     * Test that we can get a Current instance from the WeatherConnector when
+     * we search with an id
+     */
+    public function testGetWeatherUsingId()
+    {
+        $weatherConnector = new WeatherConnector();
+        $options = array(
+            'id'   => 2172797
+        );
+        // http://api.openweathermap.org/data/2.5/weather?id=2172797&mode=xml 
+        $results = file_get_contents(__DIR__ . '/../../data/weather/xml/2172797.xml');
+        
+        $mockResponse = $this->getMock('\Zend\Http\Response');
+        $mockResponse->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($results));
+        
+        $mockClient = $this->getMock('\Zend\Http\Client');
+        $mockClient->expects($this->once())
+            ->method('dispatch')
+            ->with($this->isInstanceOf('\Zend\Http\Request'))
+            ->will($this->returnValue($mockResponse));
+        
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
+        
+        $mockLock->expects($this->once())
+            ->method('lock')
+            ->will($this->returnValue(true));
+        
+        $mockLock->expects($this->once())
+            ->method('unlock')
+            ->will($this->returnValue(true));
+        
+        $weatherConnector->setHttpClient($mockClient);
+        $weatherConnector->setLock($mockLock);
+        
+        $current = $weatherConnector->getWeather($options);
+        
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\Current', $current);
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\City', $current->getCity());
+    }
 }

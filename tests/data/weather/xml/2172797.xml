@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<current>
+    <city id="2172797" name="Cairns">
+        <coord lon="145.77" lat="-16.92"/>
+        <country>AU</country>
+        <sun rise="2014-01-17T19:57:25" set="2014-01-18T08:57:17"/>
+    </city>
+    <temperature value="299.867" min="299.867" max="299.867" unit="kelvin"/>
+    <humidity value="95" unit="%"/>
+    <pressure value="1004.48" unit="hPa"/>
+    <wind>
+        <speed value="3.91" name="Gentle Breeze"/>
+        <direction value="126.501" code="SE" name="SouthEast"/>
+    </wind>
+    <clouds value="44" name="scattered clouds"/>
+    <precipitation mode="no"/>
+    <weather number="802" value="scattered clouds" icon="03n"/>
+    <lastupdate value="2014-01-18T10:11:11"/>
+</current>
+
