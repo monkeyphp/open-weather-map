@@ -83,8 +83,12 @@ class ConnectorFactory implements ConnectorFactoryInterface
     public function getLock()
     {
         if (! isset($this->lock)) {
-            $lock = Lock::getInstance();
-            $lock->setLockFile('./my.lock');
+            
+            $lock = new Lock('./my.lock', array(
+                'minLifetime' => 600, 
+                'maxLifetime' => 1000
+            ));
+            
             $this->lock = $lock;
         }
         return $this->lock;
