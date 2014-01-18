@@ -94,15 +94,16 @@ What this means is that requests to the openweathermap.org api are throttled to
 one request every 10 minutes (or 600 seconds).
 
 It is possible to override the default implementation by constructing the 
-OpenWeatherMap instance with the following parameters, setting _MINLIFETIME_ to
+OpenWeatherMap instance with the following parameters, setting 'minLifetime' to
 the limit you require. 
+
 For example, set this value to 300 to throttle requests to 1 time per 5 minutes.
 
     $options = array(
         'connectorFactory' => array(
             'lock' => array(
                 'options' => array(
-                    'minLifetime' => _MINLIFETIME_
+                    'minLifetime' => 300
                 )
             )
         )
@@ -135,7 +136,7 @@ The Lock class supports the following options
   The path of the lock file.
 - _minLifetime_ (int) 
   The minium number of seconds that a lock lives for.
-- _maxLifetime (int) 
+- _maxLifetime_ (int) 
   The maximum number of seconds before a lock if forceably released.
   
     $lock = new OpenWeatherMap\Lock\Lock(array(
