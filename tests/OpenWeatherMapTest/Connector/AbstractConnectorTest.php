@@ -290,10 +290,6 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(AbstractConnector::PARAM_APPID, $params);
     }
     
-    // getResultClassname
-    
-    // query
-    
     /**
      * Test that we can get an InputFilter instance
      */

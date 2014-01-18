@@ -44,9 +44,10 @@ use OpenWeatherMap\Lock\LockInterface;
 class ConnectorFactory implements ConnectorFactoryInterface
 {
     /**
-     * Instance of Lock
+     * Instance of LockInterface, an array used to construct a Lock instsance 
+     * with or null
      * 
-     * @var LockInterface
+     * @var Lock|array|null
      */
     protected $lock;
     
@@ -70,6 +71,26 @@ class ConnectorFactory implements ConnectorFactoryInterface
      * @var ForecastConnectorInterface
      */
     protected $forecastConnector;
+    
+    public function __construct($options = array())
+    {
+        $this->setOptions($options);
+    }
+    
+    public function setOptions($options = array())
+    {
+        if (is_array($options) || ($options instanceof \Traversable)) {
+            
+            foreach ($options as $key => $value) {
+                $key = strtolower($key);
+                switch($key) {
+                    case 'lock':
+                        $this->setLock($value);
+                        break;
+                }
+            }
+        }
+    }
     
     /**
      * Return an instance of Lock
@@ -97,13 +118,23 @@ class ConnectorFactory implements ConnectorFactoryInterface
     /**
      * Set the instance of LockInterface
      * 
-     * @param LockInterface $lock
+     * @param LockInterface|array $lock
      * 
      * @return ConnectorFactory
      */
-    public function setLock(LockInterface $lock)
+    public function setLock($lock = array())
     {
-        $this->lock = $lock;
+        if (is_array($lock)) {
+            if ($file = (array_key_exists('file', $lock) && isset($lock['file']) && is_string($lock['file']))  ? $lock['file'] : null) {
+                $options = (array_key_exists('options', $lock) && isset($lock['options']) && is_array($lock['options']) ) ? $lock['options'] : array();
+                $lock = new Lock($file, $options);
+            }
+        }
+        
+        if ($lock instanceof LockInterface) {
+            $this->lock = $lock;
+        }
+        
         return $this;
     }
     

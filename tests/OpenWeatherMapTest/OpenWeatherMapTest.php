@@ -50,10 +50,14 @@ class OpenWeatherMapTest extends PHPUnit_Framework_TestCase
      */
     public function test__constructWithOptions()
     {
-        $options = array();
+        $options = array(
+            'defaults' => array(
+                'language' => \OpenWeatherMap\Connector\AbstractConnector::LANGUAGE_DUTCH
+            )
+        );
         $openWeatherMap = new OpenWeatherMap($options);
         
-        $this->assertEquals($options, $openWeatherMap->getOptions());
+        $this->assertEquals($options['defaults'], $openWeatherMap->getDefaults());
     }
     
     /**
@@ -61,20 +65,24 @@ class OpenWeatherMapTest extends PHPUnit_Framework_TestCase
      */
     public function testSetOptions()
     {
-        $options = array('foo' => 'bar');
+        $options = array(
+            'defaults' => array(
+                'query' => 'Harrogate,UK'
+            )
+        );
         $openWeatherMap = new OpenWeatherMap();
         
         $this->assertSame($openWeatherMap, $openWeatherMap->setOptions($options));
     }
     
     /**
-     * Test that calling getOptions will return an array if the options value 
+     * Test that calling getDefaults will return an array if the options value 
      * has not already been set
      */
-    public function testGetOptionsReturnsEmptyArray()
+    public function testGetDefaultsReturnsEmptyArray()
     {
         $openWeatherMap = new OpenWeatherMap();
-        $this->assertInternalType('array', $openWeatherMap->getOptions());
+        $this->assertInternalType('array', $openWeatherMap->getDefaults());
     }
     
     /**
@@ -86,9 +94,9 @@ class OpenWeatherMapTest extends PHPUnit_Framework_TestCase
     {
         $defaults = array('latitude' => 10.0);
         $options = array('query' => 'London,UK');
-        $openWeatherMap = new OpenWeatherMap($defaults);
+        $openWeatherMap = new OpenWeatherMap(compact('defaults'));
         
-        $this->assertSame($defaults, $openWeatherMap->getOptions());
+        $this->assertSame($defaults, $openWeatherMap->getDefaults());
         $this->assertArrayNotHasKey('latitude', $openWeatherMap->mergeOptions($options));
     }
     

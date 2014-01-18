@@ -69,15 +69,47 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     protected $forecastConnector;
     
     /**
-     * An array of options that are supplied to Connector instances when then
-     * are created
+     * An array of default options that are supplied to Connector 
+     * instances when queries are made
      * 
      * @var array
      */
-    protected $options;
+    protected $defaults;
     
     /**
      * Constructor
+     * 
+     * Accepted options are:
+     * 
+     * - connectorfactory
+     *     An instance of ConnectorFactoryInterface or a set of constructor options
+     *     to pass to an instance of ConnectorFactory
+     *     ```
+     *     array(
+     *         'connectorFactory' => array (
+     *             'lock' => array (
+     *                 'file'    => 'mylockfile.lock', 
+     *                 'options' => array(
+     *                     'minLifetime' => 10, 
+     *                     'maxLifetime' => 100
+     *                 )
+     *             )
+     *         )
+     *     )```
+     *     ```
+     *     array(
+     *         'lock' => $lockIntstance
+     *     )
+     *     ```
+     *     
+     * - defaults
+     *     An array of default query options.
+     *     Accepts the following values
+     *     + query
+     *     + id
+     *     + latitude
+     *     + longitude
+     *     + apiKey
      * 
      * @param array $options Array of default options
      * 
@@ -89,17 +121,35 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     }
     
     /**
-     * Return the options value
+     * This method will return an array of default query parameters
+     * 
+     * If the defaults have not already been set, calling this method
+     * will set the defaults property to an empty array
      * 
      * @return array
      */
-    public function getOptions()
+    public function getDefaults()
     {
-        if (! isset($this->options)) {
-            $this->options = array();
+        if (! isset($this->defaults)) {
+            $this->defaults = array();
         }
-        return $this->options;
+        return $this->defaults;
     }
+    
+    public function setDefaults($defaults = array())
+    {
+        if (is_array($defaults)) {
+            $defaults = array_intersect_key($defaults, array_flip(array(
+                'latitude', 'longitude', 
+                'apiKey',   'query', 
+                'count',    'mode', 
+                'units',    'language', 
+                'id'
+            )));
+            $this->defaults = $defaults;
+        }
+        return $this;
+    }   
     
     /**
      * Set the options values
@@ -110,13 +160,28 @@ class OpenWeatherMap implements OpenWeatherMapInterface
      */
     public function setOptions($options = array())
     {
-        $this->options = $options;
+        if (is_array($options) || ($options instanceof \Traversable)) {
+            
+            foreach ($options as $key => $value) {
+                $key = strtolower($key);
+                switch ($key) {
+                    case 'defaults':
+                        $this->setDefaults($value);
+                        break;
+                    case 'connectorfactory':
+                        $this->setConnectorFactory($value);
+                        break;
+                }
+            }
+        }
         return $this;
     }
     
     /**
-     * Merge the supplied options with the 
-     * previously set options
+     * Merge the supplied options with the previously set defaults
+     * 
+     * This method will strip out certain default options if the supplied
+     * options contains certain other keys.
      * 
      * @param array $options
      * 
@@ -124,7 +189,7 @@ class OpenWeatherMap implements OpenWeatherMapInterface
      */
     public function mergeOptions($options = array())
     {
-        $defaultOptions = $this->getOptions();
+        $defaultOptions = $this->getDefaults();
         
         if (isset($options['query'])) {
             unset($defaultOptions['latitude']);
@@ -151,18 +216,28 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     /**
      * Set the ConnectorFactory instance
      * 
-     * @param ConnectorFactoryInterface $connectorFactory
+     * @param ConnectorFactoryInterface|array $connectorFactory
      * 
      * @return OpenWeatherMap
      */
-    public function setConnectorFactory(ConnectorFactoryInterface $connectorFactory)
+    public function setConnectorFactory($connectorFactory = array())
     {
-        $this->connectorFactory = $connectorFactory;
+        if (is_array($connectorFactory)) {
+            $connectorFactory = new ConnectorFactory($connectorFactory);
+        }
+        
+        if ($connectorFactory instanceof ConnectorFactoryInterface ) {
+            $this->connectorFactory = $connectorFactory;
+        }
+        
         return $this;
     }
     
     /**
      * Return the ConnectorFactory instance
+     * 
+     * This method will instantiate an instance of ConnectorFactory and set
+     * the class property if an instance has not already been set
      * 
      * @return ConnectorFactoryInterface
      */

@@ -24,6 +24,7 @@
  */
 namespace OpenWeatherMap\Connector;
 
+use Exception;
 use InvalidArgumentException;
 use OpenWeatherMap\Exception\LockException;
 use OpenWeatherMap\Lock\LockInterface;
@@ -34,6 +35,7 @@ use Zend\Filter\Int;
 use Zend\Filter\StringToLower;
 use Zend\Http\Client;
 use Zend\Http\Request;
+use Zend\Http\Response;
 use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
 use Zend\Stdlib\Hydrator\HydratorInterface;
@@ -458,9 +460,9 @@ abstract class AbstractConnector
     public function getDefaultOptions()
     {
         return array(
-            'mode'     => $this->getDefaultMode(),
-            'language' => $this->getDefaultLanguage(),
-            'units'    => $this->getDefaultUnits()
+            'mode'      => $this->getDefaultMode(),
+            'language'  => $this->getDefaultLanguage(),
+            'units'     => $this->getDefaultUnits(),
         );
     }
     
@@ -574,22 +576,31 @@ abstract class AbstractConnector
         return $this->resultClassname;
     }
     
+    /**
+     * Dispatch the supplied Request instance and return the Response
+     * 
+     * @param Request $request The Request instance
+     * 
+     * @return Response
+     * @throws Exception
+     * @throws RuntimeException
+     */
     protected function getResponse(Request $request)
     {
         try {
-            /* @var $response \Zend\Http\Response */
+            /* @var $response Response */
             $response = $this->getHttpClient()->dispatch($request);
             
             if (! $response->isSuccess()) {
                 $statusCode = $response->getStatusCode();
                 $reasonPhrase = $response->getReasonPhrase();
                 $message = "[$statusCode] $reasonPhrase";
-                throw new \RuntimeException($message);
+                throw new RuntimeException($message);
             }
             
             return $response;
             
-        } catch(\Exception $exception) {
+        } catch(Exception $exception) {
             throw $exception;
         }
     }
@@ -636,7 +647,7 @@ abstract class AbstractConnector
         }
         try {
             $response = $this->getResponse($request);
-        } catch(\Exception $exception) {
+        } catch(Exception $exception) {
             if ($lock) { 
                 $lock->unlock(); 
             }
@@ -749,6 +760,10 @@ abstract class AbstractConnector
             $id->getFilterChain()->attach(new Int());
             $id->getValidatorChain()->attach(new Digits());
             
+            // apiKey
+            $apiKey = new Input('apiKey');
+            $apiKey->setAllowEmpty(true);
+            
             // one
             $one = new Input();
             $one->setAllowEmpty(true);
@@ -776,7 +791,9 @@ abstract class AbstractConnector
                 ->add($query)
                 ->add($latitude)
                 ->add($longitude)
-                ->add($id);
+                ->add($id)
+                ->add($apiKey);
+            
             $this->inputFilter = $inputFilter;
         }
         return $this->inputFilter;
