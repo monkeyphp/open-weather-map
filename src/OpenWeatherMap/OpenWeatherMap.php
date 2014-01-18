@@ -30,6 +30,7 @@ use OpenWeatherMap\Connector\ForecastConnectorInterface;
 use OpenWeatherMap\Connector\WeatherConnectorInterface;
 use OpenWeatherMap\Entity\Current;
 use OpenWeatherMap\Entity\WeatherData;
+use Traversable;
 
 /**
  * OpenWeatherMap
@@ -79,38 +80,6 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     /**
      * Constructor
      * 
-     * Accepted options are:
-     * 
-     * - connectorfactory
-     *     An instance of ConnectorFactoryInterface or a set of constructor options
-     *     to pass to an instance of ConnectorFactory
-     *     ```
-     *     array(
-     *         'connectorFactory' => array (
-     *             'lock' => array (
-     *                 'options' => array(
-     *                     'file'    => 'mylockfile.lock', 
-     *                     'minLifetime' => 10, 
-     *                     'maxLifetime' => 100
-     *                 )
-     *             )
-     *         )
-     *     )```
-     *     ```
-     *     array(
-     *         'lock' => $lockIntstance
-     *     )
-     *     ```
-     *     
-     * - defaults
-     *     An array of default query options.
-     *     Accepts the following values
-     *     + query
-     *     + id
-     *     + latitude
-     *     + longitude
-     *     + apiKey
-     * 
      * @param array $options Array of default options
      * 
      * @return void
@@ -136,6 +105,13 @@ class OpenWeatherMap implements OpenWeatherMapInterface
         return $this->defaults;
     }
     
+    /**
+     * Set the defaults
+     * 
+     * @param array $defaults
+     * 
+     * @return OpenWeatherMap
+     */
     public function setDefaults($defaults = array())
     {
         if (is_array($defaults)) {
@@ -160,7 +136,7 @@ class OpenWeatherMap implements OpenWeatherMapInterface
      */
     public function setOptions($options = array())
     {
-        if (is_array($options) || ($options instanceof \Traversable)) {
+        if (is_array($options) || ($options instanceof Traversable)) {
             
             foreach ($options as $key => $value) {
                 $key = strtolower($key);

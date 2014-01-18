@@ -1,4 +1,17 @@
 {
+    "name": "monkeyphp/open-weather-map",
+    "type": "library",
+    "description": "Client library for accessing the OpenWeatherMap API",
+    "keywords": ["open weather map", "api", "weather", "client"],
+    "homepage": "http://github.com/monkeyphp/open-weather-map",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "David White",
+            "email": "david@monkeyphp.com",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "zendframework/zend-stdlib"         : "2.2.*",
         "zendframework/zend-uri"            : "2.2.*",
