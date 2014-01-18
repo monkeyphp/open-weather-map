@@ -62,7 +62,10 @@ The following query will use the 'apiKey' supplied when the OpenWeatherMap was
 constructed, but will use the supplied 'query' and 'mode' values overriding the
 defaults.
 
-    $options = array('query' => 'Los Angeles,US', 'mode' => 'json');
+    $options = array(
+        'query' => 'Los Angeles,US',
+        'mode'  => 'json'
+    );
     $current = $openWeatherMap->getWeather($options);
 
 The accepted values that can be supplied to the constructor in the _defaults_ key are
@@ -220,3 +223,22 @@ supply an array of options when you make the call.
 ## Run the PHPUnit tests
 
     $ vendor/bin/phpunit -c tests/phpunit.xml
+
+
+
+## License
+
+Copyright (C) 2014  David White
+ 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see [http://www.gnu.org/licenses/].
