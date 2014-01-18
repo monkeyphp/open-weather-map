@@ -106,3 +106,9 @@ supply an array of options when you make the call.
         'mode'  => 'xml' 
     );
     $weatherData = $openWeatherMap->getForecast($options);
+
+
+
+## Run the PHPUnit tests
+
+    $ vendor/bin/phpunit -c tests/phpunit.xml
