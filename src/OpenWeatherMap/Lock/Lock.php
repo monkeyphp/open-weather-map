@@ -87,10 +87,8 @@ class Lock implements LockInterface
      * 
      * @return void
      */
-    public function __construct($file, $options = array())
+    public function __construct($options = array())
     {
-        $this->setFile($file);
-        
         if (is_array($options)) {
             $this->setOptions($options);
         }
@@ -111,6 +109,9 @@ class Lock implements LockInterface
                 $key = strtolower($key);
                 
                 switch ($key) {
+                    case 'file':
+                        $this->setFile($value);
+                    break;
                     case 'maxlifetime':
                         $this->setMaxLifetime($value);
                     break;
@@ -132,7 +133,8 @@ class Lock implements LockInterface
     public function getFile()
     {
         if (! isset($this->file)) {
-            throw new RuntimeException('File not set');
+            $file = (sys_get_temp_dir() . 'my.lock');
+            $this->setFile($file);
         }
         return $this->file;
     }
@@ -142,10 +144,10 @@ class Lock implements LockInterface
      * 
      * @link http://www.php.net/manual/en/function.pathinfo.php
      * 
-     * @param string $lockFile
+     * @param string|null $lockFile
      * @return Lock
      */
-    public function setFile($file)
+    public function setFile($file = null)
     {
         $path_parts = pathinfo($file);
         

@@ -132,14 +132,10 @@ of throttling.
 
 The Lock class supports the following options
 
-- _file_ (string)
-  The path of the lock file.
-- _maxLifetime_ (int)
-  The maximum number of seconds before a lock if forceably released.
-- _minLifetime_ (int)
-  The minium number of seconds that a lock lives for.
+- _file_        (string) The path of the lock file.
+- _maxLifetime_ (int)    The maximum number of seconds before a lock if forceably released.
+- _minLifetime_ (int)    The minium number of seconds that a lock lives for.
 
-    
     $lock = new OpenWeatherMap\Lock\Lock(array(
         'file'        => '/tmp/my.lock',
         'minLifetime' => 100,

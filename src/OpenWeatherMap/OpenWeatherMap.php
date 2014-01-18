@@ -88,8 +88,8 @@ class OpenWeatherMap implements OpenWeatherMapInterface
      *     array(
      *         'connectorFactory' => array (
      *             'lock' => array (
-     *                 'file'    => 'mylockfile.lock', 
      *                 'options' => array(
+     *                     'file'    => 'mylockfile.lock', 
      *                     'minLifetime' => 10, 
      *                     'maxLifetime' => 100
      *                 )

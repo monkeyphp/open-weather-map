@@ -56,7 +56,7 @@ class LockTest extends PHPUnit_Framework_TestCase
     {
         $vfs = vfsStream::setup('exampleDir');
         $file = vfsStream::url('exampleDir/my.lock');
-        $lock = new Lock($file);
+        $lock = new Lock(array('file' => $file));
         
         $this->assertEquals($file, $lock->getFile());
     }
@@ -76,7 +76,7 @@ class LockTest extends PHPUnit_Framework_TestCase
         
         $this->setExpectedException('Exception');
         
-        $lock = new Lock($file);
+        $lock = new Lock(array('file' => $file));
     }
     
     /**
@@ -86,7 +86,7 @@ class LockTest extends PHPUnit_Framework_TestCase
     {
         $vfs = vfsStream::setup('exampleDir');
         $file = vfsStream::url('exampleDir/my.lock');
-        $lock = new Lock($file);
+        $lock = new Lock(array('file' => $file));
         
         $this->assertTrue($lock->lock());
         $this->assertTrue($vfs->hasChild('my.lock'));
@@ -99,7 +99,7 @@ class LockTest extends PHPUnit_Framework_TestCase
     {
         $vfs = vfsStream::setup('exampleDir');
         $file = vfsStream::url('exampleDir/my.lock');
-        $lock = new Lock($file);
+        $lock = new Lock(array('file' => $file));
         
         $this->assertTrue($lock->lock());
         $this->assertTrue($vfs->hasChild('my.lock'));
@@ -115,7 +115,7 @@ class LockTest extends PHPUnit_Framework_TestCase
         $vfs = vfsStream::setup('exampleDir');
         $file = vfsStream::url('exampleDir/my.lock');
         $minLifetime = 100;
-        $lock = new Lock($file, array('minlifetime' => $minLifetime));
+        $lock = new Lock(array('file' => $file, 'minlifetime' => $minLifetime));
         
         $this->assertSame($minLifetime, $lock->getMinLifetime());
         $this->assertTrue($lock->lock());
@@ -133,7 +133,7 @@ class LockTest extends PHPUnit_Framework_TestCase
         $vfs = vfsStream::setup('exampleDir');
         $file = vfsStream::url('exampleDir/my.lock');
         $maxLifetime = 2;
-        $lock = new Lock($file, array('maxlifetime' => $maxLifetime));
+        $lock = new Lock(array('file' => $file, 'maxlifetime' => $maxLifetime));
         
         $this->assertEquals($maxLifetime, $lock->getMaxLifetime());
         $this->assertTrue($lock->lock());
@@ -150,7 +150,8 @@ class LockTest extends PHPUnit_Framework_TestCase
         $file = vfsStream::url('exampleDir/my.lock');
         $maxLifetime = 2;
         $minLifetime = 1;
-        $lock = new Lock($file, array(
+        $lock = new Lock(array(
+            'file'        => $file,
             'maxlifetime' => $maxLifetime,
             'minlifetime' => $minLifetime
         ));

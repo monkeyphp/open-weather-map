@@ -105,7 +105,7 @@ class ConnectorFactory implements ConnectorFactoryInterface
     {
         if (! isset($this->lock)) {
             
-            $lock = new Lock('./my.lock', array(
+            $lock = new Lock(array(
                 'minLifetime' => 600, 
                 'maxLifetime' => 1000
             ));
@@ -125,10 +125,7 @@ class ConnectorFactory implements ConnectorFactoryInterface
     public function setLock($lock = array())
     {
         if (is_array($lock)) {
-            if ($file = (array_key_exists('file', $lock) && isset($lock['file']) && is_string($lock['file']))  ? $lock['file'] : null) {
-                $options = (array_key_exists('options', $lock) && isset($lock['options']) && is_array($lock['options']) ) ? $lock['options'] : array();
-                $lock = new Lock($file, $options);
-            }
+            $lock = new Lock($lock);
         }
         
         if ($lock instanceof LockInterface) {
