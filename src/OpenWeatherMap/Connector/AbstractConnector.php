@@ -574,12 +574,32 @@ abstract class AbstractConnector
         return $this->resultClassname;
     }
     
+    protected function getResponse(Request $request)
+    {
+        try {
+            /* @var $response \Zend\Http\Response */
+            $response = $this->getHttpClient()->dispatch($request);
+            
+            if (! $response->isSuccess()) {
+                $statusCode = $response->getStatusCode();
+                $reasonPhrase = $response->getReasonPhrase();
+                $message = "[$statusCode] $reasonPhrase";
+                throw new \RuntimeException($message);
+            }
+            
+            return $response;
+            
+        } catch(\Exception $exception) {
+            throw $exception;
+        }
+    }
+    
     /**
      * Make a call to the OpenWeatherMap api
      * 
      * @param array $options
      * 
-     * @return AbstractConnector
+     * @return AbstractConnector|string
      * @throws Exception
      * @throws LockException
      */
@@ -609,24 +629,45 @@ abstract class AbstractConnector
         
         $request = $this->getRequest($this->getUri(), $params);
         
-        if ($this->getLock()->lock()) {
-            $response = $this->getHttpClient()->dispatch($request);
-            $this->getLock()->unlock();
-        } else {
+        $lock = $this->getLock();
+        
+        if ($lock && (! $lock->lock())) {
             throw new LockException('Could not obtain the lock');
+        }
+        try {
+            $response = $this->getResponse($request);
+        } catch(\Exception $exception) {
+            if ($lock) { 
+                $lock->unlock(); 
+            }
+            throw $exception;
+        }
+        if ($lock) { 
+            $lock->unlock(); 
         }
         
         $body = $response->getBody();
         
-        $data = $this->getReader($options['mode'])->fromString($body);
+        // if the mode is HTML return immediately
+        if ($options['mode'] === AbstractConnector::MODE_HTML) {
+            return $body;
+        }
         
-        $resultClassname = $this->getResultClassname();
+        try {
+            $reader = $this->getReader($options['mode']);
+            $data = $reader->fromString($body);
+            
+            $resultClassname = $this->getResultClassname();
+            $resultClass = new $resultClassname;
+            
+            $hydrator = $this->getHydrator();
+            $hydrator->hydrate($data, $resultClass);
         
-        $resultClass = new $resultClassname;
-                
-        $this->getHydrator()->hydrate($data, $resultClass);
-        
-        return $resultClass;
+            return $resultClass;
+            
+        } catch(\Exception $exception) {
+            throw $exception;
+        }
     }
     
     /**

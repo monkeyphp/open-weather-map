@@ -78,6 +78,10 @@ class WeatherConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $weatherConnector->getResultClassname());
     }
     
+    // public function testGetWeatherUsingQuery() {}
+    
+    // public function testGetWeatherUsingLatitudeLongitude() {}
+    
     /**
      * Test that we can get a Current instance from the WeatherConnector when
      * we search with an id
@@ -92,6 +96,10 @@ class WeatherConnectorTest extends PHPUnit_Framework_TestCase
         $results = file_get_contents(__DIR__ . '/../../data/weather/xml/2172797.xml');
         
         $mockResponse = $this->getMock('\Zend\Http\Response');
+        $mockResponse->expects($this->once())
+            ->method('isSuccess')
+            ->will($this->returnValue(true));
+        
         $mockResponse->expects($this->once())
             ->method('getBody')
             ->will($this->returnValue($results));
