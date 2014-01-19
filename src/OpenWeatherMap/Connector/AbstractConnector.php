@@ -619,7 +619,7 @@ abstract class AbstractConnector
         $options = array_merge($this->getDefaultOptions(), $options);
         $inputFilter = $this->getInputFilter()->setData($options);
         
-        if (! $inputFilter->isValid($options)) {
+        if (! $inputFilter->isValid()) {
             return $inputFilter->getMessages();
         }
         
