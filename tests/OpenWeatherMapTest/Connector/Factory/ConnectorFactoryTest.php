@@ -82,4 +82,53 @@ class ConnectorFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceof('\OpenWeatherMap\Connector\WeatherConnectorInterface', $weatherConnector);
         $this->assertSame($weatherConnector->getLock(), $mockLock);
     }
+    
+    public function testGetDailyConnector()
+    {
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\LockInterface');
+        $connectorFactory = new ConnectorFactory();
+        $connectorFactory->setLock($mockLock);
+        
+        $dailyConnector = $connectorFactory->getDailyConnector();
+        
+        $this->assertInstanceOf('\OpenWeatherMap\Connector\DailyConnectorInterface', $dailyConnector);
+        $this->assertSame($dailyConnector->getLock(), $mockLock);
+    }
+    
+    public function testGetForecastConnector()
+    {
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\LockInterface');
+        $connectorFactory = new ConnectorFactory();
+        $connectorFactory->setLock($mockLock);
+        
+        $forecastConnector = $connectorFactory->getForecastConnector();
+        
+        $this->assertInstanceOf('\OpenWeatherMap\Connector\ForecastConnectorInterface', $forecastConnector);
+        $this->assertSame($forecastConnector->getLock(), $mockLock);
+    }
+     
+    public function testSetOptions()
+    {
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\LockInterface');
+        $connectorFactory = new ConnectorFactory();
+        $options = array(
+            'lock' => $mockLock
+        );
+        $connectorFactory->setOptions($options);
+        
+        $this->assertSame($mockLock, $connectorFactory->getLock());
+    }
+    
+    public function testSetLockWithArray()
+    {
+        $minLifetime = 100;
+        $options = array('minLifetime' => $minLifetime);
+        $connectorFactory = new ConnectorFactory();
+        $connectorFactory->setLock($options);
+        
+        $this->assertEquals(
+            $minLifetime, 
+            $connectorFactory->getLock()->getMinLifetime()
+        );
+    }
 }

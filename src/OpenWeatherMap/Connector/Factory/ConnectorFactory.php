@@ -32,6 +32,7 @@ use OpenWeatherMap\Connector\WeatherConnector;
 use OpenWeatherMap\Connector\WeatherConnectorInterface;
 use OpenWeatherMap\Lock\Lock;
 use OpenWeatherMap\Lock\LockInterface;
+use Traversable;
 
 /**
  * ConnectorFactory
@@ -72,11 +73,25 @@ class ConnectorFactory implements ConnectorFactoryInterface
      */
     protected $forecastConnector;
     
+    /**
+     * Constructor
+     * 
+     * @param array $options Array of options
+     * 
+     * @return void
+     */
     public function __construct($options = array())
     {
         $this->setOptions($options);
     }
     
+    /**
+     * Set various options
+     * 
+     * @param Traversable|array $options
+     * 
+     * @return ConnectorFactory
+     */
     public function setOptions($options = array())
     {
         if (is_array($options) || ($options instanceof \Traversable)) {
@@ -90,6 +105,7 @@ class ConnectorFactory implements ConnectorFactoryInterface
                 }
             }
         }
+        return $this;
     }
     
     /**

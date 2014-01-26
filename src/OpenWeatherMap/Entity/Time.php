@@ -1,7 +1,7 @@
 <?php
 /**
  * Time.php
- * 
+ *
  * @category   OpenWeatherMap
  * @package    OpenWeatherMap
  * @subpackage OpenWeatherMap\Entity
@@ -34,63 +34,158 @@ namespace OpenWeatherMap\Entity;
  */
 class Time
 {
+    /**
+     * Instance of Symbol
+     * 
+     * @var Symbol|null
+     */
     protected $symbol;
     
+    /**
+     * Instance of Precipitation
+     * 
+     * @var Precipitation|null
+     */
     protected $precipitation;
     
+    /**
+     * Instance of WindDirection
+     * 
+     * @var WindDirection|null
+     */
     protected $windDirection;
     
+    /**
+     * Instance of WindSpeed
+     * 
+     * @var WindSpeed
+     */
     protected $windSpeed;
     
+    /**
+     * Instance of Temperature
+     * 
+     * @var Temperature|null
+     */
     protected $temperature;
     
+    /**
+     * Instance of Pressure
+     * 
+     * @var Pressure|null
+     */
     protected $pressure;
     
+    /**
+     * Instance of Humidity
+     * 
+     * @var Humidity
+     */
     protected $humidity;
     
+    /**
+     * Instance of Clouds
+     * 
+     * @var Clouds
+     */
     protected $clouds;
     
+    /**
+     * eg 2014-01-26
+     * 
+     * @var string|null 
+     */
     protected $day;
     
+    /**
+     * 2014-01-26T12:00:00
+     * 
+     * @var type 
+     */
     protected $from;
     
+    /**
+     * 2014-01-26T15:00:00 
+     * 
+     * @var type
+     */
     protected $to;
     
+    /**
+     * Return the Symbol
+     * 
+     * @return Symbol|null
+     */
     public function getSymbol()
     {
         return $this->symbol;
     }
 
+    /**
+     * Return the Precipitation instance
+     * 
+     * @return Precipitation|null
+     */
     public function getPrecipitation()
     {
         return $this->precipitation;
     }
 
+    /**
+     * Return the WindDirection instance
+     * 
+     * @return WindDirection|null
+     */
     public function getWindDirection()
     {
         return $this->windDirection;
     }
-
+    
+    /**
+     * Return the WindSpeed instance
+     * 
+     * @return WindSpeed|null
+     */
     public function getWindSpeed()
     {
         return $this->windSpeed;
     }
 
+    /**
+     * Return the Temperature instance
+     * 
+     * @return Temperature|null
+     */
     public function getTemperature()
     {
         return $this->temperature;
     }
 
+    /**
+     * Return the Pressure instance
+     * 
+     * @return Pressure
+     */
     public function getPressure()
     {
         return $this->pressure;
     }
 
+    /**
+     * Return the Humidity instance
+     * 
+     * @return Humdity
+     */
     public function getHumidity()
     {
         return $this->humidity;
     }
 
+    /**
+     * Return the Clouds instance
+     * 
+     * @return Clouds
+     */
     public function getClouds()
     {
         return $this->clouds;
