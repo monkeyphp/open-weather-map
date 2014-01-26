@@ -26,6 +26,7 @@ namespace OpenWeatherMapTest\Entity;
 
 use OpenWeatherMap\Entity\Weather;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 /**
  * WeatherTest
@@ -47,6 +48,13 @@ class WeatherTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($number, $weather->getNumber());
     }
     
+    public function testSetNumberThrowsException()
+    {
+        $weather = new Weather();
+        $this->setExpectedException('\InvalidArgumentException');
+        $weather->setNumber(new stdClass());
+    }
+    
     public function testGetSetValue()
     {
         $value = "scattered clouds";
@@ -57,6 +65,13 @@ class WeatherTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value, $weather->getValue());
     }
     
+    public function testSetValueThrowsException()
+    {
+        $weather = new Weather();
+        $this->setExpectedException('\InvalidArgumentException');
+        $weather->setValue(new stdClass());
+    }
+    
     public function testGetSetIcon()
     {
         $icon = "03n";
@@ -65,5 +80,12 @@ class WeatherTest extends PHPUnit_Framework_TestCase
         $this->assertNull($weather->getIcon());
         $this->assertSame($weather, $weather->setIcon($icon));
         $this->assertEquals($icon, $weather->getIcon());
+    }
+    
+    public function testSetIconThrowsException()
+    {
+        $weather = new Weather();
+        $this->setExpectedException('\InvalidArgumentException');
+        $weather->setIcon(new stdClass());
     }
 }
