@@ -172,7 +172,7 @@ class ConnectorFactory implements ConnectorFactoryInterface
      */
     public function getForecastConnector()
     {
-        if (! isset($this->forecastConnectot)) {
+        if (! isset($this->forecastConnector)) {
             $forecastConnector = new ForecastConnector();
             $forecastConnector->setLock($this->getLock());
             $this->forecastConnector = $forecastConnector;
