@@ -97,4 +97,14 @@ class WindDirectionTest extends PHPUnit_Framework_TestCase
         
         $windDirection->setCode($code);
     }
+    
+    public function testGetSetDeg()
+    {
+        $deg = "182.503";
+        $windDirection = new WindDirection();
+        
+        $this->assertNull($windDirection->getDeg());
+        $this->assertSame($windDirection, $windDirection->setDeg($deg));
+        $this->assertEquals($deg, $windDirection->getDeg());
+    }
 }
