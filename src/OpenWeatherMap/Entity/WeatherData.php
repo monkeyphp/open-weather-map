@@ -34,70 +34,153 @@ namespace OpenWeatherMap\Entity;
  */
 class WeatherData
 {
+    /**
+     * Instance of Location
+     * 
+     * @var Location|null
+     */
     protected $location;
     
+    /**
+     * Instance of Credit
+     * 
+     * @var Credit|null
+     */
     protected $credit;
     
+    /**
+     * Instance of Meta
+     * 
+     * @var Meta|null
+     */
     protected $meta;
     
+    /**
+     * Instance of Sun
+     * 
+     * @var Sun|null
+     */
     protected $sun;
     
+    /**
+     * Instance of Forecast
+     * 
+     * @var Forecast|null
+     */
     protected $forecast;
     
+    /**
+     * Return the Location instance
+     * 
+     * @return Location|null
+     */
     public function getLocation()
     {
         return $this->location;
     }
 
+    /**
+     * Return the Credit instance
+     * 
+     * @return Credit|null
+     */
     public function getCredit()
     {
         return $this->credit;
     }
 
+    /**
+     * Return the Meta instance
+     * 
+     * @return Meta
+     */
     public function getMeta()
     {
         return $this->meta;
     }
 
+    /**
+     * Return the Sun instance
+     * 
+     * @return Sun|null
+     */
     public function getSun()
     {
         return $this->sun;
     }
 
+    /**
+     * Return the Forecast instance
+     * 
+     * @return Forecast|null
+     */
     public function getForecast()
     {
         return $this->forecast;
     }
 
-    public function setLocation($location)
+    /**
+     * Set the Location instance
+     * 
+     * @param Location|null $location
+     * 
+     * @return WeatherData
+     */
+    public function setLocation(Location $location = null)
     {
         $this->location = $location;
         return $this;
     }
 
-    public function setCredit($credit)
+    /**
+     * Set the Credit instance
+     * 
+     * @param Credit $credit
+     * 
+     * @return WeatherData
+     */
+    public function setCredit(Credit $credit = null)
     {
         $this->credit = $credit;
         return $this;
     }
 
-    public function setMeta($meta)
+    /**
+     * Set the Meta instance
+     * 
+     * @param Meta $meta
+     * 
+     * @return WeatherData
+     */
+    public function setMeta(Meta $meta = null)
     {
         $this->meta = $meta;
         return $this;
     }
 
-    public function setSun($sun)
+    /**
+     * Set the Sun instance
+     * 
+     * @param Sun $sun
+     * 
+     * @return WeatherData
+     */
+    public function setSun(Sun $sun)
     {
         $this->sun = $sun;
         return $this;
     }
-
-    public function setForecast($forecast)
+    
+    /**
+     * Set the Forecast instance
+     * 
+     * @param Forecast $forecast
+     * 
+     * @return WeatherData
+     */
+    public function setForecast(Forecast $forecast)
     {
         $this->forecast = $forecast;
         return $this;
     }
-
-
 }
