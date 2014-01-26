@@ -143,4 +143,26 @@ class WindDirection
         $this->name = $name;
         return $this;
     }
+    
+    /**
+     * Return the deg property of the WindDirection
+     * 
+     * @return int|null
+     */
+    public function getDeg()
+    {
+        return $this->getValue();
+    }
+    
+    /**
+     * Set the deg property of the WindDirection
+     * 
+     * @param int|null $deg
+     * 
+     * @return WindDirection
+     */
+    public function setDeg($deg = null)
+    {
+        return $this->setValue($deg);
+    }
 }
