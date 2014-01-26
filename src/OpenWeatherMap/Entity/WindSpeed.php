@@ -107,4 +107,26 @@ class WindSpeed
         $this->value = $value;
         return $this;
     }
+    
+    /**
+     * Return the mps (miles per second) value
+     * 
+     * @return int|null
+     */
+    public function getMps()
+    {
+        return $this->getValue();
+    }
+    
+    /**
+     * Set the mps (miles per second) value
+     * 
+     * @param int|null $mps
+     * 
+     * @return WindSpeed
+     */
+    public function setMps($mps = null)
+    {
+        return $this->setValue($mps);
+    }
 }
