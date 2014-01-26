@@ -29,6 +29,9 @@ class PrecipitationStrategy implements StrategyInterface
     
     public function extract($value)
     {
+        if (! $value instanceof Precipitation) {
+            return null;
+        }
         return $this->getHydrator()->extract($value);
     }
 

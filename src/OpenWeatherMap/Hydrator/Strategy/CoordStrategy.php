@@ -20,7 +20,7 @@ class CoordStrategy implements \Zend\Stdlib\Hydrator\Strategy\StrategyInterface
         if (! isset($this->hydrator)) {
             $hydrator = new \Zend\Stdlib\Hydrator\ClassMethods();
      
-            $hydrator->addStrategy('latitude', new LongitudeStrategy());
+            $hydrator->addStrategy('latitude', new LatitudeStrategy());
             $hydrator->addStrategy('longitude', new LongitudeStrategy());
             
             $this->hydrator = $hydrator;

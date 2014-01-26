@@ -29,6 +29,9 @@ class TemperatureStrategy implements StrategyInterface
     
     public function extract($value)
     {
+        if (! $value instanceof Temperature) {
+            return null;
+        }
         return $this->getHydrator()->extract($value);
     }
 

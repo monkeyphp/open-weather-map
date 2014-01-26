@@ -1,6 +1,6 @@
 <?php
 /**
- * ForecastStrategy.php
+ * TimeStrategy.php
  * 
  * @category   OpenWeatherMap
  * @package    OpenWeatherMap
@@ -24,19 +24,19 @@
  */
 namespace OpenWeatherMap\Hydrator\Strategy;
 
-use OpenWeatherMap\Entity\Forecast;
+use OpenWeatherMap\Entity\Time;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
- * ForecastStrategy
+ * TimeStrategy
  * 
  * @category   OpenWeatherMap
  * @package    OpenWeatherMap
  * @subpackage OpenWeatherMap\Hydrator\Strategy
  * @author     David White [monkeyphp] <david@monkeyphp.com>
  */
-class ForecastStrategy implements StrategyInterface
+class TimeStrategy implements StrategyInterface
 {
     /**
      * Instance of ClassMethods hydrator
@@ -54,44 +54,46 @@ class ForecastStrategy implements StrategyInterface
     {
         if (! isset($this->hydrator)) {
             $hydrator = new ClassMethods();
-            $hydrator->addStrategy('times', new TimesStrategy());
+            $hydrator->addStrategy('symbol',        new SymbolStrategy());
+            $hydrator->addStrategy('precipitation', new PrecipitationStrategy());
+            $hydrator->addStrategy('windDirection', new WindDirectionStrategy());
+            $hydrator->addStrategy('windSpeed',     new WindSpeedStrategy());
+            $hydrator->addStrategy('temperature',   new TemperatureStrategy());
+            $hydrator->addStrategy('pressure',      new PressureStrategy());
+            $hydrator->addStrategy('humidity',      new HumidityStrategy());
+            $hydrator->addStrategy('clouds',        new CloudsStrategy());
             $this->hydrator = $hydrator;
         }
         return $this->hydrator;
     }
     
     /**
-     * Extract the values from the supplied Forecast instance into an array
+     * Extract the values from the supplied instance of Time
      * 
-     * @param Forecast $value The Forecast instance to extract values from
+     * @param Time $value The Time instance to extract values from
      * 
-     * @return null|array
+     * @return null
      */
     public function extract($value)
     {
-        if (! $value instanceof Forecast) {
+        if (! $value instanceof Time) {
             return null;
         }
         return $this->getHydrator()->extract($value);
     }
-
+    
     /**
-     * Hydrate the supplied array of parameters into an instance of Forecast
+     * Hydrate and return an instance of Time using the supplied value array
      * 
      * @param array $value
      * 
-     * @return Forecast|null
+     * @return Time
      */
     public function hydrate($value)
     {
         if (! is_array($value)) {
             return null;
         }
-        
-        if (isset($value['time']) && is_array($value['time'])) {
-            $value['times'] = $value['time'];
-            unset($value['time']);
-        }
-        return $this->getHydrator()->hydrate($value, new Forecast());
+        return $this->getHydrator()->hydrate($value, new Time());
     }
 }

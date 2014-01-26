@@ -25,6 +25,9 @@ class CloudsStrategy  implements \Zend\Stdlib\Hydrator\Strategy\StrategyInterfac
     
     public function extract($value)
     {
+        if (! $value instanceof \OpenWeatherMap\Entity\Clouds) {
+            return null;
+        }
         return $this->getHydrator()->extract($value);
     }
 
