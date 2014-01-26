@@ -1,3 +1,5 @@
 vendor/
 nbproject/
 composer.phar
+build/report
+!build/report/empty
