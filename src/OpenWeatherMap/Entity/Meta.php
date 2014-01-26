@@ -34,10 +34,25 @@ namespace OpenWeatherMap\Entity;
  */
 class Meta
 {
+    /**
+     * The last update
+     * 
+     * @var string
+     */
     protected $lastUpdate;
     
+    /**
+     * The calc time
+     * 
+     * @var string
+     */
     protected $calcTime;
     
+    /**
+     * The next update
+     *
+     * @var string
+     */
     protected $nextUpdate;
     
     public function getLastUpdate()
