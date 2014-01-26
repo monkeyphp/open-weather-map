@@ -74,4 +74,14 @@ class WindSpeedTest extends PHPUnit_Framework_TestCase
         
         $windSpeed->setValue(new \stdClass());
     }
+    
+    public function testSetGetMps()
+    {
+        $mps = "3.91";
+        $windSpeed = new WindSpeed();
+        
+        $this->assertNull($windSpeed->getMps());
+        $this->assertSame($windSpeed, $windSpeed->setMps($mps));
+        $this->assertEquals($mps, $windSpeed->getMps());
+    }
 }
