@@ -85,6 +85,10 @@ class WindDirectionStrategy implements StrategyInterface
         if (! is_array($value)) {
             return null;
         }
+        if (isset($value['deg'])) {
+            $value['value'] = $value['deg'];
+            unset($value['deg']);
+        }
         return $this->getHydrator()->hydrate($value, new WindDirection());
     }
 }
