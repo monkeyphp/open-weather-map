@@ -38,9 +38,18 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  */
 class WindDirectionStrategy implements StrategyInterface
 {
-    
+    /**
+     * Instance of ClassMethods hydrator
+     * 
+     * @var ClassMethods
+     */
     protected $hydrator;
     
+    /**
+     * Return an instance of ClassMethods hydrator
+     * 
+     * @return ClassMethods
+     */
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
@@ -49,6 +58,13 @@ class WindDirectionStrategy implements StrategyInterface
         return $this->hydrator;
     }
     
+    /**
+     * Extract and return the values from the supplied WindDirection instance
+     * 
+     * @param WindDirection $value
+     * 
+     * @return null|array
+     */
     public function extract($value)
     {
         if (! $value instanceof WindDirection) {
@@ -57,6 +73,13 @@ class WindDirectionStrategy implements StrategyInterface
         return $this->getHydrator()->extract($value);
     }
 
+    /**
+     * Hydrate and return an instance of WindDirection
+     * 
+     * @param array $value
+     * 
+     * @return null|WindDirection
+     */
     public function hydrate($value)
     {
         if (! is_array($value)) {
@@ -64,5 +87,4 @@ class WindDirectionStrategy implements StrategyInterface
         }
         return $this->getHydrator()->hydrate($value, new WindDirection());
     }
-
 }
