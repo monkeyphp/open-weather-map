@@ -44,7 +44,7 @@ class Forecast
     
     public function getTimes()
     {
-        return $this->time;
+        return $this->times;
     }
 
     public function setTimes($times = array())

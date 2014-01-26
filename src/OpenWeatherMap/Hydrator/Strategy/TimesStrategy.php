@@ -25,14 +25,14 @@ class TimesStrategy implements StrategyInterface
     {
         if (! isset($this->hydrator)) {
             $hydrator = new ClassMethods();
-            $hydrator->addStrategy('symbol', new SymbolStrategy());
+            $hydrator->addStrategy('symbol',        new SymbolStrategy());
             $hydrator->addStrategy('precipitation', new PrecipitationStrategy());
             $hydrator->addStrategy('windDirection', new WindDirectionStrategy());
-            $hydrator->addStrategy('windSpeed', new WindSpeedStrategy());
-            $hydrator->addStrategy('temperature', new TemperatureStrategy());
-            $hydrator->addStrategy('pressure', new PressureStrategy());
-            $hydrator->addStrategy('humidity', new HumidityStrategy());
-            $hydrator->addStrategy('clouds', new CloudsStrategy());
+            $hydrator->addStrategy('windSpeed',     new WindSpeedStrategy());
+            $hydrator->addStrategy('temperature',   new TemperatureStrategy());
+            $hydrator->addStrategy('pressure',      new PressureStrategy());
+            $hydrator->addStrategy('humidity',      new HumidityStrategy());
+            $hydrator->addStrategy('clouds',        new CloudsStrategy());
             $this->hydrator = $hydrator;
         }
         return $this->hydrator;
