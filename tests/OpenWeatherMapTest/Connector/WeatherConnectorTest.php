@@ -49,16 +49,6 @@ class WeatherConnectorTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Test that we can get an instance of ClassMethods hydrator
-     */
-    public function testGetHydrator()
-    {
-        $weatherConnector = new WeatherConnector();
-        
-        $this->assertInstanceOf('\Zend\Stdlib\Hydrator\ClassMethods', $weatherConnector->getHydrator());
-    }
-    
-    /**
      * Test that we can get the end point
      */
     public function testGetEndPoint()
@@ -66,16 +56,6 @@ class WeatherConnectorTest extends PHPUnit_Framework_TestCase
         $weatherConnector = new WeatherConnector();
         
         $this->assertInternalType('string', $weatherConnector->getEndPoint());
-    }
-    
-    /**
-     * Test that we can get the result classname
-     */
-    public function testGetResultClassname()
-    {
-        $weatherConnector = new WeatherConnector();
-        
-        $this->assertInternalType('string', $weatherConnector->getResultClassname());
     }
     
     /**

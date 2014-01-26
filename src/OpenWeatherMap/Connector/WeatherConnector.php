@@ -27,6 +27,7 @@ namespace OpenWeatherMap\Connector;
 use OpenWeatherMap\Entity\Current;
 use OpenWeatherMap\Hydrator\Strategy\CityStrategy;
 use OpenWeatherMap\Hydrator\Strategy\CloudsStrategy;
+use OpenWeatherMap\Hydrator\Strategy\CurrentStrategy;
 use OpenWeatherMap\Hydrator\Strategy\HumidityStrategy;
 use OpenWeatherMap\Hydrator\Strategy\LastUpdateStrategy;
 use OpenWeatherMap\Hydrator\Strategy\PrecipitationStrategy;
@@ -52,33 +53,9 @@ class WeatherConnector extends AbstractConnector implements WeatherConnectorInte
      */
     protected $endPoint = 'weather';
     
-    /**
-     *
-     * @var string
-     */
-    protected $resultClassname = 'OpenWeatherMap\Entity\Current';
-    
-    /**
-     * Return an instance of ClassMethods
-     * 
-     * @return ClassMethods
-     */
-    public function getHydrator()
+    public function getStrategy()
     {
-        if (! isset($this->hydrator)) {
-            $hydrator = new ClassMethods();
-            $hydrator->addStrategy("city",          new CityStrategy());
-            $hydrator->addStrategy('temperature',   new TemperatureStrategy());
-            $hydrator->addStrategy('humidity',      new HumidityStrategy());
-            $hydrator->addStrategy('pressure',      new PressureStrategy());
-            $hydrator->addStrategy('wind',          new WindStrategy());
-            $hydrator->addStrategy('clouds',        new CloudsStrategy());
-            $hydrator->addStrategy('precipitation', new PrecipitationStrategy());
-            $hydrator->addStrategy('weather',       new WeatherStrategy());
-            $hydrator->addStrategy('lastupdate',    new LastUpdateStrategy());
-            $this->hydrator = $hydrator;
-        }
-        return $this->hydrator;
+        return new CurrentStrategy();
     }
     
     /**

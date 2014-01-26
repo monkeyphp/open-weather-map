@@ -56,25 +56,11 @@ use Zend\Validator\StringLength;
 abstract class AbstractConnector
 {
     /**
-     * Result class name
-     * 
-     * @var string
-     */
-    protected $resultClassname;
-    
-    /**
      * Instance of InputFilter used to validate supplied parameters
      * 
      * @var InputFilter
      */
     protected $inputFilter;
-    
-    /**
-     * Instance of HydratorInterface
-     * 
-     * @var HydratorInterface
-     */
-    protected $hydrator;
     
     /**
      * Url param for query
@@ -223,7 +209,7 @@ abstract class AbstractConnector
      * 
      * @var string
      */
-    protected $uri = 'http://api.openweathermap.org/data/2.5';
+    protected $serviceUri = 'http://api.openweathermap.org/data/2.5';
     
     /**
      * Url endpoint
@@ -247,11 +233,9 @@ abstract class AbstractConnector
     protected $lock;
     
     /**
-     * Return an instance of \Zend\Stdlib\Hydrator\HydratorInterface
      * 
-     * @return HydratorInterface
      */
-    abstract public function getHydrator();
+    abstract public function getStrategy();
     
     /**
      * Instance of LockInterface
@@ -276,6 +260,13 @@ abstract class AbstractConnector
         return $this;
     }
      
+    /**
+     * Return the end point for this connector
+     * 
+     * @return string
+     * 
+     * @throws \RuntimeException
+     */
     public function getEndPoint()
     {
         if (! isset($this->endPoint)) {
@@ -291,7 +282,33 @@ abstract class AbstractConnector
      */
     public function getUri()
     {
-        return implode('/', array($this->uri, $this->endPoint));
+        return implode('/', array(
+            $this->getServiceUri(), 
+            $this->getEndPoint()
+        ));
+    }
+    
+    /**
+     * Return the service uri
+     * 
+     * @return string
+     */
+    public function getServiceUri()
+    {
+        return $this->serviceUri;
+    }
+
+    /**
+     * Set the service uri
+     * 
+     * @param string $serviceUri
+     * 
+     * @return AbstractConnector
+     */
+    public function setServiceUri($serviceUri)
+    {
+        $this->serviceUri = $serviceUri;
+        return $this;
     }
     
     /**
@@ -563,20 +580,6 @@ abstract class AbstractConnector
     }
     
     /**
-     * Return the name of the result class
-     * 
-     * @return string
-     * @throws RuntimeException
-     */
-    public function getResultClassname()
-    {
-        if (! isset($this->resultClassname)) {
-            throw new RuntimeException('Did you set the result class name?');
-        }
-        return $this->resultClassname;
-    }
-    
-    /**
      * Dispatch the supplied Request instance and return the Response
      * 
      * @param Request $request The Request instance
@@ -640,43 +643,33 @@ abstract class AbstractConnector
         
         $request = $this->getRequest($this->getUri(), $params);
         
-        $lock = $this->getLock();
-        
-        if ($lock && (! $lock->lock())) {
-            throw new LockException('Could not obtain the lock');
-        }
         try {
+            $lock = $this->getLock();
+            if ($lock && (! $lock->lock())) {
+                throw new LockException('Could not obtain the lock');
+            }
+            
             $response = $this->getResponse($request);
-        } catch(Exception $exception) {
+            
             if ($lock) { 
                 $lock->unlock(); 
             }
-            throw $exception;
-        }
-        if ($lock) { 
-            $lock->unlock(); 
-        }
-        
-        $body = $response->getBody();
-        
-        // if the mode is HTML return immediately
-        if ($options['mode'] === AbstractConnector::MODE_HTML) {
-            return $body;
-        }
-        
-        try {
+            
+            $body = $response->getBody();
+            
+            if ($options['mode'] === AbstractConnector::MODE_HTML) {
+                return $body;
+            }
+            
             $reader = $this->getReader($options['mode']);
             $data = $reader->fromString($body);
             
-            $resultClassname = $this->getResultClassname();
-            $resultClass = new $resultClassname;
+            return $this->getStrategy()->hydrate($data);
             
-            $hydrator = $this->getHydrator();
-            $hydrator->hydrate($data, $resultClass);
-        
-            return $resultClass;
-            
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
+            if ($lock) { 
+                $lock->unlock(); 
+            }
             throw $exception;
         }
     }

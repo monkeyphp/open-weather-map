@@ -68,32 +68,11 @@ class DailyConnector extends AbstractConnector implements DailyConnectorInterfac
      */
     protected $endPoint = 'forecast/daily';
     
-    /**
-     * The name of the result class
-     * 
-     * @var string
-     */
-    protected $resultClassname = 'OpenWeatherMap\Entity\WeatherData';
-    
-    /**
-     * Return an instance of HydratorInterface
-     * 
-     * @return HydratorInterface
-     */
-    public function getHydrator()
+    public function getStrategy()
     {
-        if (! isset($this->hydrator)) {
-            $hydrator = new ClassMethods();
-            $hydrator->addStrategy('location', new LocationStrategy());
-            $hydrator->addStrategy('credit', new CreditStrategy());
-            $hydrator->addStrategy('meta', new MetaStrategy());
-            $hydrator->addStrategy('sun', new SunStrategy());
-            $hydrator->addStrategy('forecast', new ForecastStrategy());
-            $this->hydrator = $hydrator;
-        }
-        return $this->hydrator;
+        return new ForecastStrategy();
     }
-
+    
     /**
      * Return an instance of InputFilter
      * 
