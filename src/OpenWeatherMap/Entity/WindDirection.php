@@ -24,6 +24,8 @@
  */
 namespace OpenWeatherMap\Entity;
 
+use InvalidArgumentException;
+
 /**
  * WindDirection
  * 
@@ -34,41 +36,110 @@ namespace OpenWeatherMap\Entity;
  */
 class WindDirection
 {
-    protected $deg;
+    /**
+     * The value of the wind direction
+     * 
+     * @var float
+     */
+    protected $value;
     
+    /**
+     * The code of the wind direction
+     * 
+     * @var string
+     */
     protected $code;
     
+    /**
+     * The name of the wind direction
+     * 
+     * @var string
+     */
     protected $name;
     
-    public function getDeg()
+    /**
+     * Return the value of the wind direction
+     * 
+     * @return float|null
+     */
+    public function getValue()
     {
-        return $this->deg;
+        return $this->value;
     }
-
+    
+    /**
+     * Return the code of the wind direction
+     * 
+     * @return string|null
+     */
     public function getCode()
     {
         return $this->code;
     }
 
+    /**
+     * Return the name of the wind direction
+     * 
+     * @return string|null
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function setDeg($deg)
+    /**
+     * Set the value property of the wind direction
+     * 
+     * @param string|int|float $value The value to set the value property to
+     * 
+     * @return WindDirection
+     * @throws InvalidArgumentException
+     */
+    public function setValue($value = null)
     {
-        $this->deg = $deg;
+        if (! is_null($value)) {
+            if (! is_numeric($value)) {
+                throw new InvalidArgumentException('Expects a numeric');
+            }
+        }
+        $this->value = $value;
         return $this;
     }
-
-    public function setCode($code)
+    
+    /**
+     * Set the code property of the wind direction
+     * 
+     * @param string $code The value to set the code to
+     * 
+     * @return WindDirection
+     * @throws InvalidArgumentException
+     */
+    public function setCode($code = null)
     {
+        if (! is_null($code)) {
+            if (! is_string($code)) {
+                throw new InvalidArgumentException('Expects a string');
+            }
+        }
         $this->code = $code;
         return $this;
     }
 
-    public function setName($name)
+    /**
+     * Set the name property of the wind direction
+     * 
+     * @param string|null $name The value to set the name property to
+     * 
+     * @return WindDirection
+     * @throws InvalidArgumentException
+     */
+    public function setName($name = null)
     {
+        if (! is_null($name)) {
+            if (! is_string($name)) {
+                throw new InvalidArgumentException('Expects a string');
+            }
+        }
         $this->name = $name;
         return $this;
     }
