@@ -60,6 +60,14 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Test that we can get the end point
+     */
+    public function testGetEndPoint()
+    {
+        $this->markTestIncomplete();
+    }
+    
+    /**
      * Test that we can get the uri
      */
     public function testGetUri()
@@ -67,6 +75,16 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         
         $this->assertInternalType('string', $mockConnector->getUri());
+    }
+    
+    public function testGetServiceUri()
+    {
+        $this->markTestIncomplete();
+    }
+    
+    public function testSetServiceUri()
+    {
+        $this->markTestIncomplete();
     }
     
     /**
@@ -245,6 +263,11 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Zend\Config\Reader\Json', $reader);
     }
     
+    public function testGetReaderHtml()
+    {
+        $this->markTestIncomplete();
+    }
+    
     /**
      * Test that we can retrieve an instance of Http Client
      */
@@ -253,6 +276,11 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         
         $this->assertInstanceOf('\Zend\Http\Client', $mockConnector->getHttpClient());
+    }
+    
+    public function testSetHttpClient()
+    {
+        $this->markTestIncomplete();
     }
     
     /**
@@ -289,6 +317,25 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(AbstractConnector::PARAM_LANGUAGE, $params);
         $this->assertArrayHasKey(AbstractConnector::PARAM_APPID, $params);
     }
+    
+    public function testParseParamsWithEmptyOptions()
+    {
+        $this->markTestIncomplete();
+    }
+    
+    
+    public function testGetResultClassname() 
+    {
+        $this->markTestIncomplete();
+    }
+    
+    // protected
+    public function testGetResponse()
+    {
+        $this->markTestIncomplete();
+    }
+    
+    
     
     /**
      * Test that we can get an InputFilter instance
