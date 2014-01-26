@@ -24,6 +24,8 @@
  */
 namespace OpenWeatherMap\Entity;
 
+use InvalidArgumentException;
+
 /**
  * WindSpeed
  * 
@@ -34,29 +36,75 @@ namespace OpenWeatherMap\Entity;
  */
 class WindSpeed
 {
-    protected $mps;
-    
+    /**
+     * The nam eof the wind speed
+     * 
+     * @var string
+     */
     protected $name;
     
-    public function getMps()
-    {
-        return $this->mps;
-    }
-
+    /**
+     * The value of the wind speed
+     * 
+     * @var int
+     */
+    protected $value;
+    
+    /**
+     * Return the name of the Wind speed
+     * 
+     * @return string|null
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function setMps($mps)
+    /**
+     * Set the wind speed name
+     * 
+     * @param string $name The name of the wind speed
+     * 
+     * @throws InvalidArgumentException
+     * @return WindSpeed
+     */
+    public function setName($name = null)
     {
-        $this->mps = $mps;
+        if (! is_null($name)) {
+            if (! is_string($name)) {
+                throw new InvalidArgumentException('Expects a string');
+            }
+        }
+        $this->name = $name;
         return $this;
     }
-
-    public function setName($name)
+    
+    /**
+     * Return the value
+     * 
+     * @return string|int|null
+     */
+    public function getValue()
     {
-        $this->name = $name;
+        return $this->value;
+    }
+    
+    /**
+     * Set the value property
+     * 
+     * @param string|int|float $value The value to set the value property to
+     * 
+     * @return WindSpeed
+     * @throws InvalidArgumentException
+     */
+    public function setValue($value = null)
+    {
+        if (! is_null($value)) {
+            if (! is_numeric($value)) {
+                throw new InvalidArgumentException('Expects a numeric value');
+            }
+        }
+        $this->value = $value;
         return $this;
     }
 }
