@@ -77,15 +77,14 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $mockConnector->getUri());
     }
     
+    
     public function testGetServiceUri()
     {
-        $this->markTestIncomplete();
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        
+        $this->assertInternalType('string', $mockConnector->getServiceUri());
     }
     
-    public function testSetServiceUri()
-    {
-        $this->markTestIncomplete();
-    }
     
     /**
      * Test that we can get the array of languages
@@ -263,11 +262,14 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Zend\Config\Reader\Json', $reader);
     }
     
-    public function testGetReaderHtml()
+    public function testGetReaderThrowsException()
     {
-        $this->markTestIncomplete();
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $mode = 'foo';
+        
+        $this->setExpectedException('InvalidArgumentException');
+        $mockConnector->getReader($mode);
     }
-    
     /**
      * Test that we can retrieve an instance of Http Client
      */

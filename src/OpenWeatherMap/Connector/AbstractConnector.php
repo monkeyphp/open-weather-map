@@ -270,7 +270,9 @@ abstract class AbstractConnector
     public function getEndPoint()
     {
         if (! isset($this->endPoint)) {
+            // @codeCoverageIgnoreStart
             throw new \RuntimeException('Endpoint not set');
+            // @codeCoverageIgnoreEnd
         }
         return $this->endPoint;
     }
@@ -298,19 +300,6 @@ abstract class AbstractConnector
         return $this->serviceUri;
     }
 
-    /**
-     * Set the service uri
-     * 
-     * @param string $serviceUri
-     * 
-     * @return AbstractConnector
-     */
-    public function setServiceUri($serviceUri)
-    {
-        $this->serviceUri = $serviceUri;
-        return $this;
-    }
-    
     /**
      * Return the array of languages
      * 
@@ -498,8 +487,6 @@ abstract class AbstractConnector
                 return new Xml();
             case self::MODE_JSON:
                 return new Json();
-            case self::MODE_HTML:
-                break;
             default:
                 throw new InvalidArgumentException(sprintf('Supplied value %s is invalid', $mode));
         }
@@ -591,18 +578,14 @@ abstract class AbstractConnector
     protected function getResponse(Request $request)
     {
         try {
-            /* @var $response Response */
             $response = $this->getHttpClient()->dispatch($request);
-            
             if (! $response->isSuccess()) {
                 $statusCode = $response->getStatusCode();
                 $reasonPhrase = $response->getReasonPhrase();
                 $message = "[$statusCode] $reasonPhrase";
                 throw new RuntimeException($message);
             }
-            
             return $response;
-            
         } catch(Exception $exception) {
             throw $exception;
         }
