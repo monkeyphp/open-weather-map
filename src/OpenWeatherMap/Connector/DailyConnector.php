@@ -163,7 +163,7 @@ class DailyConnector extends AbstractConnector implements DailyConnectorInterfac
      * 
      * @return array
      */
-    protected function parseParams($options = array())
+    public function parseParams($options = array())
     {
         $params = parent::parseParams($options);
         
