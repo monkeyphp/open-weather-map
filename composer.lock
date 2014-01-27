@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5d75a53c8f3fc674f300ad3a49bfc80f",
+    "hash": "0fa165ad9c67a887be56dfe2b6333b0e",
     "packages": [
         {
             "name": "zendframework/zend-config",
@@ -275,6 +275,51 @@
             "time": "2014-01-04 13:00:20"
         },
         {
+            "name": "zendframework/zend-json",
+            "version": "dev-master",
+            "target-dir": "Zend/Json",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendJson.git",
+                "reference": "be5239c1aa48d6174b2368e3710cd74fc1f5659f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendJson/zipball/be5239c1aa48d6174b2368e3710cd74fc1f5659f",
+                "reference": "be5239c1aa48d6174b2368e3710cd74fc1f5659f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "suggest": {
+                "zendframework/zend-server": "Zend\\Server component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev",
+                    "dev-develop": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Json\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides convenience methods for serializing native PHP to JSON and decoding JSON to native PHP",
+            "keywords": [
+                "json",
+                "zf2"
+            ],
+            "time": "2014-01-02 18:00:19"
+        },
+        {
             "name": "zendframework/zend-loader",
             "version": "dev-master",
             "target-dir": "Zend/Loader",
@@ -539,12 +584,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "832c3fb3226553d4207d2b36b3334287638145b1"
+                "reference": "d46cd5e9ac07e78aa060cd7975d5eca16419de38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/832c3fb3226553d4207d2b36b3334287638145b1",
-                "reference": "832c3fb3226553d4207d2b36b3334287638145b1",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d46cd5e9ac07e78aa060cd7975d5eca16419de38",
+                "reference": "d46cd5e9ac07e78aa060cd7975d5eca16419de38",
                 "shasum": ""
             },
             "require": {
@@ -556,7 +601,7 @@
             },
             "require-dev": {
                 "ext-xdebug": ">=2.2.1",
-                "phpunit/phpunit": "dev-master"
+                "phpunit/phpunit": "3.8.*@dev"
             },
             "suggest": {
                 "ext-dom": "*",
@@ -570,7 +615,7 @@
             },
             "autoload": {
                 "classmap": [
-                    "PHP/"
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -594,7 +639,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-01-08 10:16:32"
+            "time": "2014-01-27 11:49:12"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -785,12 +830,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d86acc549f022bc436eac8a0d35c4a8a52992036"
+                "reference": "7a85574ef62e8c7c4d687d332c498a66079c4485"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d86acc549f022bc436eac8a0d35c4a8a52992036",
-                "reference": "d86acc549f022bc436eac8a0d35c4a8a52992036",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7a85574ef62e8c7c4d687d332c498a66079c4485",
+                "reference": "7a85574ef62e8c7c4d687d332c498a66079c4485",
                 "shasum": ""
             },
             "require": {
@@ -819,7 +864,7 @@
                 "phpunit/php-invoker": ">=1.1.0"
             },
             "bin": [
-                "composer/bin/phpunit"
+                "phpunit"
             ],
             "type": "library",
             "extra": {
@@ -829,7 +874,7 @@
             },
             "autoload": {
                 "classmap": [
-                    "PHPUnit/"
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -854,7 +899,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-01-11 08:28:47"
+            "time": "2014-01-27 11:08:21"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -862,12 +907,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "a1a2f93ebf2677ca2bf292a925095f457cd960a5"
+                "reference": "32d05a80739d20a4970bd64f67503668a3daea16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/a1a2f93ebf2677ca2bf292a925095f457cd960a5",
-                "reference": "a1a2f93ebf2677ca2bf292a925095f457cd960a5",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/32d05a80739d20a4970bd64f67503668a3daea16",
+                "reference": "32d05a80739d20a4970bd64f67503668a3daea16",
                 "shasum": ""
             },
             "require": {
@@ -875,8 +920,7 @@
                 "phpunit/php-text-template": ">=1.1.1"
             },
             "require-dev": {
-                "pear-pear/pear": "1.9.4",
-                "phpunit/phpunit": "dev-master"
+                "phpunit/phpunit": "3.8.*@dev"
             },
             "suggest": {
                 "ext-soap": "*"
@@ -889,7 +933,7 @@
             },
             "autoload": {
                 "classmap": [
-                    "PHPUnit/"
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -912,7 +956,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2013-12-12 22:23:57"
+            "time": "2014-01-27 11:07:04"
         },
         {
             "name": "sebastian/diff",
