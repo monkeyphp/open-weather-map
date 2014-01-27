@@ -24,17 +24,14 @@
  */
 namespace OpenWeatherMap\Connector;
 
+use OpenWeatherMap\Connector\AbstractConnector;
+use OpenWeatherMap\Connector\DailyConnector;
+use OpenWeatherMap\Connector\DailyConnectorInterface;
 use OpenWeatherMap\Entity\WeatherData;
-use OpenWeatherMap\Hydrator\Strategy\CreditStrategy;
-use OpenWeatherMap\Hydrator\Strategy\ForecastStrategy;
-use OpenWeatherMap\Hydrator\Strategy\LocationStrategy;
-use OpenWeatherMap\Hydrator\Strategy\MetaStrategy;
-use OpenWeatherMap\Hydrator\Strategy\SunStrategy;
+use OpenWeatherMap\Hydrator\Strategy\WeatherDataStrategy;
 use Zend\Filter\Int;
 use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
-use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Validator\Digits;
 
 /**
@@ -68,9 +65,14 @@ class DailyConnector extends AbstractConnector implements DailyConnectorInterfac
      */
     protected $endPoint = 'forecast/daily';
     
+    /**
+     * Return the strategy used to hydrate the Forecast instance
+     * 
+     * @return WeatherDataStrategy
+     */
     public function getStrategy()
     {
-        return new ForecastStrategy();
+        return new WeatherDataStrategy();
     }
     
     /**

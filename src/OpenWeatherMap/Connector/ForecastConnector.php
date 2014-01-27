@@ -27,13 +27,8 @@ namespace OpenWeatherMap\Connector;
 use OpenWeatherMap\Connector\AbstractConnector;
 use OpenWeatherMap\Connector\ForecastConnectorInterface;
 use OpenWeatherMap\Entity\WeatherData;
-use OpenWeatherMap\Hydrator\Strategy\CreditStrategy;
-use OpenWeatherMap\Hydrator\Strategy\ForecastStrategy;
-use OpenWeatherMap\Hydrator\Strategy\LocationStrategy;
-use OpenWeatherMap\Hydrator\Strategy\MetaStrategy;
-use OpenWeatherMap\Hydrator\Strategy\SunStrategy;
-use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use OpenWeatherMap\Hydrator\Strategy\WeatherDataStrategy;
+
 /**
  * ForecastConnector
  * 
@@ -53,7 +48,7 @@ class ForecastConnector extends AbstractConnector implements ForecastConnectorIn
     
     public function getStrategy()
     {
-        return new ForecastStrategy();
+        return new WeatherDataStrategy();
     }
     
     /**

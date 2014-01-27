@@ -25,17 +25,7 @@
 namespace OpenWeatherMap\Connector;
 
 use OpenWeatherMap\Entity\Current;
-use OpenWeatherMap\Hydrator\Strategy\CityStrategy;
-use OpenWeatherMap\Hydrator\Strategy\CloudsStrategy;
 use OpenWeatherMap\Hydrator\Strategy\CurrentStrategy;
-use OpenWeatherMap\Hydrator\Strategy\HumidityStrategy;
-use OpenWeatherMap\Hydrator\Strategy\LastUpdateStrategy;
-use OpenWeatherMap\Hydrator\Strategy\PrecipitationStrategy;
-use OpenWeatherMap\Hydrator\Strategy\PressureStrategy;
-use OpenWeatherMap\Hydrator\Strategy\TemperatureStrategy;
-use OpenWeatherMap\Hydrator\Strategy\WeatherStrategy;
-use OpenWeatherMap\Hydrator\Strategy\WindStrategy;
-use Zend\Stdlib\Hydrator\ClassMethods;
 
 /**
  * WeatherConnector

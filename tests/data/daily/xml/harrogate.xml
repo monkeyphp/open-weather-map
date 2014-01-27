@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<weatherdata>
+    <location>
+        <name>Harrogate</name>
+        <type/>
+        <country>GB</country>
+        <timezone/>
+        <location altitude="0" latitude="53.99078" longitude="-1.5373" geobase="geonames" geobaseid="0"/>
+    </location>
+    <credit/>
+    <meta>
+        <lastupdate/>
+        <calctime>0.0092</calctime>
+        <nextupdate/>
+    </meta>
+    <sun rise="2014-01-27T08:00:14" set="2014-01-27T16:37:44"/>
+    <forecast>
+        <time day="2014-01-27">
+            <symbol number="500" name="light rain" var="10d"/>
+            <precipitation value="3" type="rain"/>
+            <windDirection deg="210" code="SSW" name="South-southwest"/>
+            <windSpeed mps="4.21" name="Gentle Breeze"/>
+            <temperature day="278.25" min="277.61" max="278.25" night="277.69" eve="277.72" morn="278.25"/>
+            <pressure unit="hPa" value="965.98"/>
+            <humidity value="99" unit="%"/>
+            <clouds value="overcast clouds" all="88" unit="%"/>
+        </time>
+        <time day="2014-01-28">
+            <symbol number="501" name="moderate rain" var="10d"/>
+            <precipitation value="7" type="rain"/>
+            <windDirection deg="129" code="SE" name="SouthEast"/>
+            <windSpeed mps="4.88" name="Gentle Breeze"/>
+            <temperature day="278.08" min="277.35" max="278.32" night="278.28" eve="278.23" morn="277.42"/>
+            <pressure unit="hPa" value="961.79"/>
+            <humidity value="98" unit="%"/>
+            <clouds value="overcast clouds" all="92" unit="%"/>
+        </time>
+        <time day="2014-01-29">
+            <symbol number="500" name="light rain" var="10d"/>
+            <precipitation value="2" type="rain"/>
+            <windDirection deg="88" code="E" name="East"/>
+            <windSpeed mps="7.36" name="Moderate breeze"/>
+            <temperature day="277.13" min="274.37" max="277.91" night="274.37" eve="275.32" morn="277.91"/>
+            <pressure unit="hPa" value="985"/>
+            <humidity value="98" unit="%"/>
+            <clouds value="overcast clouds" all="88" unit="%"/>
+        </time>
+        <time day="2014-01-30">
+            <symbol number="600" name="light snow" var="13d"/>
+            <precipitation value="0.3" type="snow"/>
+            <windDirection deg="102" code="ESE" name="East-southeast"/>
+            <windSpeed mps="1.83" name="Light breeze"/>
+            <temperature day="275.48" min="273.1" max="275.48" night="273.1" eve="273.74" morn="273.78"/>
+            <pressure unit="hPa" value="996.45"/>
+            <humidity value="99" unit="%"/>
+            <clouds value="broken clouds" all="68" unit="%"/>
+        </time>
+        <time day="2014-01-31">
+            <symbol number="600" name="light snow" var="13d"/>
+            <precipitation value="1" type="snow"/>
+            <windDirection deg="163" code="SSE" name="South-southeast"/>
+            <windSpeed mps="3.96" name="Gentle Breeze"/>
+            <temperature day="275.03" min="273.29" max="281.69" night="279.29" eve="280.97" morn="273.29"/>
+            <pressure unit="hPa" value="985.97"/>
+            <humidity value="99" unit="%"/>
+            <clouds value="overcast clouds" all="92" unit="%"/>
+        </time>
+        <time day="2014-02-01">
+            <symbol number="500" name="light rain" var="10d"/>
+            <precipitation value="2" type="rain"/>
+            <windDirection deg="249" code="WSW" name="West-southwest"/>
+            <windSpeed mps="3.7" name="Gentle Breeze"/>
+            <temperature day="277.78" min="275.42" max="277.78" night="275.42" eve="275.61" morn="275.82"/>
+            <pressure unit="hPa" value="982.42"/>
+            <humidity value="100" unit="%"/>
+            <clouds value="broken clouds" all="76" unit="%"/>
+        </time>
+        <time day="2014-02-02">
+            <symbol number="500" name="light rain" var="10d"/>
+            <precipitation value="0.3" type="rain"/>
+            <windDirection deg="227" code="SW" name="Southwest"/>
+            <windSpeed mps="2.04" name="Light breeze"/>
+            <temperature day="276.9" min="274.65" max="276.9" night="275.32" eve="275.3" morn="274.65"/>
+            <pressure unit="hPa" value="990.6"/>
+            <humidity value="0" unit="%"/>
+            <clouds value="sky is clear" all="0" unit="%"/>
+        </time>
+    </forecast>
+</weatherdata>
