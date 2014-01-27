@@ -159,7 +159,8 @@ class WeatherConnectorTest extends PHPUnit_Framework_TestCase
     {
         $weatherConnector = new WeatherConnector();
         $options = array(
-            'id'   => 2172797
+            'id'   => 2172797,
+            'mode' => 'xml'
         );
         // http://api.openweathermap.org/data/2.5/weather?id=2172797&mode=xml 
         $results = file_get_contents(__DIR__ . '/../../data/weather/xml/2172797.xml');
@@ -195,6 +196,5 @@ class WeatherConnectorTest extends PHPUnit_Framework_TestCase
         $current = $weatherConnector->getWeather($options);
         
         $this->assertInstanceOf('\OpenWeatherMap\Entity\Current', $current);
-        $this->assertInstanceOf('\OpenWeatherMap\Entity\City', $current->getCity());
     }
 }
