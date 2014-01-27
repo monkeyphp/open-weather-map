@@ -24,6 +24,8 @@
  */
 namespace OpenWeatherMap\Entity;
 
+use InvalidArgumentException;
+
 /**
  * Precipitation
  * 
@@ -34,41 +36,107 @@ namespace OpenWeatherMap\Entity;
  */
 class Precipitation
 {
+    /**
+     *
+     * @var string|null
+     */
     protected $mode;
     
+    /**
+     *
+     * @var string|null
+     */
     protected $value;
     
+    /**
+     *
+     * @var string|null
+     */
     protected $type;
     
+    /**
+     * Return the mode
+     * 
+     * @return string|null
+     */
     public function getMode()
     {
         return $this->mode;
     }
 
-    public function setMode($mode)
+    /**
+     * Set the mode
+     * 
+     * @param string $mode
+     * 
+     * @return Precipitation
+     * @throws InvalidArgumentException
+     */
+    public function setMode($mode = null)
     {
+        if (! is_null($mode)) {
+            if (! is_string($mode)) {
+                throw new InvalidArgumentException('Expects a string');
+            }
+        }
         $this->mode = $mode;
         return $this;
     }
 
+    /**
+     * Return the value
+     * 
+     * @return string|null
+     */
     public function getValue()
     {
         return $this->value;
     }
 
+    /**
+     * Return the type
+     * 
+     * @return string
+     */
     public function getType()
     {
         return $this->type;
     }
 
-    public function setValue($value)
+    /**
+     * Set the value
+     * 
+     * @param string|null $value
+     * 
+     * @return Precipitation
+     * @throws InvalidArgumentException
+     */
+    public function setValue($value = null)
     {
+        if (! is_null($value)) {
+            if (! is_string($value)) {
+                throw new InvalidArgumentException('Expects a string');
+            }
+        }
         $this->value = $value;
         return $this;
     }
 
-    public function setType($type)
+    /**
+     * Set the type
+     * 
+     * @param string|null $type
+     * 
+     * @return Precipitation
+     * @throws InvalidArgumentException
+     */
+    public function setType($type = null)
     {
+        if (! is_null($type)) {
+            if (! is_string($type)) {
+                throw new InvalidArgumentException('Expects a string');
+            }
+        }
         $this->type = $type;
         return $this;
     }
