@@ -225,6 +225,10 @@ supply an array of options when you make the call.
     $ vendor/bin/phpunit -c tests/phpunit.xml
 
 
+## Run the PHP CS tests
+
+    $ vendor/bin/phpcs --standard="PSR2" src/
+
 
 ## License
 
