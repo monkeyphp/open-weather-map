@@ -1,24 +1,24 @@
 <?php
 /**
  * Temperature.php
- * 
+ *
  * @category   OpenWeatherMap
  * @package    OpenWeatherMap
  * @subpackage OpenWeatherMap\Entity
  * @author     David White [monkeyphp] <david@monkeyphp.com>
- * 
+ *
  * Copyright (C) 2014  David White
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see [http://www.gnu.org/licenses/].
  */
@@ -28,7 +28,7 @@ use InvalidArgumentException;
 
 /**
  * Temperature
- * 
+ *
  * @category   OpenWeatherMap
  * @package    OpenWeatherMap
  * @subpackage OpenWeatherMap\Entity
@@ -38,65 +38,65 @@ class Temperature
 {
     /**
      * Daytime temperature
-     * 
+     *
      * @var string|null
      */
     protected $day;
-    
+
     /**
      * Low temperature
-     * 
+     *
      * @var string|null
      */
     protected $min;
-    
+
     /**
      * Max temperature
-     * 
+     *
      * @var string|null
      */
     protected $max;
-    
+
     /**
      * Night time temperature
-     * 
+     *
      * @var string|null
      */
     protected $night;
-    
+
     /**
      * Evening temperature
-     * 
+     *
      * @var string|null
      */
     protected $evening;
-    
+
     /**
      * Morning temperature
-     * 
+     *
      * @var string|null
      */
     protected $morning;
-    
+
     /**
      * Temperature (as used in Weather)
-     * 
+     *
      * @var string|null
      */
     protected $value;
-    
+
     /**
      * Unit measurement
-     * 
+     *
      * @example "kelvin"
-     * 
+     *
      * @var string|null
      */
     protected $unit;
-    
+
     /**
      * Return the value of the Temperature
-     * 
+     *
      * @return string|null
      */
     public function getValue()
@@ -106,7 +106,7 @@ class Temperature
 
     /**
      * Return the min temperature
-     * 
+     *
      * @return string|null
      */
     public function getMin()
@@ -116,17 +116,17 @@ class Temperature
 
     /**
      * Return the max temperature
-     * 
+     *
      * @return string|null
      */
     public function getMax()
     {
         return $this->max;
     }
-    
+
     /**
      * Return the unit that the temperatures are measured in
-     * 
+     *
      * @return string|null
      */
     public function getUnit()
@@ -135,10 +135,10 @@ class Temperature
     }
 
     /**
-     * Set the value 
-     * 
+     * Set the value
+     *
      * @param string|null $value
-     * 
+     *
      * @return Temperature
      * @throws InvalidArgumentException
      */
@@ -155,9 +155,9 @@ class Temperature
 
     /**
      * Set the min value
-     * 
+     *
      * @param string|null $min
-     * 
+     *
      * @return Temperature
      * @throws InvalidArgumentException
      */
@@ -174,9 +174,9 @@ class Temperature
 
     /**
      * Set the max value
-     * 
+     *
      * @param string|null $max
-     * 
+     *
      * @return Temperature
      * @throws InvalidArgumentException
      */
@@ -185,7 +185,7 @@ class Temperature
         if (! is_null($max)) {
             if (! is_string($max)) {
                 throw new InvalidArgumentException('Expects a string');
-            } 
+            }
         }
         $this->max = $max;
         return $this;
@@ -193,9 +193,9 @@ class Temperature
 
     /**
      * Set the unit of measurement
-     * 
+     *
      * @param string|null $unit
-     * 
+     *
      * @return Temperature
      * @throws InvalidArgumentException
      */
@@ -209,10 +209,10 @@ class Temperature
         $this->unit = $unit;
         return $this;
     }
-    
+
     /**
      * Return the day time temperature
-     * 
+     *
      * @return string|null
      */
     public function getDay()
@@ -222,7 +222,7 @@ class Temperature
 
     /**
      * Return the evening temperature
-     * 
+     *
      * @return string|null
      */
     public function getEvening()
@@ -232,7 +232,7 @@ class Temperature
 
     /**
      * Return the morning temperature value
-     * 
+     *
      * @return string|null
      */
     public function getMorning()
@@ -242,9 +242,9 @@ class Temperature
 
     /**
      * Set the daytime temperature
-     * 
+     *
      * @param string|null $day
-     * 
+     *
      * @return Temperature
      * @throws InvalidArgumentException
      */
@@ -261,9 +261,9 @@ class Temperature
 
     /**
      * Set the evening temperature value
-     * 
+     *
      * @param string|null $evening
-     * 
+     *
      * @return Temperature
      * @throws InvalidArgumentException
      */
@@ -280,9 +280,9 @@ class Temperature
 
     /**
      * Set the morning temperature
-     * 
+     *
      * @param string|null $morning
-     * 
+     *
      * @return Temperature
      * @throws InvalidArgumentException
      */
@@ -299,19 +299,19 @@ class Temperature
 
     /**
      * Return the night time temperature
-     * 
+     *
      * @return string|null
      */
     public function getNight()
     {
         return $this->night;
     }
-    
+
     /**
      * Set the night time temperature
-     * 
-     * @param string|null $night 
-     * 
+     *
+     * @param string|null $night
+     *
      * @return Temperature
      * @throws InvalidArgumentException
      */
