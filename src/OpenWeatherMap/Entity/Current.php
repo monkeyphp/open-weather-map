@@ -60,9 +60,15 @@ class Current
     
     /**
      *
-     * @var Wind
+     * @var WindSpeed
      */
-    protected $wind;
+    protected $windSpeed;
+    
+    /**
+     *
+     * @var WindDirection
+     */
+    protected $windDirection;
     
     /**
      *
@@ -125,10 +131,6 @@ class Current
         return $this->pressure;
     }
 
-    public function getWind()
-    {
-        return $this->wind;
-    }
 
     public function getClouds()
     {
@@ -188,19 +190,6 @@ class Current
         $this->pressure = $pressure;
         return $this;
     }
-    
-    /**
-     * Set the Wind instance
-     * 
-     * @param Wind $wind
-     * 
-     * @return Current
-     */
-    public function setWind(Wind $wind)
-    {
-        $this->wind = $wind;
-        return $this;
-    }
 
     /**
      * Set the Clouds instance
@@ -246,4 +235,28 @@ class Current
         $this->lastUpdate = $lastUpdate;
         return $this;
     }
+    
+    public function getWindSpeed()
+    {
+        return $this->windSpeed;
+    }
+
+    public function getWindDirection()
+    {
+        return $this->windDirection;
+    }
+
+    public function setWindSpeed(WindSpeed $windSpeed)
+    {
+        $this->windSpeed = $windSpeed;
+        return $this;
+    }
+
+    public function setWindDirection(WindDirection $windDirection)
+    {
+        $this->windDirection = $windDirection;
+        return $this;
+    }
+
+
 }

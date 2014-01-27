@@ -63,7 +63,7 @@ class CurrentStrategy implements StrategyInterface
             $hydrator->addStrategy('clouds',        new CloudsStrategy());
             $hydrator->addStrategy('precipitation', new PrecipitationStrategy());
             $hydrator->addStrategy('weather',       new WeatherStrategy());
-            $hydrator->addStrategy('lastupdate',    new LastUpdateStrategy());
+            //$hydrator->addStrategy('lastupdate',    new LastUpdateStrategy());
             $this->hydrator = $hydrator;
         }
         return $this->hydrator;
@@ -105,6 +105,13 @@ class CurrentStrategy implements StrategyInterface
                 $value['windDirection'] = $wind['direction'];
             }
             unset($value['wind']);
+        }
+        if (isset($value['lastupdate']) && is_array($value['lastupdate'])) {
+            $lastUpdate = $value['lastupdate'];
+            if (isset($lastUpdate['value'])) {
+                $value['lastUpdate'] = $lastUpdate['value'];
+                unset($value['lastupdate']);
+            }
         }
         return $this->getHydrator()->hydrate($value, new Current());
     }

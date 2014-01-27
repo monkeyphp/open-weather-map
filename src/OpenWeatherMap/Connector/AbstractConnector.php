@@ -468,7 +468,7 @@ abstract class AbstractConnector
         return array(
             'mode'      => $this->getDefaultMode(),
             'language'  => $this->getDefaultLanguage(),
-            'units'     => $this->getDefaultUnits(),
+            'units'     => $this->getDefaultUnits()
         );
     }
     
@@ -528,7 +528,7 @@ abstract class AbstractConnector
      * @return Request
      */
     public function getRequest($uri, $params = array(), $method = Request::METHOD_GET)
-    {
+    {   
         $request = new Request();
         $request->setUri($uri);
         $request->getQuery()->fromArray($params);
