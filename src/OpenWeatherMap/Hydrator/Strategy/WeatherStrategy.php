@@ -1,28 +1,53 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * WeatherStrategy.php
+ *
+ * @category   OpenWeatherMap
+ * @package    OpenWeatherMap
+ * @subpackage OpenWeatherMap\Hydrator\Strategy
+ * @author     David White [monkeyphp] <david@monkeyphp.com>
+ *
+ * Copyright (C) 2014  David White
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see [http://www.gnu.org/licenses/].
  */
 namespace OpenWeatherMap\Hydrator\Strategy;
+
+use OpenWeatherMap\Entity\Weather;
+use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
+
 /**
- * Description of CloudsStrategy
+ * WeatherStrategy
  *
- * @author David White <david@monkeyphp.com>
+ * @category   OpenWeatherMap
+ * @package    OpenWeatherMap
+ * @subpackage OpenWeatherMap\Hydrator\Strategy
+ * @author     David White [monkeyphp] <david@monkeyphp.com>
  */
-class WeatherStrategy  implements \Zend\Stdlib\Hydrator\Strategy\StrategyInterface
+class WeatherStrategy implements StrategyInterface
 {
     protected $hydrator;
-    
+
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
-            $this->hydrator = new \Zend\Stdlib\Hydrator\ClassMethods();
+            $this->hydrator = new ClassMethods();
         }
         return $this->hydrator;
     }
-    
+
     public function extract($value)
     {
         return $this->getHydrator()->extract($value);
@@ -30,7 +55,6 @@ class WeatherStrategy  implements \Zend\Stdlib\Hydrator\Strategy\StrategyInterfa
 
     public function hydrate($value)
     {
-        return $this->getHydrator()->hydrate($value, new \OpenWeatherMap\Entity\Weather());
+        return $this->getHydrator()->hydrate($value, new Weather());
     }
-
 }

@@ -20,7 +20,7 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 class MetaStrategy implements StrategyInterface
 {
     protected $hydrator;
-    
+
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
@@ -28,10 +28,10 @@ class MetaStrategy implements StrategyInterface
         }
         return $this->hydrator;
     }
-    
+
     public function extract($value)
     {
-        
+
     }
 
     public function hydrate($value)
@@ -50,5 +50,4 @@ class MetaStrategy implements StrategyInterface
         }
         return $this->getHydrator()->hydrate($value, new Meta());
     }
-
 }
