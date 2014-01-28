@@ -164,7 +164,7 @@ class Temperature
     public function setMin($min = null)
     {
         if (! is_null($min)) {
-            if (! is_string($min)) {
+            if (! is_string($min) && !is_numeric($min)) {
                 throw new InvalidArgumentException('Expects a string');
             }
         }
@@ -183,7 +183,7 @@ class Temperature
     public function setMax($max = null)
     {
         if (! is_null($max)) {
-            if (! is_string($max)) {
+            if (! is_string($max) && ! is_numeric($max)) {
                 throw new InvalidArgumentException('Expects a string');
             }
         }
@@ -251,7 +251,7 @@ class Temperature
     public function setDay($day = null)
     {
         if (! is_null($day)) {
-            if (! is_string($day)) {
+            if (! is_string($day) && ! is_numeric($day)) {
                 throw new InvalidArgumentException('Expects a string');
             }
         }
@@ -270,7 +270,7 @@ class Temperature
     public function setEvening($evening = null)
     {
         if (! is_null($evening)) {
-            if (! is_string($evening)) {
+            if (! is_string($evening) && !is_numeric($evening)) {
                 throw new InvalidArgumentException('Expects a string');
             }
         }
@@ -289,7 +289,7 @@ class Temperature
     public function setMorning($morning = null)
     {
         if (! is_null($morning)) {
-            if (! is_string($morning)) {
+            if (! is_string($morning) && !is_numeric($morning)) {
                 throw new InvalidArgumentException('Expects a string');
             }
         }
@@ -318,7 +318,7 @@ class Temperature
     public function setNight($night = null)
     {
         if (! is_null($night)) {
-            if (! is_string($night)) {
+            if (! is_string($night) && !is_numeric($night)) {
                 throw new InvalidArgumentException('Expects a string');
             }
         }

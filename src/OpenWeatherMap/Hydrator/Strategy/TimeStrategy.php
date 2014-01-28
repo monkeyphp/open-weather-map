@@ -94,6 +94,68 @@ class TimeStrategy implements StrategyInterface
         if (! is_array($value)) {
             return null;
         }
+
+        // handle the differences between xml and json response
+        // day/dt
+        if (isset($value['dt'])) {
+            $value['day'] = $value['dt'];
+            unset($value['dt']);
+        }
+        // temperature/temp
+        if (isset($value['temp'])) {
+            $value['temperature'] = $value['temp'];
+            unset($value['temp']);
+        }
+        // pressure
+        if (isset($value['pressure']) && ! is_array($value['pressure'])) {
+            $pressure = array('value' => $value['pressure']);
+            $value['pressure'] = $pressure;
+        }
+        // humidity
+        if (isset($value['humidity']) && ! is_array($value['humidity'])) {
+            $humidity = array('value' => $value['humidity']);
+            $value['humidity'] = $humidity;
+        }
+
+        // speed
+        if (isset($value['speed']) && ! is_array($value['speed'])) {
+            $value['windSpeed'] = array('mps' => $value['speed']);
+            unset($value['speed']);
+        }
+        // deg
+        if (isset($value['deg'])) {
+            $value['windDirection'] = array('deg' => $value['deg']);
+            unset($value['deg']);
+        }
+        // clouds
+        if (isset($value['clouds'])) {
+            $value['clouds'] = array('all' => $value['clouds']);
+            unset($value['clouds']);
+        }
+        // precipitation/rain
+        if (isset($value['rain'])) {
+            $value['precipitation'] = array('value' => $value['rain']);
+            unset($value['rain']);
+        }
+        // weather
+        if (isset($value['weather']) && is_array($value['weather'])) {
+            $weather = $value['weather'];
+            unset($value['weather']);
+            foreach ($weather as $index => $data) {
+                if (is_array($data)) {
+                    if (isset($data['id'])) {
+                        $value['symbol']['number'] = $data['id'];
+                    }
+                    if (isset($data['description'])) {
+                        $value['clouds']['value'] = $data['description'];
+                    }
+                    if (isset($data['icon'])) {
+                        $value['symbol']['icon'] = $data['icon'];
+                    }
+                    break;
+                }
+            }
+        }
         return $this->getHydrator()->hydrate($value, new Time());
     }
 }

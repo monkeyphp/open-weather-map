@@ -91,6 +91,32 @@ class WeatherDataStrategy implements StrategyInterface
         if (! is_array($value)) {
             return null;
         }
+
+        // handle the difference between xml and json repsonses
+        // cod
+        if (isset($value['cod'])) {
+            unset($value['cod']);
+        }
+        // message
+        if (isset($value['message'])) {
+            unset($value['message']);
+        }
+        // city/location
+        if (! isset($value['location']) &&
+            (isset($value['city']) && is_array($value['city']))
+        ) {
+            $value['location'] = $value['city'];
+            unset($value['city']);
+        }
+        // cnt
+        // list/forecast
+        if (! isset($value['forecast']) &&
+            (isset($value['list']) && is_array($value['list']))
+        ) {
+            $list = $value['list'];
+            unset($value['list']);
+            $value['forecast'] = array('time' => $list);
+        }
         return $this->getHydrator()->hydrate($value, new WeatherData());
     }
 }
