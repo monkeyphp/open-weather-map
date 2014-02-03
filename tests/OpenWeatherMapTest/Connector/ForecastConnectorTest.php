@@ -1,24 +1,24 @@
 <?php
 /**
  * ForecastConnectorTest.php
- * 
+ *
  * @category   OpenWeatherMapTest
  * @package    OpenWeatherMapTest
  * @subpackage OpenWeatherMapTest\Connector
  * @author     David White [monkeyphp] <david@monkeyphp.com>
- * 
+ *
  * Copyright (C) 2014  David White
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see [http://www.gnu.org/licenses/].
  */
@@ -29,7 +29,7 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * ForecastConnectorTest
- * 
+ *
  * @category   OpenWeatherMapTest
  * @package    OpenWeatherMapTest
  * @subpackage OpenWeatherMapTest\Connector
@@ -37,13 +37,22 @@ use PHPUnit_Framework_TestCase;
  */
 class ForecastConnectorTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Test that we can retrieve the weather forecast using a query
+     *
+     * @group egg
+     */
     public function testGetForecastByQuery()
     {
         $forecastConnector = new ForecastConnector();
         $options = array(
-            'query' => 'London,UK'
+            'query' => 'London,UK',
+          //  'mode' => 'json'
         );
-        $results = file_get_contents(__DIR__ . '/../../data/daily/xml/london.xml');
+
+        $results = file_get_contents(__DIR__ . '/../../data/forecast/xml/london.xml');
+        //$results = file_get_contents(__DIR__ . '/../../data/forecast/json/london.json');
+
         $mockResponse = $this->getMock('\Zend\Http\Response');
         $mockResponse->expects($this->once())
             ->method('isSuccess')
@@ -65,9 +74,9 @@ class ForecastConnectorTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
         $forecastConnector->setHttpClient($mockClient);
         $forecastConnector->setLock($mockLock);
-        
+
         $weatherData = $forecastConnector->getForecast($options);
-        
+
         $this->assertInstanceOf('\OpenWeatherMap\Entity\WeatherData', $weatherData);
     }
 }

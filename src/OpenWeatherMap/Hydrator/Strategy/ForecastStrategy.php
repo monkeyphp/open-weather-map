@@ -87,7 +87,6 @@ class ForecastStrategy implements StrategyInterface
         if (! is_array($value)) {
             return null;
         }
-
         if (isset($value['time']) && is_array($value['time'])) {
             $times = array();
             $timeStrategy = new TimeStrategy();

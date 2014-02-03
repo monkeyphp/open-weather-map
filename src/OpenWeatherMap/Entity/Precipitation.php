@@ -114,7 +114,7 @@ class Precipitation
     public function setValue($value = null)
     {
         if (! is_null($value)) {
-            if (! is_string($value)  && !is_numeric($value)) {
+            if (! is_string($value) && !is_numeric($value)) {
                 throw new InvalidArgumentException('Expects a string');
             }
         }

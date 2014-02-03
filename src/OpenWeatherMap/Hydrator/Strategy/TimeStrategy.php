@@ -128,15 +128,60 @@ class TimeStrategy implements StrategyInterface
             unset($value['deg']);
         }
         // clouds
-        if (isset($value['clouds'])) {
+        if (isset($value['clouds']) && ! is_array($value['clouds'])) {
             $value['clouds'] = array('all' => $value['clouds']);
             unset($value['clouds']);
         }
         // precipitation/rain
         if (isset($value['rain'])) {
-            $value['precipitation'] = array('value' => $value['rain']);
+            if (is_array($value['rain'])) {
+                $x = each($value['rain']);
+                $value['precipitation'] = array('unit' => $x['key'], 'value' => $x['value']);
+            } else {
+                $value['precipitation'] = array('value' => $value['rain']);
+            }
             unset($value['rain']);
         }
+        // main
+        if (isset($value['main']) && is_array($value['main'])) {
+//        (
+//            [temp] => 274.967
+//            [temp_min] => 274.967
+//            [temp_max] => 274.967
+//            [pressure] => 989.44
+//            [sea_level] => 1025.23
+//            [grnd_level] => 989.44
+//            [humidity] => 95
+//        )
+            // temp
+
+            // temp_min
+
+            // temp_max
+
+            // pressure
+
+            // sea_level
+
+            // grnd_level
+
+            // humidity
+
+            // temp_kf
+            unset($value['main']);
+        }
+
+        // wind
+        if (isset($value['wind']) && is_array($value['wind'])) {
+
+//             (
+//            [speed] => 5.85
+//            [deg] => 182.502
+//        )
+
+            unset($value['wind']);
+        }
+
         // weather
         if (isset($value['weather']) && is_array($value['weather'])) {
             $weather = $value['weather'];
@@ -156,6 +201,12 @@ class TimeStrategy implements StrategyInterface
                 }
             }
         }
+
+
+//        echo '<pre>';
+//        print_r($value);
+//        echo '</pre>';
+        //die();
         return $this->getHydrator()->hydrate($value, new Time());
     }
 }

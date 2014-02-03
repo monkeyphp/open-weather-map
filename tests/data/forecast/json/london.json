@@ -1,0 +1,39 @@
+{
+    "cod": "200",
+    "message": 0.0215,
+    "city": {
+        "id": 4517009,
+        "name": "London",
+        "coord": {
+            "lon": -83.44825,
+            "lat": 39.886452},
+        "country": "US",
+        "population": 9904},
+    "cnt": 41,
+    "list": [
+       {
+            "dt": 1391245200, 
+            "main": {
+                "temp": 274.967, 
+                "temp_min": 274.967, 
+                "temp_max": 274.967, 
+                "pressure": 989.44, 
+                "sea_level": 1025.23, 
+                "grnd_level": 989.44, 
+                "humidity": 95
+            }, 
+            "weather": [{
+                "id": 500, "main": "Rain", "description": "light rain", "icon": "10n"
+            }], 
+            "clouds": {
+                "all": 92
+            }, 
+            "wind": {
+                "speed": 5.85, "deg": 182.502
+            },
+            "snow": {"3h": 0},
+            "rain": {"3h": 2}, 
+            "sys": {"pod": "n"}, 
+            "dt_txt": "2014-02-01 09:00:00"
+        }, 
+        {"dt": 1391256000, "main": {"temp": 276.434, "temp_min": 276.434, "temp_max": 276.434, "pressure": 987.15, "sea_level": 1022.86, "grnd_level": 987.15, "humidity": 88}, "weather": [{"id": 500, "main": "Rain", "description": "light rain", "icon": "10n"}], "clouds": {"all": 92}, "wind": {"speed": 7.12, "deg": 203.501}, "snow": {"3h": 0}, "rain": {"3h": 1}, "sys": {"pod": "n"}, "dt_txt": "2014-02-01 12:00:00"}, {"dt": 1391266800, "main": {"temp": 277.822, "temp_min": 277.822, "temp_max": 277.822, "pressure": 986.31, "sea_level": 1021.57, "grnd_level": 986.31, "humidity": 85}, "weather": [{"id": 804, "main": "Clouds", "description": "overcast clouds", "icon": "04d"}], "clouds": {"all": 88}, "wind": {"speed": 9.06, "deg": 207.501}, "snow": {"3h": 0}, "rain": {"3h": 0}, "sys": {"pod": "d"}, "dt_txt": "2014-02-01 15:00:00"}, {"dt": 1391277600, "main": {"temp": 280.166, "temp_min": 280.166, "temp_max": 280.166, "pressure": 983.77, "sea_level": 1018.71, "grnd_level": 983.77, "humidity": 86}, "weather": [{"id": 500, "main": "Rain", "description": "light rain", "icon": "10d"}], "clouds": {"all": 92}, "wind": {"speed": 9.71, "deg": 210.5}, "snow": {"3h": 0}, "rain": {"3h": 1}, "sys": {"pod": "d"}, "dt_txt": "2014-02-01 18:00:00"}, {"dt": 1391288400, "main": {"temp": 281.266, "temp_min": 281.266, "temp_max": 281.266, "pressure": 984.42, "sea_level": 1019.48, "grnd_level": 984.42, "humidity": 97}, "weather": [{"id": 500, "main": "Rain", "description": "light rain", "icon": "10d"}], "clouds": {"all": 92}, "wind": {"speed": 6.55, "deg": 270.003}, "snow": {"3h": 0}, "rain": {"3h": 2}, "sys": {"pod": "d"}, "dt_txt": "2014-02-01 21:00:00"}, {"dt": 1391299200, "main": {"temp": 273.679, "temp_min": 273.679, "temp_max": 273.679, "pressure": 989.15, "sea_level": 1024.7, "grnd_level": 989.15, "humidity": 100}, "weather": [{"id": 501, "main": "Rain", "description": "moderate rain", "icon": "10n"}], "clouds": {"all": 92}, "wind": {"speed": 4.52, "deg": 319.004}, "snow": {"3h": 0}, "rain": {"3h": 4}, "sys": {"pod": "n"}, "dt_txt": "2014-02-02 00:00:00"}, {"dt": 1391310000, "main": {"temp": 270.128, "temp_min": 270.128, "temp_max": 270.128, "pressure": 992.51, "sea_level": 1028.43, "grnd_level": 992.51, "humidity": 94}, "weather": [{"id": 804, "main": "Clouds", "description": "overcast clouds", "icon": "04n"}], "clouds": {"all": 92}, "wind": {"speed": 5.45, "deg": 339.01}, "snow": {"3h": 0}, "rain": {"3h": 0}, "sys": {"pod": "n"}, "dt_txt": "2014-02-02 03:00:00"}, {"dt": 1391320800, "main": {"temp": 266.518, "temp_min": 266.518, "temp_max": 266.518, "pressure": 995.09, "sea_level": 1031.41, "grnd_level": 995.09, "humidity": 90}, "weather": [{"id": 801, "main": "Clouds", "description": "few clouds", "icon": "02n"}], "clouds": {"all": 24}, "wind": {"speed": 4.67, "deg": 337.001}, "snow": {"3h": 0}, "rain": {"3h": 0}, "sys": {"pod": "n"}, "dt_txt": "2014-02-02 06:00:00"}, {"dt": 1391331600, "main": {"temp": 264.642, "temp_min": 264.642, "temp_max": 264.642, "pressure": 997.07, "sea_level": 1033.86, "grnd_level": 997.07, "humidity": 89}, "weather": [{"id": 802, "main": "Clouds", "description": "scattered clouds", "icon": "03n"}], "clouds": {"all": 32}, "wind": {"speed": 3.78, "deg": 340.001}, "snow": {"3h": 0}, "rain": {"3h": 0}, "sys": {"pod": "n"}, "dt_txt": "2014-02-02 09:00:00"}, {"dt": 1391342400, "main": {"temp": 262.286, "temp_min": 262.286, "temp_max": 262.286, "pressure": 999.54, "sea_level": 1036.53, "grnd_level": 999.54, "humidity": 90}, "weather": [{"id": 800, "main": "Clear", "description": "sky is clear", "icon": "01n"}], "clouds": {"all": 0}, "wind": {"speed": 2.56, "deg": 330.502}, "snow": {"3h": 0}, "rain": {"3h": 0}, "sys": {"pod": "n"}, "dt_txt": "2014-02-02 12:00:00"}, {"dt": 1391353200, "main": {"temp": 264.138, "temp_min": 264.138, "temp_max": 264.138, "pressure": 1002.04, "sea_level": 1038.95, "grnd_level": 1002.04, "humidity": 100}, "weather": [{"id": 800, "main": "Clear", "description": "sky is clear", "icon": "01d"}], "clouds": {"all": 0}, "wind": {"speed": 2.06, "deg": 310.001}, "snow": {"3h": 0}, "rain": {"3h": 0}, "sys": {"pod": "d"}, "dt_txt": "2014-02-02 15:00:00"}, {"dt": 1391364000, "main": {"temp": 268.035, "temp_min": 268.035, "temp_max": 268.035, "pressure": 1002.02, "sea_level": 1038.4, "grnd_level": 1002.02, "humidity": 100}, "weather": [{"id": 801, "main": "Clouds", "description": "few clouds", "icon": "02d"}], "clouds": {"all": 12}, "wind": {"speed": 2.02, "deg": 309.5}, "snow": {"3h": 0}, "rain": {"3h": 0}, "sys": {"pod": "d"}, "dt_txt": "2014-02-02 18:00:00"}, {"dt": 1391374800, "main": {"temp": 269.744, "temp_min": 269.744, "temp_max": 269.744, "pressure": 1002.19, "sea_level": 1038.61, "grnd_level": 1002.19, "humidity": 100}, "weather": [{"id": 801, "main": "Clouds", "description": "few clouds", "icon": "02d"}], "clouds": {"all": 12}, "wind": {"speed": 2.51, "deg": 298.001}, "snow": {"3h": 0}, "rain": {"3h": 0}, "sys": {"pod": "d"}, "dt_txt": "2014-02-02 21:00:00"}]}

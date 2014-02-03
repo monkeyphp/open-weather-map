@@ -81,9 +81,6 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(DailyConnector::PARAM_COUNT, $params);
     }
 
-    /**
-     * @group egg
-     */
     public function testGetDailyUsingQuery()
     {
         $dailyConnector = new DailyConnector();

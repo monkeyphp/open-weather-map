@@ -91,7 +91,6 @@ class WeatherDataStrategy implements StrategyInterface
         if (! is_array($value)) {
             return null;
         }
-
         // handle the difference between xml and json repsonses
         // cod
         if (isset($value['cod'])) {
