@@ -136,6 +136,44 @@ class OpenWeatherMapTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that we can set valid default values
+     *
+     * @covers \OpenWeatherMap\OpenWeatherMap::setDefaults
+     */
+    public function testSetDefaultsWithValidValues()
+    {
+        $count = 5;
+        $defaults = array('count' => $count);
+        $openWeatherMap = new OpenWeatherMap();
+
+        $this->assertEmpty($openWeatherMap->getDefaults());
+        $this->assertSame($openWeatherMap, $openWeatherMap->setDefaults($defaults));
+
+        $openWeatherMapDefaults = $openWeatherMap->getDefaults();
+        $this->assertArrayHasKey('count', $openWeatherMapDefaults);
+        $this->assertEquals($openWeatherMapDefaults['count'], $count);
+    }
+
+    /**
+     * Test that invalid keys will be ignored
+     *
+     * @covers \OpenWeatherMap\OpenWeatherMap::setDefaults
+     */
+    public function testSetDefaultsIgnoresInvalidKeys()
+    {
+        $count = 5;
+        $defaults = array('foobardeedum' => $count);
+        $openWeatherMap = new OpenWeatherMap();
+
+        $this->assertEmpty($openWeatherMap->getDefaults());
+        $this->assertSame($openWeatherMap, $openWeatherMap->setDefaults($defaults));
+
+        $openWeatherMapDefaults = $openWeatherMap->getDefaults();
+        $this->assertEmpty($openWeatherMapDefaults);
+        $this->assertArrayNotHasKey('foobardeedum', $openWeatherMapDefaults);
+    }
+
+    /**
      * Test that supplying 'query' in the array to mergeOptions will unset
      * the 'latitude' key in the default options passed to OpenWeatherMap
      * constructor
