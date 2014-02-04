@@ -35,24 +35,28 @@ namespace OpenWeatherMap\Entity;
 class Current
 {
     /**
+     * Instance of City
      *
      * @var City
      */
     protected $city;
 
     /**
+     * Instance of Temperature
      *
      * @var Temperature
      */
     protected $temperature;
 
     /**
+     * Instance of Humidity
      *
      * @var Humidity
      */
     protected $humidity;
 
     /**
+     * Instance of Pressure
      *
      * @var Pressure
      */
@@ -159,7 +163,7 @@ class Current
      *
      * @return Current
      */
-    public function setCity(City $city)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
         return $this;
@@ -172,7 +176,7 @@ class Current
      *
      * @return Current
      */
-    public function setTemperature(Temperature $temperature)
+    public function setTemperature(Temperature $temperature = null)
     {
         $this->temperature = $temperature;
         return $this;
@@ -185,7 +189,7 @@ class Current
      *
      * @return Current
      */
-    public function setPressure(Pressure $pressure)
+    public function setPressure(Pressure $pressure = null)
     {
         $this->pressure = $pressure;
         return $this;
@@ -198,7 +202,7 @@ class Current
      *
      * @return Current
      */
-    public function setClouds(Clouds $clouds)
+    public function setClouds(Clouds $clouds = null)
     {
         $this->clouds = $clouds;
         return $this;
