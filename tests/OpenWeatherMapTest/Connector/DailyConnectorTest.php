@@ -30,6 +30,8 @@ use PHPUnit_Framework_TestCase;
 /**
  * DailyConnectorTest
  *
+ * Test cases for instance of DailyConnector
+ *
  * @category   OpenWeatherMapTest
  * @package    OpenWeatherMapTest
  * @subpackage OpenWeatherMapTest\Connector
@@ -37,6 +39,9 @@ use PHPUnit_Framework_TestCase;
  */
 class DailyConnectorTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Test that we can get the strategy class
+     */
     public function testGetStrategy()
     {
         $dailyConnector = new DailyConnector();
@@ -45,6 +50,9 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\OpenWeatherMap\Hydrator\Strategy\WeatherDataStrategy', $strategy);
     }
 
+    /**
+     * Test that we can get the input filter
+     */
     public function testGetInputFilter()
     {
         $dailyConnector = new DailyConnector();
@@ -53,6 +61,9 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Zend\InputFilter\InputFilter', $inputFilter);
     }
 
+    /**
+     * Test that we can set and get the default count
+     */
     public function testGetSetDefaultCount()
     {
         $defaultCount = 5;
@@ -63,6 +74,9 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($defaultCount, $dailyConnector->getDefaultCount());
     }
 
+    /**
+     * Test the we can get the default options
+     */
     public function testGetDefaultOptions()
     {
         $dailyConnector = new DailyConnector();
@@ -71,6 +85,9 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('count', $defaultOptions);
     }
 
+    /**
+     * Test that we can parse the params
+     */
     public function testParseParams()
     {
         $count = 5;
@@ -81,15 +98,58 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(DailyConnector::PARAM_COUNT, $params);
     }
 
-    public function testGetDailyUsingQuery()
+    /**
+     * Test that we can get the daily forecast using the xml mode and supplying
+     * a query string
+     */
+    public function testGetDailyXmlUsingQuery()
+    {
+        $dailyConnector = new DailyConnector();
+        $options = array(
+            'query' => 'Harrogate,UK',
+        );
+        $results = file_get_contents(__DIR__ . '/../../data/daily/xml/york.xml');
+
+        $mockResponse = $this->getMock('\Zend\Http\Response');
+        $mockResponse->expects($this->once())
+            ->method('isSuccess')
+            ->will($this->returnValue(true));
+        $mockResponse->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($results));
+        $mockClient = $this->getMock('\Zend\Http\Client');
+        $mockClient->expects($this->once())
+            ->method('dispatch')
+            ->with($this->isInstanceOf('\Zend\Http\Request'))
+            ->will($this->returnValue($mockResponse));
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
+        $mockLock->expects($this->once())
+            ->method('lock')
+            ->will($this->returnValue(true));
+        $mockLock->expects($this->once())
+            ->method('unlock')
+            ->will($this->returnValue(true));
+        $dailyConnector->setHttpClient($mockClient);
+        $dailyConnector->setLock($mockLock);
+
+        $weatherData = $dailyConnector->getDaily($options);
+
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\WeatherData', $weatherData);
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\Location', $weatherData->getLocation());
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\Forecast', $weatherData->getForecast());
+    }
+
+    /**
+     * Test that we can get the daily forecast using the json mode and supplying
+     * a query string
+     */
+    public function testGetDailyJsonUsingQuery()
     {
         $dailyConnector = new DailyConnector();
         $options = array(
             'query' => 'Harrogate,UK',
             'mode' => 'json'
         );
-
-//        $results = file_get_contents(__DIR__ . '/../../data/daily/xml/york.xml');
         $results = file_get_contents(__DIR__ . '/../../data/daily/json/york.json');
 
         $mockResponse = $this->getMock('\Zend\Http\Response');
@@ -119,5 +179,118 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\OpenWeatherMap\Entity\WeatherData', $weatherData);
         $this->assertInstanceOf('\OpenWeatherMap\Entity\Location', $weatherData->getLocation());
         $this->assertInstanceOf('\OpenWeatherMap\Entity\Forecast', $weatherData->getForecast());
+    }
+
+    /**
+     * Test that we can get the daily forecast using the xml mode
+     * and supplying a latitude and longitude
+     */
+    public function testGetDailyXmlUsingLatitudeLongitude()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * Test that we can get the daily forecast using the json mode
+     * and supplying a latitude and longitude
+     *
+     * @group egg
+     */
+    public function testGetDailyJsonUsingLatitudeLongitude()
+    {
+        $dailyConnector = new DailyConnector();
+        $options = array(
+            'latitude'  => 35,
+            'longitude' => 139,
+            'mode'      => 'json'
+        );
+        $results = file_get_contents(__DIR__ . '/../../data/daily/json/lat_35_lng_139.json');
+
+        $mockResponse = $this->getMock('\Zend\Http\Response');
+        $mockResponse->expects($this->once())
+            ->method('isSuccess')
+            ->will($this->returnValue(true));
+        $mockResponse->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($results));
+        $mockClient = $this->getMock('\Zend\Http\Client');
+        $mockClient->expects($this->once())
+            ->method('dispatch')
+            ->with($this->isInstanceOf('\Zend\Http\Request'))
+            ->will($this->returnValue($mockResponse));
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
+        $mockLock->expects($this->once())
+            ->method('lock')
+            ->will($this->returnValue(true));
+        $mockLock->expects($this->once())
+            ->method('unlock')
+            ->will($this->returnValue(true));
+        $dailyConnector->setHttpClient($mockClient);
+        $dailyConnector->setLock($mockLock);
+
+        $weatherData = $dailyConnector->getDaily($options);
+
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\WeatherData', $weatherData);
+
+        $location = $weatherData->getLocation();
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\Location', $location);
+        $this->assertEquals(1851632, $location->getId());
+
+        $this->assertEquals(7, $weatherData->getCount());
+    }
+
+    /**
+     * Test that we can get the daily forecast using the xml mode
+     * and supplying an id
+     */
+    public function testGetDailyXmlUsingId()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * Test that we can get the daily forecast using the json mode and
+     * supplying an id
+     */
+    public function testDailyJsonUsingId()
+    {
+        $dailyConnector = new DailyConnector();
+        $options = array(
+            'id'   => 524901,
+            'mode' => 'json'
+        );
+        $results = file_get_contents(__DIR__ . '/../../data/daily/json/524901.json');
+
+        $mockResponse = $this->getMock('\Zend\Http\Response');
+        $mockResponse->expects($this->once())
+            ->method('isSuccess')
+            ->will($this->returnValue(true));
+        $mockResponse->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($results));
+        $mockClient = $this->getMock('\Zend\Http\Client');
+        $mockClient->expects($this->once())
+            ->method('dispatch')
+            ->with($this->isInstanceOf('\Zend\Http\Request'))
+            ->will($this->returnValue($mockResponse));
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
+        $mockLock->expects($this->once())
+            ->method('lock')
+            ->will($this->returnValue(true));
+        $mockLock->expects($this->once())
+            ->method('unlock')
+            ->will($this->returnValue(true));
+        $dailyConnector->setHttpClient($mockClient);
+        $dailyConnector->setLock($mockLock);
+
+        $weatherData = $dailyConnector->getDaily($options);
+
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\WeatherData', $weatherData);
+
+
+        $location = $weatherData->getLocation();
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\Location', $location);
+        $this->assertEquals(524901, $location->getId());
+        $this->assertEquals(1000000, $location->getPopulation());
     }
 }

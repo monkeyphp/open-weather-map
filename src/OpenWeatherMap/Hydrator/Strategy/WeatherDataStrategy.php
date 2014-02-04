@@ -107,7 +107,12 @@ class WeatherDataStrategy implements StrategyInterface
             $value['location'] = $value['city'];
             unset($value['city']);
         }
+        
         // cnt
+        if (isset($value['cnt'])) {
+            $value['count'] = $value['cnt'];
+        }
+
         // list/forecast
         if (! isset($value['forecast']) &&
             (isset($value['list']) && is_array($value['list']))

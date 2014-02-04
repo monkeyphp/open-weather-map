@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<weatherdata>
+    <location>
+        <name>Moscow</name>
+        <type/>
+        <country>RU</country>
+        <timezone/>
+        <location altitude="0" latitude="55.75222" longitude="37.615555" geobase="geonames" geobaseid="524901"/>
+    </location>
+    <credit/>
+    <meta>
+        <lastupdate/>
+        <calctime>0.0032</calctime>
+        <nextupdate/>
+    </meta>
+    <sun rise="2014-02-03T05:18:27" set="2014-02-03T14:08:18"/>
+    <forecast>
+        <time day="2014-02-03">
+            <symbol number="803" name="broken clouds" var="04n"/>
+            <precipitation/>
+            <windDirection deg="256" code="WSW" name="West-southwest"/>
+            <windSpeed mps="5.01" name="Gentle Breeze"/>
+            <temperature day="263.09" min="262.93" max="263.88" night="263.88" eve="263.09" morn="263.09"/>
+            <pressure unit="hPa" value="1015.8"/>
+            <humidity value="85" unit="%"/>
+            <clouds value="broken clouds" all="56" unit="%"/>
+        </time>
+        <time day="2014-02-04">
+            <symbol number="600" name="light snow" var="13d"/>
+            <precipitation value="1" type="snow"/>
+            <windDirection deg="309" code="NW" name="Northwest"/>
+            <windSpeed mps="6.07" name="Moderate breeze"/>
+            <temperature day="268.72" min="265.94" max="270.43" night="269.84" eve="269.7" morn="265.94"/>
+            <pressure unit="hPa" value="1011.45"/>
+            <humidity value="88" unit="%"/>
+            <clouds value="broken clouds" all="80" unit="%"/>
+        </time>
+        <time day="2014-02-05">
+            <symbol number="600" name="light snow" var="13d"/>
+            <precipitation value="0.25" type="snow"/>
+            <windDirection deg="301" code="WNW" name="West-northwest"/>
+            <windSpeed mps="2.89" name="Light breeze"/>
+            <temperature day="270.48" min="265.49" max="270.48" night="265.49" eve="268.44" morn="269.43"/>
+            <pressure unit="hPa" value="1013.85"/>
+            <humidity value="97" unit="%"/>
+            <clouds value="broken clouds" all="80" unit="%"/>
+        </time>
+        <time day="2014-02-06">
+            <symbol number="800" name="sky is clear" var="01d"/>
+            <precipitation/>
+            <windDirection deg="215" code="SW" name="Southwest"/>
+            <windSpeed mps="4.96" name="Gentle Breeze"/>
+            <temperature day="266.88" min="263.87" max="268.69" night="267.41" eve="266.53" morn="265.17"/>
+            <pressure unit="hPa" value="1006.17"/>
+            <humidity value="84" unit="%"/>
+            <clouds value="sky is clear" all="0" unit="%"/>
+        </time>
+        <time day="2014-02-07">
+            <symbol number="600" name="light snow" var="13d"/>
+            <precipitation value="1" type="snow"/>
+            <windDirection deg="217" code="SW" name="Southwest"/>
+            <windSpeed mps="5.16" name="Gentle Breeze"/>
+            <temperature day="269.8" min="267.63" max="270.79" night="270.08" eve="270.1" morn="267.63"/>
+            <pressure unit="hPa" value="999.91"/>
+            <humidity value="94" unit="%"/>
+            <clouds value="overcast clouds" all="88" unit="%"/>
+        </time>
+        <time day="2014-02-08">
+            <symbol number="601" name="snow" var="13d"/>
+            <precipitation value="7" type="snow"/>
+            <windDirection deg="176" code="S" name="South"/>
+            <windSpeed mps="8.78" name="Fresh Breeze"/>
+            <temperature day="271.52" min="270.87" max="275.36" night="275.36" eve="273.65" morn="270.87"/>
+            <pressure unit="hPa" value="990.09"/>
+            <humidity value="93" unit="%"/>
+            <clouds value="overcast clouds" all="92" unit="%"/>
+        </time>
+        <time day="2014-02-09">
+            <symbol number="600" name="light snow" var="13d"/>
+            <precipitation value="0.57" type="snow"/>
+            <windDirection deg="157" code="SSE" name="South-southeast"/>
+            <windSpeed mps="7.03" name="Moderate breeze"/>
+            <temperature day="266.48" min="264.08" max="269.97" night="269.97" eve="267.22" morn="264.08"/>
+            <pressure unit="hPa" value="1011.98"/>
+            <humidity value="0" unit="%"/>
+            <clouds value="overcast clouds" all="94" unit="%"/>
+        </time>
+    </forecast>
+</weatherdata>
+

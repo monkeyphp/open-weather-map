@@ -39,8 +39,6 @@ class ForecastConnectorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test that we can retrieve the weather forecast using a query
-     *
-     * @group egg
      */
     public function testGetForecastByQuery()
     {

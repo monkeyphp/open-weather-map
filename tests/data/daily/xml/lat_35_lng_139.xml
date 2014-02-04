@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<weatherdata>
+    <location>
+        <name>Shuzenji</name>
+        <type/>
+        <country>JP</country>
+        <timezone/>
+        <location altitude="0" latitude="34.966671" longitude="138.933334" geobase="geonames" geobaseid="0"/>
+    </location>
+    <credit/>
+    <meta>
+        <lastupdate/>
+        <calctime>0.0031</calctime>
+        <nextupdate/>
+    </meta>
+    <sun rise="2014-02-02T21:41:14" set="2014-02-03T08:14:55"/>
+    <forecast>
+        <time day="2014-02-03">
+            <symbol number="801" name="few clouds" var="02n"/>
+            <precipitation/>
+            <windDirection deg="229" code="SW" name="Southwest"/>
+            <windSpeed mps="1.96" name="Light breeze"/>
+            <temperature day="276.49" min="276.49" max="276.49" night="276.49" eve="276.49" morn="276.49"/>
+            <pressure unit="hPa" value="968.95"/>
+            <humidity value="95" unit="%"/>
+            <clouds value="few clouds" all="20" unit="%"/>
+        </time>
+        <time day="2014-02-04">
+            <symbol number="601" name="snow" var="13d"/>
+            <precipitation value="7.75" type="snow"/>
+            <windDirection deg="25" code="NNE" name="North-northeast"/>
+            <windSpeed mps="2.06" name="Light breeze"/>
+            <temperature day="272.94" min="267.56" max="274.5" night="267.56" eve="270.6" morn="273.48"/>
+            <pressure unit="hPa" value="970.54"/>
+            <humidity value="100" unit="%"/>
+            <clouds value="overcast clouds" all="92" unit="%"/>
+        </time>
+        <time day="2014-02-05">
+            <symbol number="800" name="sky is clear" var="02d"/>
+            <precipitation/>
+            <windDirection deg="79" code="E" name="East"/>
+            <windSpeed mps="1.65" name="Light breeze"/>
+            <temperature day="274.82" min="261.61" max="274.93" night="267.26" eve="269.8" morn="261.61"/>
+            <pressure unit="hPa" value="982.75"/>
+            <humidity value="75" unit="%"/>
+            <clouds value="sky is clear" all="8" unit="%"/>
+        </time>
+        <time day="2014-02-06">
+            <symbol number="600" name="light snow" var="13d"/>
+            <precipitation value="0.75" type="snow"/>
+            <windDirection deg="107" code="ESE" name="East-southeast"/>
+            <windSpeed mps="1.18" name="Calm"/>
+            <temperature day="274.6" min="269.49" max="274.6" night="271.18" eve="272.85" morn="269.49"/>
+            <pressure unit="hPa" value="988.77"/>
+            <humidity value="86" unit="%"/>
+            <clouds value="overcast clouds" all="92" unit="%"/>
+        </time>
+        <time day="2014-02-07">
+            <symbol number="802" name="scattered clouds" var="03d"/>
+            <precipitation/>
+            <windDirection deg="39" code="NE" name="NorthEast"/>
+            <windSpeed mps="1.63" name="Light breeze"/>
+            <temperature day="276.3" min="270.7" max="276.94" night="270.7" eve="272.7" morn="270.71"/>
+            <pressure unit="hPa" value="989.34"/>
+            <humidity value="74" unit="%"/>
+            <clouds value="scattered clouds" all="32" unit="%"/>
+        </time>
+        <time day="2014-02-08">
+            <symbol number="602" name="heavy snow" var="13d"/>
+            <precipitation value="22.5" type="snow"/>
+            <windDirection deg="10" code="N" name="North"/>
+            <windSpeed mps="3.01" name="Light breeze"/>
+            <temperature day="274.19" min="270.83" max="276.37" night="276.13" eve="274.72" morn="270.83"/>
+            <pressure unit="hPa" value="986.45"/>
+            <humidity value="100" unit="%"/>
+            <clouds value="overcast clouds" all="92" unit="%"/>
+        </time>
+        <time day="2014-02-09">
+            <symbol number="500" name="light rain" var="10d"/>
+            <precipitation value="1.83" type="rain"/>
+            <windDirection deg="19" code="NNE" name="North-northeast"/>
+            <windSpeed mps="2.97" name="Light breeze"/>
+            <temperature day="277.99" min="277.41" max="279.76" night="277.41" eve="279.76" morn="278.07"/>
+            <pressure unit="hPa" value="996.19"/>
+            <humidity value="0" unit="%"/>
+            <clouds value="overcast clouds" all="93" unit="%"/>
+        </time>
+    </forecast>
+</weatherdata>
+

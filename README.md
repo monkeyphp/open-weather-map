@@ -11,13 +11,38 @@ Client library for accessing the OpenWeatherMap Api.
 
 ## Learn
 
+### Get the library
+
+The easiest way to get the library is to use Composer[https://getcomposer.org/] 
+and Packagist[http://packagist.org/].
+
+### Get Composer
+    
+    $ curl -sS https://getcomposer.org/installer | php
+
+### Create or update the composer.json to include the library
+
+    $ touch composer.json
+    
+Add the following to the composer.json file
+
+    {
+        "require": {
+            "monkeyphp/open-weather-map" "*"
+        }
+    }
+
+### Run Composer install
+
+    $ php composer.phar install
+
 ### Autoloading the OpenWeatherMap library
 
 The easiest way to start using OpenWeatherMap is to use the Composer autoloader.
 
+Include the Composer autoloader
+
     require_once "vendor/autoload.php";
-
-
 
 ### Create an instance of OpenWeatherMap
 

@@ -52,6 +52,48 @@ class Location
 
     protected $geobaseId;
 
+    /**
+     * The id of the location
+     *
+     * Only availble from JSON
+     *
+     * @var int|null
+     */
+    protected $id;
+
+    /**
+     * The population
+     *
+     * Only available from JSON
+     *
+     * @var int|null
+     */
+    protected $population;
+
+    public function getPopulation()
+    {
+        return $this->population;
+    }
+
+    public function setPopulation($population)
+    {
+        $this->population = $population;
+        return $this;
+    }
+
+    
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+
     public function getName()
     {
         return $this->name;
