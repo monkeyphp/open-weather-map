@@ -107,30 +107,36 @@ class CurrentTest extends PHPUnit_Framework_TestCase
     public function testGetSetWindSpeed()
     {
         $current = new Current();
+        $this->markTestIncomplete();
     }
 
     public function testGetSetWindDirection()
     {
         $current = new Current();
+        $this->markTestIncomplete();
     }
 
     public function testGetSetClouds()
     {
         $current = new Current();
+        $this->markTestIncomplete();
     }
 
     public function testGetSetPrecipitation()
     {
         $current = new Current();
+        $this->markTestIncomplete();
     }
 
     public function testGetSetWeather()
     {
         $current = new Current();
+        $this->markTestIncomplete();
     }
 
     public function testGetSetLastUpdate()
     {
         $current = new Current();
+        $this->markTestIncomplete();
     }
 }
