@@ -37,18 +37,27 @@ use InvalidArgumentException;
 class Precipitation
 {
     /**
+     * The mode value
+     *
+     * @example "no"
      *
      * @var string|null
      */
     protected $mode;
 
     /**
+     * The value of the precipitation
      *
-     * @var string|null
+     * @example 0.5
+     *
+     * @var float|null
      */
     protected $value;
 
     /**
+     * The type of the precipitation
+     *
+     * @example "rain"
      *
      * @var string|null
      */
@@ -67,7 +76,7 @@ class Precipitation
     /**
      * Set the mode
      *
-     * @param string $mode
+     * @param string|null $mode
      *
      * @return Precipitation
      * @throws InvalidArgumentException
@@ -94,19 +103,16 @@ class Precipitation
     }
 
     /**
-     * Return the type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
      * Set the value
      *
-     * @param string|null $value
+     * This method checks that the supplied value is a float.
+     * If the supplied value is not a float, this method will attempt
+     * to cast the supplied value to a float.
+     *
+     * If the supplied value is not a float or cannot be cast to a float,
+     * this method will throw an InvalidArgumentException
+     *
+     * @param float|null $value The value to set the value property to
      *
      * @return Precipitation
      * @throws InvalidArgumentException
@@ -114,12 +120,27 @@ class Precipitation
     public function setValue($value = null)
     {
         if (! is_null($value)) {
-            if (! is_string($value) && !is_numeric($value)) {
-                throw new InvalidArgumentException('Expects a string');
+            // we cant cast Objects to float
+            if (is_object($value)) {
+                throw new InvalidArgumentException('Expects a float or a value that can be cast to a float');
+            }
+            // attempt to cast to float
+            if (! is_float($value)) {
+                $value = (float)$value;
             }
         }
         $this->value = $value;
         return $this;
+    }
+
+    /**
+     * Return the type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -133,7 +154,7 @@ class Precipitation
     public function setType($type = null)
     {
         if (! is_null($type)) {
-            if (! is_string($type)  && !is_numeric($type)) {
+            if (! is_string($type)) {
                 throw new InvalidArgumentException('Expects a string');
             }
         }
