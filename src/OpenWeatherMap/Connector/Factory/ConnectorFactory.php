@@ -37,6 +37,8 @@ use Traversable;
 /**
  * ConnectorFactory
  *
+ * ConnectorFactory is used to return instances of ConnectorInterface
+ *
  * @category   OpenWeatherMap
  * @package    OpenWeatherMap
  * @subpackage OpenWeatherMap\Connector\Factory
@@ -88,6 +90,11 @@ class ConnectorFactory implements ConnectorFactoryInterface
     /**
      * Set various options
      *
+     * Accepted options are:
+     *
+     * 'lock' - an instance of LockInterface or an array used to construct
+     * an instance of Lock with
+     *
      * @param Traversable|array $options
      *
      * @return ConnectorFactory
@@ -95,7 +102,6 @@ class ConnectorFactory implements ConnectorFactoryInterface
     public function setOptions($options = array())
     {
         if (is_array($options) || ($options instanceof \Traversable)) {
-
             foreach ($options as $key => $value) {
                 $key = strtolower($key);
                 switch($key) {
@@ -120,12 +126,10 @@ class ConnectorFactory implements ConnectorFactoryInterface
     public function getLock()
     {
         if (! isset($this->lock)) {
-
             $lock = new Lock(array(
                 'minLifetime' => 600,
                 'maxLifetime' => 1000
             ));
-
             $this->lock = $lock;
         }
         return $this->lock;
@@ -143,11 +147,9 @@ class ConnectorFactory implements ConnectorFactoryInterface
         if (is_array($lock)) {
             $lock = new Lock($lock);
         }
-
         if ($lock instanceof LockInterface) {
             $this->lock = $lock;
         }
-
         return $this;
     }
 
