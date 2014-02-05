@@ -671,7 +671,8 @@ abstract class AbstractConnector
                             InArray::NOT_IN_ARRAY => 'The supplied mode is not valid'
                         )
                     )
-                ), true
+                ),
+                true
             );
             // units
             $units = new Input('units');
@@ -685,7 +686,8 @@ abstract class AbstractConnector
                             InArray::NOT_IN_ARRAY => 'The supplied unit is not valid'
                         )
                     )
-                ), true
+                ),
+                true
             );
             // language
             $language = new Input('language');
@@ -699,7 +701,8 @@ abstract class AbstractConnector
                             InArray::NOT_IN_ARRAY => 'The supplied language is invalid'
                         )
                     )
-                ), true
+                ),
+                true
             );
             // query
             $query = new Input('query');
@@ -717,7 +720,8 @@ abstract class AbstractConnector
                             StringLength::TOO_SHORT => 'The supplied query should be at least 1 character'
                         )
                     )
-                ), true
+                ),
+                true
             );
             // latitude
             $latitude = new Input('latitude');
@@ -727,7 +731,8 @@ abstract class AbstractConnector
                     array(
                         'pattern' => '#\A[-|+]?[\d]{1,2}(?:[\.][\d]*)?\z#'
                     )
-                ), true
+                ),
+                true
             );
             // longitude
             $longitude = new Input('longitude');
@@ -737,7 +742,8 @@ abstract class AbstractConnector
                     array(
                         'pattern' => '#\A[-|+]?[\d]{1,3}(?:[\.][\d]*)?\z#'
                     )
-                ), true
+                ),
+                true
             );
             // id
             $id = new Input('id');
@@ -769,7 +775,8 @@ abstract class AbstractConnector
                             Callback::INVALID_VALUE => 'A query, id or latitude and longitude value is expected'
                         )
                     )
-                ), true
+                ),
+                true
             );
             $inputFilter
                 ->add($atLeast)
