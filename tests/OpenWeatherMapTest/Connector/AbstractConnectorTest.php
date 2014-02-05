@@ -470,4 +470,126 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Zend\InputFilter\InputFilter', $mockConnector->getInputFilter());
     }
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidMode()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+        $inputFilter->setData(array('mode' => 'foobar'));
+
+        $isValid = $inputFilter->isValid();
+        $messages = $inputFilter->getMessages();
+
+        $this->assertFalse($isValid);
+        $this->assertArrayHasKey('mode', $messages);
+    }
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidUnits()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+        $inputFilter->setData(array('units' => 'foobar'));
+
+        $isValid = $inputFilter->isValid();
+        $messages = $inputFilter->getMessages();
+
+        $this->assertFalse($isValid);
+        $this->assertArrayHasKey('units', $messages);
+    }
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidLanguage()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+        $inputFilter->setData(array('language' => 'foobar'));
+
+        $isValid = $inputFilter->isValid();
+        $messages = $inputFilter->getMessages();
+
+        $this->assertFalse($isValid);
+        $this->assertArrayHasKey('language', $messages);
+    }
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidQuery()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+        $inputFilter->setData(array('query' => str_repeat('a', 101)));
+
+        $isValid = $inputFilter->isValid();
+        $messages = $inputFilter->getMessages();
+
+        $this->assertFalse($isValid);
+        $this->assertArrayHasKey('query', $messages);
+    }
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidLatitude()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+
+        $this->markTestIncomplete();
+    }
+
+    
+
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidLongitude()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidId()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidApiKey()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterInvalidAtLeastOne()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+
+        $this->markTestIncomplete();
+    }
 }

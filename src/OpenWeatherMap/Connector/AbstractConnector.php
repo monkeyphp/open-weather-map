@@ -666,11 +666,13 @@ abstract class AbstractConnector
             $mode->getValidatorChain()->attach(
                 new InArray(
                     array(
-                        'haystack' => $this->getModes()
+                        'haystack' => $this->getModes(),
+                        'messages' => array(
+                            InArray::NOT_IN_ARRAY => 'The supplied mode is not valid'
+                        )
                     )
-                )
+                ), true
             );
-
             // units
             $units = new Input('units');
             $units->allowEmpty(false);
@@ -678,11 +680,13 @@ abstract class AbstractConnector
             $units->getValidatorChain()->attach(
                 new InArray(
                     array(
-                        'haystack' => $this->getUnits()
+                        'haystack' => $this->getUnits(),
+                        'messages' => array(
+                            InArray::NOT_IN_ARRAY => 'The supplied unit is not valid'
+                        )
                     )
-                )
+                ), true
             );
-
             // language
             $language = new Input('language');
             $language->allowEmpty(false);
@@ -690,11 +694,13 @@ abstract class AbstractConnector
             $language->getValidatorChain()->attach(
                 new InArray(
                     array(
-                        'haystack' => $this->getLanguages()
+                        'haystack' => $this->getLanguages(),
+                        'messages' => array(
+                            InArray::NOT_IN_ARRAY => 'The supplied language is invalid'
+                        )
                     )
-                )
+                ), true
             );
-
             // query
             $query = new Input('query');
             $query->setAllowEmpty(true);
@@ -704,40 +710,51 @@ abstract class AbstractConnector
                     array(
                         'min' => 1,
                         'max' => 100,
-                        'encoding' => 'UTF-8'
+                        'encoding' => 'UTF-8',
+                        'messages' => array(
+                            StringLength::INVALID => 'The supplied query should be a string',
+                            StringLength::TOO_LONG => 'The supplied query should be no longer than 100 chars',
+                            StringLength::TOO_SHORT => 'The supplied query should be at least 1 character'
+                        )
                     )
-                )
+                ), true
             );
-
             // latitude
             $latitude = new Input('latitude');
             $latitude->setAllowEmpty(true);
             $latitude->getValidatorChain()->attach(
-                new Regex('#\A[-|+]?[\d]{1,2}(?:[\.][\d]*)?\z#')
+                new Regex(
+                    array(
+                        'pattern' => '#\A[-|+]?[\d]{1,2}(?:[\.][\d]*)?\z#'
+                    )
+                ), true
             );
-
             // longitude
             $longitude = new Input('longitude');
             $longitude->setAllowEmpty(true);
             $longitude->getValidatorChain()->attach(
-                new Regex('#\A[-|+]?[\d]{1,3}(?:[\.][\d]*)?\z#')
+                new Regex(
+                    array(
+                        'pattern' => '#\A[-|+]?[\d]{1,3}(?:[\.][\d]*)?\z#'
+                    )
+                ), true
             );
-
             // id
             $id = new Input('id');
             $id->setAllowEmpty(true);
             $id->getFilterChain()->attach(new Int());
-            $id->getValidatorChain()->attach(new Digits());
-
+            $id->getValidatorChain()->attach(
+                new Digits(),
+                true
+            );
             // apiKey
             $apiKey = new Input('apiKey');
             $apiKey->setAllowEmpty(true);
-
-            // one
-            $one = new Input();
-            $one->setAllowEmpty(true);
-            $one->setBreakOnFailure(true);
-            $one->getValidatorChain()->attach(
+            // atLeast
+            $atLeast = new Input();
+            $atLeast->setAllowEmpty(true);
+            $atLeast->setBreakOnFailure(true);
+            $atLeast->getValidatorChain()->attach(
                 new Callback(
                     array(
                         'callback' => function ($value, $context = array()) {
@@ -747,13 +764,15 @@ abstract class AbstractConnector
                             ) {
                                 return true;
                             }
-                        }
+                        },
+                        'messages' => array(
+                            Callback::INVALID_VALUE => 'A query, id or latitude and longitude value is expected'
+                        )
                     )
-                )
+                ), true
             );
-
             $inputFilter
-                ->add($one)
+                ->add($atLeast)
                 ->add($mode)
                 ->add($units)
                 ->add($language)
