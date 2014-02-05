@@ -192,6 +192,10 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     /**
      * Set the ConnectorFactory instance
      *
+     * This method accepts an instance of ConnectorFactoryInterface or an instance
+     * of parameters that will be used to configure an instance of
+     * ConnectorFactory
+     *
      * @param ConnectorFactoryInterface|array $connectorFactory
      *
      * @return OpenWeatherMap
@@ -213,7 +217,7 @@ class OpenWeatherMap implements OpenWeatherMapInterface
      * Return the ConnectorFactory instance
      *
      * This method will instantiate an instance of ConnectorFactory and set
-     * the class property if an instance has not already been set
+     * the instance property if an instance has not already been set
      *
      * @return ConnectorFactoryInterface
      */
