@@ -38,7 +38,6 @@ use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
-use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Validator\Callback;
 use Zend\Validator\Digits;
 use Zend\Validator\InArray;
@@ -238,7 +237,7 @@ abstract class AbstractConnector
     abstract public function getStrategy();
 
     /**
-     * Instance of LockInterface
+     * Return an instance of LockInterface
      *
      * @return LockInterface|null
      */
@@ -250,7 +249,7 @@ abstract class AbstractConnector
     /**
      * Set the LockInterface instance
      *
-     * @param LockInterface $lock
+     * @param LockInterface $lock The LockInterface instance
      *
      * @return AbstractConnector
      */
@@ -301,30 +300,19 @@ abstract class AbstractConnector
     }
 
     /**
-     * Return the array of languages
+     * Return the array of accepted languages
      *
      * @return array
      */
     public function getLanguages()
     {
         return array(
-            self::LANGUAGE_ENGLISH,
-            self::LANGUAGE_RUSSIAN,
-            self::LANGUAGE_ITALIAN,
-            self::LANGUAGE_UKRANIAN,
-            self::LANGUAGE_SPANISH,
-            self::LANGUAGE_GERMAN,
-            self::LANGUAGE_PORTUGUESE,
-            self::LANGUAGE_ROMANIAN,
-            self::LANGUAGE_POLISH,
-            self::LANGUAGE_FINNISH,
-            self::LANGUAGE_DUTCH,
-            self::LANGUAGE_FRENCH,
-            self::LANGUAGE_BULGARIAN,
-            self::LANGUAGE_SWEDISH,
-            self::LANGUAGE_CHINESE_TRADITIONAL,
-            self::LANGUAGE_CHINESE_SIMPLIFIED,
-            self::LANGUAGE_TURKISH
+            self::LANGUAGE_ENGLISH,    self::LANGUAGE_RUSSIAN,  self::LANGUAGE_ITALIAN,
+            self::LANGUAGE_UKRANIAN,   self::LANGUAGE_SPANISH,  self::LANGUAGE_GERMAN,
+            self::LANGUAGE_PORTUGUESE, self::LANGUAGE_ROMANIAN, self::LANGUAGE_POLISH,
+            self::LANGUAGE_FINNISH,    self::LANGUAGE_DUTCH,    self::LANGUAGE_FRENCH,
+            self::LANGUAGE_BULGARIAN,  self::LANGUAGE_SWEDISH,  self::LANGUAGE_TURKISH,
+            self::LANGUAGE_CHINESE_TRADITIONAL, self::LANGUAGE_CHINESE_SIMPLIFIED
         );
     }
 
@@ -525,15 +513,20 @@ abstract class AbstractConnector
      * @param array  $params Array of uri params
      * @param string $method The request http method
      *
+     * @throws Exception
      * @return Request
      */
     public function getRequest($uri, $params = array(), $method = Request::METHOD_GET)
     {
-        $request = new Request();
-        $request->setUri($uri);
-        $request->getQuery()->fromArray($params);
-        $request->setMethod($method);
-        return $request;
+        try {
+            $request = new Request();
+            $request->setUri($uri);
+            $request->getQuery()->fromArray($params);
+            $request->setMethod($method);
+            return $request;
+        } catch (Exception $exception) {
+            throw new Exception('Could not create Request instance', null, $exception);
+        }
     }
 
     /**
@@ -575,7 +568,7 @@ abstract class AbstractConnector
      * @throws Exception
      * @throws RuntimeException
      */
-    protected function getResponse(Request $request)
+    public function getResponse(Request $request)
     {
         try {
             $response = $this->getHttpClient()->dispatch($request);
