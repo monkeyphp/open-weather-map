@@ -137,7 +137,7 @@ class Temperature
     /**
      * Set the value
      *
-     * @param string|null $value
+     * @param string|int|float|null $value
      *
      * @return Temperature
      * @throws InvalidArgumentException
@@ -145,8 +145,12 @@ class Temperature
     public function setValue($value = null)
     {
         if (! is_null($value)) {
-            if (! is_string($value)) {
-                throw new InvalidArgumentException('Expects a string');
+            if (is_scalar($value) && is_numeric($value)) {
+                $value = (float)$value;
+            } else {
+                throw new InvalidArgumentException(
+                    'Expects a numeric value. ' . gettype($value) . ' supplied'
+                );
             }
         }
         $this->value = $value;
@@ -164,8 +168,12 @@ class Temperature
     public function setMin($min = null)
     {
         if (! is_null($min)) {
-            if (! is_string($min) && !is_numeric($min)) {
-                throw new InvalidArgumentException('Expects a string');
+            if (is_scalar($min) && is_numeric($min)) {
+                $min = (float)$min;
+            } else {
+                throw new InvalidArgumentException(
+                    'Expects a numeric. ' . gettype($min) . ' supplied'
+                );
             }
         }
         $this->min = $min;
@@ -183,8 +191,12 @@ class Temperature
     public function setMax($max = null)
     {
         if (! is_null($max)) {
-            if (! is_string($max) && ! is_numeric($max)) {
-                throw new InvalidArgumentException('Expects a string');
+            if (is_scalar($max) && is_numeric($max)) {
+                $max = (float)$max;
+            } else {
+                throw new InvalidArgumentException(
+                    'Expects a numeric value. ' . gettype($max) . ' supplied'
+                );
             }
         }
         $this->max = $max;
@@ -193,6 +205,8 @@ class Temperature
 
     /**
      * Set the unit of measurement
+     *
+     * @example "kelvin"
      *
      * @param string|null $unit
      *
@@ -203,7 +217,9 @@ class Temperature
     {
         if (! is_null($unit)) {
             if (! is_string($unit)) {
-                throw new InvalidArgumentException('Expects a string');
+                throw new InvalidArgumentException(
+                    'Expects a string. ' . gettype($unit) . ' supplied'
+                );
             }
         }
         $this->unit = $unit;
@@ -243,7 +259,7 @@ class Temperature
     /**
      * Set the daytime temperature
      *
-     * @param string|null $day
+     * @param string|int|float|null $day
      *
      * @return Temperature
      * @throws InvalidArgumentException
@@ -251,8 +267,12 @@ class Temperature
     public function setDay($day = null)
     {
         if (! is_null($day)) {
-            if (! is_string($day) && ! is_numeric($day)) {
-                throw new InvalidArgumentException('Expects a string');
+            if (is_scalar($day) && is_numeric($day)) {
+                $day = (float) $day;
+            } else {
+                throw new InvalidArgumentException(
+                    'Expects a numeric value. ' . gettype($day) . ' supplied'
+                );
             }
         }
         $this->day = $day;
@@ -262,7 +282,7 @@ class Temperature
     /**
      * Set the evening temperature value
      *
-     * @param string|null $evening
+     * @param string|float|int|null $evening
      *
      * @return Temperature
      * @throws InvalidArgumentException
@@ -270,8 +290,12 @@ class Temperature
     public function setEvening($evening = null)
     {
         if (! is_null($evening)) {
-            if (! is_string($evening) && !is_numeric($evening)) {
-                throw new InvalidArgumentException('Expects a string');
+            if (is_scalar($evening) && is_numeric($evening)) {
+                $evening = (float) $evening;
+            } else {
+                throw new InvalidArgumentException(
+                    'Expects a numeric value. ' . gettype($evening) . ' supplied'
+                );
             }
         }
         $this->evening = $evening;
@@ -281,7 +305,7 @@ class Temperature
     /**
      * Set the morning temperature
      *
-     * @param string|null $morning
+     * @param string|int|float|null $morning
      *
      * @return Temperature
      * @throws InvalidArgumentException
@@ -289,8 +313,12 @@ class Temperature
     public function setMorning($morning = null)
     {
         if (! is_null($morning)) {
-            if (! is_string($morning) && !is_numeric($morning)) {
-                throw new InvalidArgumentException('Expects a string');
+            if (is_scalar($morning) && is_numeric($morning)) {
+                $morning = (float) $morning;
+            } else {
+                throw new InvalidArgumentException(
+                    'Expects a numeric value. ' . gettype($morning) . ' supplied'
+                );
             }
         }
         $this->morning = $morning;
@@ -300,7 +328,7 @@ class Temperature
     /**
      * Return the night time temperature
      *
-     * @return string|null
+     * @return float|null
      */
     public function getNight()
     {
@@ -310,7 +338,7 @@ class Temperature
     /**
      * Set the night time temperature
      *
-     * @param string|null $night
+     * @param string|int|float|null $night
      *
      * @return Temperature
      * @throws InvalidArgumentException
@@ -318,8 +346,12 @@ class Temperature
     public function setNight($night = null)
     {
         if (! is_null($night)) {
-            if (! is_string($night) && !is_numeric($night)) {
-                throw new InvalidArgumentException('Expects a string');
+            if (is_scalar($night) && is_numeric($night)) {
+                $night = (float) $night;
+            } else {
+                throw new InvalidArgumentException(
+                    'Expects a numeric value. ' . gettype($night) . ' supplied'
+                );
             }
         }
         $this->night = $night;
