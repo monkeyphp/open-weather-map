@@ -74,6 +74,8 @@ class CityStrategyTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that we can extract values from a City instance
+     *
      * @covers \OpenWeatherMap\Hydrator\Strategy\CityStrategy::extract
      */
     public function testExtract()

@@ -38,8 +38,18 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  */
 class CloudsStrategy implements StrategyInterface
 {
+    /**
+     * Instance of ClassMethods hydrator
+     *
+     * @var ClassMethods
+     */
     protected $hydrator;
 
+    /**
+     * Return an instance of ClassMethods
+     * 
+     * @return ClassMethods
+     */
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
@@ -48,6 +58,16 @@ class CloudsStrategy implements StrategyInterface
         return $this->hydrator;
     }
 
+    /**
+     * Extract the values from the supplied instance of Clouds
+     *
+     * If the supplied parameter is not an instance of Clouds, this
+     * method will return null
+     *
+     * @param Clouds $value The Clouds instance to extract values from
+     *
+     * @return array|null
+     */
     public function extract($value)
     {
         if (! $value instanceof Clouds) {
@@ -56,8 +76,19 @@ class CloudsStrategy implements StrategyInterface
         return $this->getHydrator()->extract($value);
     }
 
-    public function hydrate($value)
+    /**
+     * Hydrate an instance of Clouds using the supplied array of
+     * values
+     *
+     * @param array $value The array of values
+     *
+     * @return null|Clouds
+     */
+    public function hydrate($values)
     {
-        return $this->getHydrator()->hydrate($value, new Clouds());
+        if (! is_array($values)) {
+            return null;
+        }
+        return $this->getHydrator()->hydrate($values, new Clouds());
     }
 }
