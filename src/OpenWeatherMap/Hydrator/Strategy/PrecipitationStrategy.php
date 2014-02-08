@@ -38,8 +38,18 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  */
 class PrecipitationStrategy implements StrategyInterface
 {
+    /**
+     * Instance of ClassMethods hydrator
+     *
+     * @var ClassMethods
+     */
     protected $hydrator;
 
+    /**
+     * Return an instance of ClassMethods
+     * 
+     * @return ClassMethods
+     */
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
@@ -48,6 +58,16 @@ class PrecipitationStrategy implements StrategyInterface
         return $this->hydrator;
     }
 
+    /**
+     * Exract the values from the supplied Precipitation instance
+     *
+     * If the supplied parameter is not a Precipitation instance this
+     * method will return null
+     *
+     * @param Precipitation $value
+     *
+     * @return null|array
+     */
     public function extract($value)
     {
         if (! $value instanceof Precipitation) {
@@ -56,8 +76,19 @@ class PrecipitationStrategy implements StrategyInterface
         return $this->getHydrator()->extract($value);
     }
 
+    /**
+     * Hydrate and return an instance of Precipitation from the supplied
+     * array of values
+     *
+     * @param array $value The array of values
+     *
+     * @return null|Precipitation
+     */
     public function hydrate($value)
     {
+        if (! is_array($value)) {
+            return null;
+        }
         return $this->getHydrator()->hydrate($value, new Precipitation());
     }
 }
