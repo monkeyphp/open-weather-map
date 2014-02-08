@@ -472,6 +472,26 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that validation will fail if a no id, query or lati/long are
+     * provided
+     *
+     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
+     */
+    public function testInputFilterMissingParameter()
+    {
+        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
+        $inputFilter = $mockConnector->getInputFilter();
+        $inputFilter->setData(array('mode' => 'xml', 'language' => 'en', 'units' => 'metric'));
+
+        $isValid = $inputFilter->isValid();
+        $messages = $inputFilter->getMessages();
+        $this->assertFalse($isValid);
+        $this->assertArrayHasKey('atLeastOne', $messages);
+    }
+
+    /**
+     * Test that an invalid mode results in a validation error
+     *
      * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
      */
     public function testInputFilterInvalidMode()
@@ -482,19 +502,20 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
 
         $isValid = $inputFilter->isValid();
         $messages = $inputFilter->getMessages();
-
         $this->assertFalse($isValid);
         $this->assertArrayHasKey('mode', $messages);
     }
 
     /**
+     * Test that an invalid unit results in a validation error
+     *
      * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
      */
     public function testInputFilterInvalidUnits()
     {
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         $inputFilter = $mockConnector->getInputFilter();
-        $inputFilter->setData(array('units' => 'foobar'));
+        $inputFilter->setData(array('units' => 'foobar', 'id' => 123));
 
         $isValid = $inputFilter->isValid();
         $messages = $inputFilter->getMessages();
@@ -504,13 +525,15 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that an invalid language results in a validation error
+     *
      * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
      */
     public function testInputFilterInvalidLanguage()
     {
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         $inputFilter = $mockConnector->getInputFilter();
-        $inputFilter->setData(array('language' => 'foobar'));
+        $inputFilter->setData(array('language' => 'foobar', 'id' => 123));
 
         $isValid = $inputFilter->isValid();
         $messages = $inputFilter->getMessages();
@@ -520,13 +543,15 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that a too long query string results in a validation error
+     *
      * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
      */
     public function testInputFilterInvalidQuery()
     {
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         $inputFilter = $mockConnector->getInputFilter();
-        $inputFilter->setData(array('query' => str_repeat('a', 101)));
+        $inputFilter->setData(array('query' => str_repeat('a', 101), 'id' => 123));
 
         $isValid = $inputFilter->isValid();
         $messages = $inputFilter->getMessages();
@@ -536,60 +561,56 @@ class AbstractConnectorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that an invalid latitude results in a validation error
+     *
      * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
      */
     public function testInputFilterInvalidLatitude()
     {
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         $inputFilter = $mockConnector->getInputFilter();
+        $inputFilter->setData(array('latitude' => new stdClass(), 'id' => 123));
 
-        $this->markTestIncomplete();
+        $isValid = $inputFilter->isValid();
+        $messages = $inputFilter->getMessages();
+
+        $this->assertFalse($isValid);
+        $this->assertArrayHasKey('latitude', $messages);
     }
 
-    
-
-
     /**
+     * Test that an invalid longitude results in a validation error
+     *
      * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
      */
     public function testInputFilterInvalidLongitude()
     {
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         $inputFilter = $mockConnector->getInputFilter();
+        $inputFilter->setData(array('longitude' => new stdClass(), 'id' => 123));
 
-        $this->markTestIncomplete();
+        $isValid = $inputFilter->isValid();
+        $messages = $inputFilter->getMessages();
+
+        $this->assertFalse($isValid);
+        $this->assertArrayHasKey('longitude', $messages);
     }
 
     /**
+     * Test that an invalid id results in a validation error
+     *
      * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
      */
     public function testInputFilterInvalidId()
     {
         $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
         $inputFilter = $mockConnector->getInputFilter();
+        $inputFilter->setData(array('id' => 'asdfg'));
 
-        $this->markTestIncomplete();
-    }
+        $isValid = $inputFilter->isValid();
+        $messages = $inputFilter->getMessages();
 
-    /**
-     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
-     */
-    public function testInputFilterInvalidApiKey()
-    {
-        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
-        $inputFilter = $mockConnector->getInputFilter();
-
-        $this->markTestIncomplete();
-    }
-
-    /**
-     * @covers \OpenWeatherMap\Connector\AbstractConnector::getInputFilter
-     */
-    public function testInputFilterInvalidAtLeastOne()
-    {
-        $mockConnector = $this->getMockForAbstractClass('\OpenWeatherMap\Connector\AbstractConnector');
-        $inputFilter = $mockConnector->getInputFilter();
-
-        $this->markTestIncomplete();
+        $this->assertFalse($isValid);
+        $this->assertArrayHasKey('id', $messages);
     }
 }

@@ -27,11 +27,11 @@ namespace OpenWeatherMap\Connector;
 use Exception;
 use InvalidArgumentException;
 use OpenWeatherMap\Exception\LockException;
+use OpenWeatherMap\InputFilter\ParameterFilter;
 use OpenWeatherMap\Lock\LockInterface;
 use RuntimeException;
 use Zend\Config\Reader\Json;
 use Zend\Config\Reader\Xml;
-use Zend\Filter\Int;
 use Zend\Filter\StringToLower;
 use Zend\Http\Client;
 use Zend\Http\Request;
@@ -658,7 +658,7 @@ abstract class AbstractConnector
     public function getInputFilter()
     {
         if (! isset($this->inputFilter)) {
-            $inputFilter = new InputFilter();
+            $inputFilter = new ParameterFilter();
             // mode
             $mode = new Input('mode');
             $mode->allowEmpty(false);
@@ -748,7 +748,6 @@ abstract class AbstractConnector
             // id
             $id = new Input('id');
             $id->setAllowEmpty(true);
-            $id->getFilterChain()->attach(new Int());
             $id->getValidatorChain()->attach(
                 new Digits(),
                 true
@@ -756,30 +755,8 @@ abstract class AbstractConnector
             // apiKey
             $apiKey = new Input('apiKey');
             $apiKey->setAllowEmpty(true);
-            // atLeast
-            $atLeast = new Input();
-            $atLeast->setAllowEmpty(true);
-            $atLeast->setBreakOnFailure(true);
-            $atLeast->getValidatorChain()->attach(
-                new Callback(
-                    array(
-                        'callback' => function ($value, $context = array()) {
-                            if (isset($context['query']) ||
-                                (isset($context['latititude']) && isset($context['longitude'])) ||
-                                (isset($context['id']))
-                            ) {
-                                return true;
-                            }
-                        },
-                        'messages' => array(
-                            Callback::INVALID_VALUE => 'A query, id or latitude and longitude value is expected'
-                        )
-                    )
-                ),
-                true
-            );
+
             $inputFilter
-                ->add($atLeast)
                 ->add($mode)
                 ->add($units)
                 ->add($language)
