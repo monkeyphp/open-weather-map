@@ -30,13 +30,15 @@ use PHPUnit_Framework_TestCase;
 use stdClass;
 
 /**
- * Description of CloudsStrategyTest
+ * CloudsStrategyTest
  *
- * @author David White <david@monkeyphp.com>
+ * @category   OpenWeatherMapTest
+ * @package    OpenWeatherMapTest
+ * @subpackage OpenWeatherMapTest\Hydrator\Strategy
+ * @author     David White [monkeyphp] <david@monkeyphp.com>
  */
 class CloudsStrategyTest extends PHPUnit_Framework_TestCase
 {
-    // <clouds value="broken clouds" all="56" unit="%"/>
     /**
      * Test that we can hydrate an instance of Clouds
      *
