@@ -38,8 +38,18 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  */
 class PressureStrategy implements StrategyInterface
 {
+    /**
+     * Instance of ClassMethods
+     *
+     * @var ClassMethods
+     */
     protected $hydrator;
 
+    /**
+     * Return an instance of ClassMethods
+     * 
+     * @return ClassMethods
+     */
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
@@ -48,6 +58,13 @@ class PressureStrategy implements StrategyInterface
         return $this->hydrator;
     }
 
+    /**
+     * Extract the values from the supplied Pressure instance
+     *
+     * @param Pressure $value
+     *
+     * @return null|array
+     */
     public function extract($value)
     {
         if (! $value instanceof Pressure) {
@@ -56,8 +73,21 @@ class PressureStrategy implements StrategyInterface
         return $this->getHydrator()->extract($value);
     }
 
+    /**
+     * Hydrate and return an instance of Pressure
+     *
+     * If the supplied parameter is not an array this method
+     * will return null.
+     *
+     * @param array $value The array of values
+     *
+     * @return null|Pressure
+     */
     public function hydrate($value)
     {
+        if (! is_array($value)) {
+            return null;
+        }
         return $this->getHydrator()->hydrate($value, new Pressure());
     }
 }
