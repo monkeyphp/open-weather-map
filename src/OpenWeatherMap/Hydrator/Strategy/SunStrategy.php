@@ -24,6 +24,10 @@
  */
 namespace OpenWeatherMap\Hydrator\Strategy;
 
+use OpenWeatherMap\Entity\Sun;
+use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
+
 /**
  * SunStrategy
  *
@@ -32,25 +36,55 @@ namespace OpenWeatherMap\Hydrator\Strategy;
  * @subpackage OpenWeatherMap\Hydrator\Strategy
  * @author     David White [monkeyphp] <david@monkeyphp.com>
  */
-class SunStrategy implements \Zend\Stdlib\Hydrator\Strategy\StrategyInterface
+class SunStrategy implements StrategyInterface
 {
+    /**
+     * Instance of ClassMethods
+     *
+     * @var ClassMethods
+     */
     protected $hydrator;
 
+    /**
+     * Return an instance of ClassMethods
+     *
+     * @return ClassMethods
+     */
     public function getHydrator()
     {
         if (! isset($this->hydrator)) {
-            $this->hydrator = new \Zend\Stdlib\Hydrator\ClassMethods();
+            $this->hydrator = new ClassMethods();
         }
         return $this->hydrator;
     }
 
+    /**
+     * Extract the values from the supplied instance of Sun
+     * 
+     * @param Sun $value The instance of Sun to extract values from
+     *
+     * @return null|array
+     */
     public function extract($value)
     {
-        return $value;
+        if (! $value instanceof Sun) {
+            return null;
+        }
+        return $this->getHydrator()->extract($value);
     }
 
+    /**
+     * Hydrate and return an instance of Sun
+     *
+     * @param array $value The values to hydrate the instance of Sun
+     *
+     * @return null|Sun
+     */
     public function hydrate($value)
     {
-        return $this->getHydrator()->hydrate($value, new \OpenWeatherMap\Entity\Sun());
+        if (! is_array($value)) {
+            return null;
+        }
+        return $this->getHydrator()->hydrate($value, new Sun());
     }
 }
