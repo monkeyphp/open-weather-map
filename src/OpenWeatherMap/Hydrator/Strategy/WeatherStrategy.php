@@ -50,6 +50,9 @@ class WeatherStrategy implements StrategyInterface
 
     public function extract($value)
     {
+        if (! $value instanceof Weather) {
+            return null;
+        }
         return $this->getHydrator()->extract($value);
     }
 

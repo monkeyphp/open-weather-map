@@ -53,7 +53,7 @@ class CurrentStrategy implements StrategyInterface
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
-            $hydrator = new ClassMethods();
+            $hydrator = new ClassMethods(false);
             $hydrator->addStrategy("city", new CityStrategy());
             $hydrator->addStrategy('temperature', new TemperatureStrategy());
             $hydrator->addStrategy('humidity', new HumidityStrategy());
@@ -86,7 +86,7 @@ class CurrentStrategy implements StrategyInterface
     /**
      * Hydrate and return an instance of Current
      *
-     * @param array $value
+     * @param array $value The array of values to hydrate with
      *
      * @return Current|null
      */
