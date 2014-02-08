@@ -76,7 +76,7 @@ class TemperatureStrategy implements StrategyInterface
     /**
      * Hydrate and return an instance of Temperature
      *
-     * @param array $value
+     * @param array $value The values to hydrate the Temperature instance with
      *
      * @return Temperature
      */
