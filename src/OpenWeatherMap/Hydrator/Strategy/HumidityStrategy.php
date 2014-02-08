@@ -38,8 +38,18 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  */
 class HumidityStrategy implements StrategyInterface
 {
+    /**
+     * Instance of ClassMethods hydrator
+     *
+     * @var ClassMethods
+     */
     protected $hydrator;
 
+    /**
+     * Return an instance of ClassMethods
+     *
+     * @return ClassMethods
+     */
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
@@ -48,6 +58,13 @@ class HumidityStrategy implements StrategyInterface
         return $this->hydrator;
     }
 
+    /**
+     * Extract the values from the supplied Humidity instance
+     * 
+     * @param \OpenWeatherMap\Entity\Humidity $value
+     *
+     * @return null|array
+     */
     public function extract($value)
     {
         if (! $value instanceof Humidity) {
@@ -56,8 +73,19 @@ class HumidityStrategy implements StrategyInterface
         return $this->getHydrator()->extract($value);
     }
 
-    public function hydrate($value)
+    /**
+     * Hydrate and return an instance of Humidity using the supplied
+     * array of values
+     *
+     * @param array $values The array of values to hydrate with
+     *
+     * @return null|Humidity
+     */
+    public function hydrate($values)
     {
-        return $this->getHydrator()->hydrate($value, new Humidity());
+        if (! is_array($values)) {
+            return null;
+        }
+        return $this->getHydrator()->hydrate($values, new Humidity());
     }
 }
