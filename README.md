@@ -1,7 +1,5 @@
 # OpenWeatherMap
 
----
-
 A PHP client library for accessing the [OpenWeatherMap](http://openweathermap.org) Api.
 
 [![Build Status](https://travis-ci.org/monkeyphp/open-weather-map.png?branch=develop)](https://travis-ci.org/monkeyphp/open-weather-map)
@@ -17,14 +15,12 @@ You can read more about OpenWeatherMap [here](http://openweathermap.org/).
 
 The library is built on top of a number of [Zend Framework 2](http://framework.zend.com/manual/2.2/en/index.html) components.
 
----
 
 ## Links
 
 - http://openweathermap.org/
 - http://openweathermap.org/appid
 
----
 
 ## Get the OpenWeatherMap library
 
@@ -62,7 +58,6 @@ Include the Composer autoloader into your script
 
     require_once "vendor/autoload.php";
 
----
 
 ## Create an instance of OpenWeatherMap
 
@@ -100,7 +95,6 @@ __mode__ and __query__ value.
 
     $current = $openWeatherMap->weather();
 
----
 
 ## ConnectorFactory and Connectors
 
@@ -110,7 +104,6 @@ The primary role of the ConnectorFactory is to create Connector classes that are
 
 Each of the Connector classes requires a Lock classes that manages throttling calls to the api.
 
----
 
 ## Locking
 
@@ -181,9 +174,6 @@ The Lock class supports the following options
         'maxLifetime' => 150
     ));
 
-
-
----
 
 ##Using the OpenWeatherMap instance    
 
@@ -303,11 +293,17 @@ Remember that you _must_ provide an id, a query or a latitude and longitude valu
 
 ## Run the PHPUnit tests
 
+The library is tested with [PHPUnit](http://phpunit.de/).
+
     $ vendor/bin/phpunit -c tests/phpunit.xml
+
 
 ## Run the PHP CS tests
 
+The library uses a PSR compatible coding standard.
+
     $ vendor/bin/phpcs --standard="PSR2" src/
+
 
 ## License
 
