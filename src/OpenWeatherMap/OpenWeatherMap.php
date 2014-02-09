@@ -166,26 +166,22 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     public function mergeOptions($options = array())
     {
         $defaultOptions = $this->getDefaults();
-
         if (isset($options['query'])) {
             unset($defaultOptions['latitude']);
             unset($defaultOptions['longitude']);
             unset($defaultOptions['id']);
         }
-
         if (isset($options['longitude']) &&
             isset($options['latitude'])
         ) {
             unset($defaultOptions['id']);
             unset($defaultOptions['query']);
         }
-
         if (isset($options['id'])) {
             unset($defaultOptions['query']);
             unset($defaultOptions['latitude']);
             unset($defaultOptions['longitude']);
         }
-
         return $defaultOptions + $options;
     }
 
@@ -205,11 +201,9 @@ class OpenWeatherMap implements OpenWeatherMapInterface
         if (is_array($connectorFactory)) {
             $connectorFactory = new ConnectorFactory($connectorFactory);
         }
-
         if ($connectorFactory instanceof ConnectorFactoryInterface) {
             $this->connectorFactory = $connectorFactory;
         }
-
         return $this;
     }
 

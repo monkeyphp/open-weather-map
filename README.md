@@ -1,6 +1,8 @@
 # OpenWeatherMap
 
-Client library for accessing the OpenWeatherMap Api.
+---
+
+A PHP client library for accessing the [OpenWeatherMap](http://openweathermap.org) Api.
 
 [![Build Status](https://travis-ci.org/monkeyphp/open-weather-map.png?branch=develop)](https://travis-ci.org/monkeyphp/open-weather-map)
 [![Latest Stable Version](https://poser.pugx.org/monkeyphp/open-weather-map/v/stable.png)](https://packagist.org/packages/monkeyphp/open-weather-map) 
@@ -8,27 +10,37 @@ Client library for accessing the OpenWeatherMap Api.
 [![Latest Unstable Version](https://poser.pugx.org/monkeyphp/open-weather-map/v/unstable.png)](https://packagist.org/packages/monkeyphp/open-weather-map) 
 [![License](https://poser.pugx.org/monkeyphp/open-weather-map/license.png)](https://packagist.org/packages/monkeyphp/open-weather-map)
 
+The OpenWeatherMap library is a client library for accessing weather data from the 
+free [OpenWeatherMap](http://openweathermap.org/) Api.
+
+You can read more about OpenWeatherMap [here](http://openweathermap.org/).
+
+The library is built on top of a number of [Zend Framework 2](http://framework.zend.com/manual/2.2/en/index.html) components.
+
+---
+
 ## Links
 
 - http://openweathermap.org/
 - http://openweathermap.org/appid
 
-## Learn
+---
 
-### Get the library
+## Get the OpenWeatherMap library
 
-The easiest way to get the library is to use Composer[https://getcomposer.org/] 
-and Packagist[http://packagist.org/].
+The easiest way to get the library is to use [Composer](https://getcomposer.org/) 
+and [Packagist](http://packagist.org/).
 
-### Get Composer
+If you do not already have Composer in your application, you can install it as
+follows.
     
     $ curl -sS https://getcomposer.org/installer | php
 
-### Create or update the composer.json to include the library
+Create the ```composer.json``` file.
 
     $ touch composer.json
     
-Add the following to the composer.json file
+Add the following to the ```composer.json``` file
 
     {
         "require": {
@@ -36,27 +48,43 @@ Add the following to the composer.json file
         }
     }
 
-### Run Composer install
+Finally run Composer install
 
     $ php composer.phar install
+
+You should now have the library installed into your ```vendors``` directory.
 
 ### Autoloading the OpenWeatherMap library
 
 The easiest way to start using OpenWeatherMap is to use the Composer autoloader.
 
-Include the Composer autoloader
+Include the Composer autoloader into your script
 
     require_once "vendor/autoload.php";
 
-### Create an instance of OpenWeatherMap
+---
 
-Create a default instance of the OpenWeatherMap class.
+## Create an instance of OpenWeatherMap
+
+The OpenWeatherMap library provides a top level class ```OpenWeatherMap``` that all
+available functionality can be accessed through.
+
+A default instance (without any parameters) can be constructed as follows:
 
     $openWeatherMap = new OpenWeatherMap\OpenWeatherMap();
 
-You can also optionally supply a set a options to the OpenWeatherMap() constructor.
-If you supply a key of _defaults_ containing an array, the contained values will 
-be used as default options to all subsequent queries.
+You can alos construct an instance of ```OpenWeatherMap``` you can also supply a set of constructor options. 
+
+The accepted keys to the constructor are:
+
+<dl>
+    <dt>defaults</dt>
+    <dd>Supply an array of query values that will be used as parameters in subsequent queries</dd>
+    <dt>connectorFactory</dt>
+    <dd></dd>
+</dl>
+
+For example, we can create an instance of ```OpenWeatherMap``` as follows
 
     $options = array (
         'defaults' => array (
@@ -67,50 +95,24 @@ be used as default options to all subsequent queries.
     );
     $openWeatherMap = new OpenWeatherMap\OpenWeatherMap($options);
 
-Now all subsequent queries will automatically include the supplied 'apiKey',
-'mode' and 'query' value.
+Now all subsequent queries will automatically include the supplied __apiKey__,
+__mode__ and __query__ value.
 
     $current = $openWeatherMap->weather();
 
-These _default_ values, however, can be overridden in subsequent queries.
+---
 
-    $options = array (
-        'defaults' => array (
-            'apikey' => _YOURAPIKEY_,
-            'mode'   => 'xml',
-            'query'  => 'London,UK'
-        )
-    );
-    $openWeatherMap = new OpenWeatherMap\OpenWeatherMap($options);
+## ConnectorFactory and Connectors
 
-All queries from now on will, be default use the supplied apiKey, mode and query.
-But we can pass in options when we perform our queries that will override those
-defaults.
+Internally, the OpenWeatherMap library uses a factory class to manage the plumbing for connecting to the OpenWeatherMap Api.
 
-The following query will use the 'apiKey' supplied when the OpenWeatherMap was
-constructed, but will use the supplied 'query' and 'mode' values overriding the
-defaults.
+The primary role of the ConnectorFactory is to create Connector classes that are then used to query each of the endpoints that the OpenWeatherMap Api exposes.
 
-    $options = array(
-        'query' => 'Los Angeles,US',
-        'mode'  => 'json'
-    );
-    $current = $openWeatherMap->getWeather($options);
+Each of the Connector classes requires a Lock classes that manages throttling calls to the api.
 
-The accepted values that can be supplied to the constructor in the _defaults_ key are
+---
 
-- latitude
-- longitude
-- apiKey
-- query
-- count
-- mode
-- units
-- language
-- id
-
-
-### Locking
+## Locking
 
 The OpenWeatherMap utilises a simple locking mechanism to throttle requests to the
 http://openweathermap.org/ api.
@@ -181,6 +183,54 @@ The Lock class supports the following options
 
 
 
+---
+
+##Using the OpenWeatherMap instance    
+
+Once you have constructed an ```OpenWeatherMap``` instance, configured to your 
+needs, you can now start using it to query the api.
+
+There are 3 methods that the ```OpenWeatherMap``` exposes.
+
+All 3 methods accept an array of values, which may contain the following keys.
+
+<dl>
+    <dt>latitude</dt>
+    <dd></dd>
+    
+    <dt>longitude</dt>
+    <dd></dd>
+    
+    <dt>id</dt>
+    <dd></dd>
+    
+    <dt>query</dt>
+    <dd></dd>
+    
+    <dt>apiKey</dt>
+    <dd></dd>
+    
+    <dt>count</dt>
+    <dd></dd>
+    
+    <dt>mode</dt>
+    
+    <dt>units</dt>
+    
+    <dt>language</dt>
+</dl>
+
+In the array of options, you must provide at least one of the following (in preference order):
+
+1. __query__
+2.  __latitude__ and __longitude__
+3. __id__
+
+The above keys are used in part of a preferential order.
+
+For example, supplying both __query__ and __id__ will result in the __query__ value
+being used to query the OpenWeatherMap Api with as that has a higher preference.
+
 ### Get the current weather
 
 If you supplied a set of default options when you created the OpenWeatherMap, then
@@ -189,7 +239,9 @@ you can just make the call.
     $weather = $openWeatherMap->getWeather();
 
 If you created a default instance of OpenWeatherMap, then you will need to 
-supply an array of options when you make the call.
+supply an array of options when you make the call. 
+
+Remember that you _must_ provide an id, a query or a latitude and longitude value.
 
     $options = array(
         'query' => 'London,uk',
@@ -211,8 +263,6 @@ which can then be queried for the details about the current weather.
     and {$temperature->getMax()} {$temperature->getUnit()}.
     EOT;
 
-
-
 ### Get the daily forecast
 
 If you supplied a set of default options when you created the OpenWeatherMap, then
@@ -223,13 +273,14 @@ you can just make the call.
 If you created a default instance of OpenWeatherMap, then you will need to 
 supply an array of options when you make the call.
 
+Remember that you _must_ provide an id, a query or a latitude and longitude value.
+
     $options = array(
         'query' => 'London,uk',
         'mode'  => 'xml' 
     );
     $weatherData = $openWeatherMap->getDaily($options);
-
-
+    
 
 ### Get the hourly forecast
 
@@ -241,23 +292,22 @@ you can just make the call.
 If you created a default instance of OpenWeatherMap, then you will need to 
 supply an array of options when you make the call.
 
+Remember that you _must_ provide an id, a query or a latitude and longitude value.
+
     $options = array(
         'query' => 'London,uk',
         'mode'  => 'xml' 
     );
     $weatherData = $openWeatherMap->getForecast($options);
-
-
+   
 
 ## Run the PHPUnit tests
 
     $ vendor/bin/phpunit -c tests/phpunit.xml
 
-
 ## Run the PHP CS tests
 
     $ vendor/bin/phpcs --standard="PSR2" src/
-
 
 ## License
 

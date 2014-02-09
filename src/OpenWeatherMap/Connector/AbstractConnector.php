@@ -48,9 +48,9 @@ use Zend\InputFilter\InputFilter;
 abstract class AbstractConnector
 {
     /**
-     * Instance of InputFilter used to validate supplied parameters
+     * Instance of ParameterFilter used to validate supplied parameters
      *
-     * @var InputFilter
+     * @var ParameterFilter
      */
     protected $inputFilter;
 
