@@ -38,8 +38,18 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  */
 class WeatherStrategy implements StrategyInterface
 {
+    /**
+     * Instance of ClassMethods hydrator
+     * 
+     * @var ClassMethods
+     */
     protected $hydrator;
 
+    /**
+     * Return an instance of ClassMethods
+     *
+     * @return ClassMethods
+     */
     protected function getHydrator()
     {
         if (! isset($this->hydrator)) {
@@ -48,6 +58,13 @@ class WeatherStrategy implements StrategyInterface
         return $this->hydrator;
     }
 
+    /**
+     * Extract the values from the supplied Weather instance
+     *
+     * @param Weather $value
+     *
+     * @return null|array
+     */
     public function extract($value)
     {
         if (! $value instanceof Weather) {
@@ -56,8 +73,18 @@ class WeatherStrategy implements StrategyInterface
         return $this->getHydrator()->extract($value);
     }
 
+    /**
+     * Hydrate and return an instance of Weather
+     *
+     * @param array $value The array of values
+     *
+     * @return null|Weather
+     */
     public function hydrate($value)
     {
+        if (! is_array($value)) {
+            return null;
+        }
         return $this->getHydrator()->hydrate($value, new Weather());
     }
 }

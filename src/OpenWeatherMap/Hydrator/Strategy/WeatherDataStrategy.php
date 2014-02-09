@@ -84,6 +84,7 @@ class WeatherDataStrategy implements StrategyInterface
      * values
      *
      * @param array $value The values to hydrate the WeatherData instance with
+     * 
      * @return null|WeatherData
      */
     public function hydrate($value)
@@ -107,7 +108,7 @@ class WeatherDataStrategy implements StrategyInterface
             $value['location'] = $value['city'];
             unset($value['city']);
         }
-        
+
         // cnt
         if (isset($value['cnt'])) {
             $value['count'] = $value['cnt'];
