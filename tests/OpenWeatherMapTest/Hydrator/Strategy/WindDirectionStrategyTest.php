@@ -66,11 +66,6 @@ class WindDirectionStrategyTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
-     * <windDirection
-     * deg="256"
-     * code="WSW"
-     * name="West-southwest"/>
      * @covers \OpenWeatherMap\Hydrator\Strategy\WindDirectionStrategy::extract
      */
     public function testExtract()
