@@ -25,10 +25,17 @@
 namespace OpenWeatherMapTest\Entity;
 
 use OpenWeatherMap\Entity\City;
+use OpenWeatherMap\Entity\Clouds;
 use OpenWeatherMap\Entity\Current;
 use OpenWeatherMap\Entity\Humidity;
+use OpenWeatherMap\Entity\Precipitation;
+use OpenWeatherMap\Entity\Pressure;
 use OpenWeatherMap\Entity\Temperature;
+use OpenWeatherMap\Entity\Weather;
+use OpenWeatherMap\Entity\WindDirection;
+use OpenWeatherMap\Entity\WindSpeed;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 /**
  * CurrentTest
@@ -97,46 +104,120 @@ class CurrentTest extends PHPUnit_Framework_TestCase
     public function testGetSetPressure()
     {
         $current = new Current();
-        $pressure = new \OpenWeatherMap\Entity\Pressure();
+        $pressure = new Pressure();
 
         $this->assertNull($current->getPressure());
         $this->assertSame($current, $current->setPressure($pressure));
         $this->assertSame($pressure, $current->getPressure());
     }
 
+    /**
+     * Test that we can get and set the WindSpeed
+     *
+     * @covers \OpenWeatherMap\Entity\Current::getWindSpeed
+     * @covers \OpenWeatherMap\Entity\Current::setWindSpeed
+     */
     public function testGetSetWindSpeed()
     {
         $current = new Current();
-        $this->markTestIncomplete();
+        $windSpeed = new WindSpeed();
+
+        $this->assertNull($current->getWindSpeed());
+        $this->assertSame($current, $current->setWindSpeed($windSpeed));
+        $this->assertSame($windSpeed, $current->getWindSpeed());
     }
 
+    /**
+     * Test that we can get and set the WindDirection
+     *
+     * @covers \OpenWeatherMap\Entity\Current::getWindDirection
+     * @covers \OpenWeatherMap\Entity\Current::setWindDirection
+     */
     public function testGetSetWindDirection()
     {
         $current = new Current();
-        $this->markTestIncomplete();
+        $windDirection = new WindDirection();
+
+        $this->assertNull($current->getWindDirection());
+        $this->assertSame($current, $current->setWindDirection($windDirection));
+        $this->assertSame($windDirection, $current->getWindDirection());
     }
 
+    /**
+     * Test that we can get and set the Clouds
+     *
+     * @covers \OpenWeatherMap\Entity\Current::getClouds
+     * @covers \OpenWeatherMap\Entity\Current::setClouds
+     */
     public function testGetSetClouds()
     {
         $current = new Current();
-        $this->markTestIncomplete();
+        $clouds = new Clouds();
+
+        $this->assertNull($current->getClouds());
+        $this->assertSame($current, $current->setClouds($clouds));
+        $this->assertSame($clouds, $current->getClouds());
     }
 
+    /**
+     * Test that we can get and set the Precipitation
+     *
+     * @covers \OpenWeatherMap\Entity\Current::getPrecipitation
+     * @covers \OpenWeatherMap\Entity\Current::setPrecipitation
+     */
     public function testGetSetPrecipitation()
     {
         $current = new Current();
-        $this->markTestIncomplete();
+        $precipitation = new Precipitation();
+
+        $this->assertNull($current->getPrecipitation());
+        $this->assertSame($current, $current->setPrecipitation($precipitation));
+        $this->assertSame($precipitation, $current->getPrecipitation());
     }
 
+    /**
+     * Test that we can get and set the Weather
+     *
+     * @covers \OpenWeatherMap\Entity\Current::getWeather
+     * @covers \OpenWeatherMap\Entity\Current::setWeather
+     */
     public function testGetSetWeather()
     {
         $current = new Current();
-        $this->markTestIncomplete();
+        $weather = new Weather();
+
+        $this->assertNull($current->getWeather());
+        $this->assertSame($current, $current->setWeather($weather));
+        $this->assertSame($weather, $current->getWeather());
     }
 
+    /**
+     * Test that we can get and set the last update
+     *
+     * @covers \OpenWeatherMap\Entity\Current::getLastUpdate
+     * @covers \OpenWeatherMap\Entity\Current::setLastUpdate
+     */
     public function testGetSetLastUpdate()
     {
         $current = new Current();
-        $this->markTestIncomplete();
+        $lastUpdate = "2014-01-18T10:11:11";
+
+        $this->assertNull($current->getLastUpdate());
+        $this->assertSame($current, $current->setLastUpdate($lastUpdate));
+        $this->assertEquals($lastUpdate, $current->getLastUpdate());
+    }
+
+    /**
+     * Test that attempting to set the lastupdate value using a non string
+     * value results in an exception
+     *
+     * @expectedException InvalidArgumentException
+     * @covers \OpenWeatherMap\Entity\Current::setLastUpdate
+     */
+    public function testSetLastUpdateThrowsException()
+    {
+        $current = new Current();
+
+        $current->setLastUpdate(new stdClass());
     }
 }

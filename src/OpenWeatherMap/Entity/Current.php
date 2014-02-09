@@ -24,6 +24,8 @@
  */
 namespace OpenWeatherMap\Entity;
 
+use InvalidArgumentException;
+
 /**
  * Current
  *
@@ -37,68 +39,80 @@ class Current
     /**
      * Instance of City
      *
-     * @var City
+     * @var City|null
      */
     protected $city;
 
     /**
      * Instance of Temperature
      *
-     * @var Temperature
+     * @var Temperature|null
      */
     protected $temperature;
 
     /**
      * Instance of Humidity
      *
-     * @var Humidity
+     * @var Humidity|null
      */
     protected $humidity;
 
     /**
      * Instance of Pressure
      *
-     * @var Pressure
+     * @var Pressure|null
      */
     protected $pressure;
 
     /**
+     * Instance of WindSpeed
      *
-     * @var WindSpeed
+     * @var WindSpeed|null
      */
     protected $windSpeed;
 
     /**
+     * Instance of WindDirection
      *
-     * @var WindDirection
+     * @var WindDirection|null
      */
     protected $windDirection;
 
     /**
+     * Instance of Clouds
      *
-     * @var Clouds
+     * @var Clouds|null
      */
     protected $clouds;
 
     /**
+     * Instance of Precipitation
      *
-     * @var Precipitation
+     * @var Precipitation|null
      */
     protected $precipitation;
 
     /**
+     * Instance of Weather
      *
-     * @var Weather
+     * @var Weather|null
      */
     protected $weather;
 
     /**
+     * The last update
      *
+     * @example 2014-01-18T10:11:11
+     * 
      * @var string
      */
     protected $lastUpdate;
 
-
+    /**
+     * Return the Humidity
+     *
+     * @return Humidity|null
+     */
     public function getHumidity()
     {
         return $this->humidity;
@@ -107,50 +121,81 @@ class Current
     /**
      * Set the Humidity instance
      *
-     * @param Humidity $humidity
+     * @param Humidity|null $humidity The Humidity instance
      *
      * @return Current
      */
-    public function setHumidity(Humidity $humidity)
+    public function setHumidity(Humidity $humidity = null)
     {
         $this->humidity = $humidity;
         return $this;
     }
 
-
+    /**
+     * Return the City instance
+     *
+     * @return City|null
+     */
     public function getCity()
     {
         return $this->city;
     }
 
+    /**
+     * Return the Temperature instance
+     *
+     * @return Temperature|null
+     */
     public function getTemperature()
     {
         return $this->temperature;
     }
 
-
-
+    /**
+     * Return the Pressure instance
+     *
+     * @return Pressure|null
+     */
     public function getPressure()
     {
         return $this->pressure;
     }
 
-
+    /**
+     * Return the instance of Clouds
+     *
+     * @return Clouds|null
+     */
     public function getClouds()
     {
         return $this->clouds;
     }
 
+    /**
+     * Return the Precipitation instance
+     *
+     * @return Precipitation|null
+     */
     public function getPrecipitation()
     {
         return $this->precipitation;
     }
 
+    /**
+     * Return the Weather instance
+     *
+     * @return Weather|null
+     */
     public function getWeather()
     {
         return $this->weather;
     }
 
+    /**
+     * Return the last update value
+     *
+     * @return string|mixed
+     */
     public function getLastUpdate()
     {
         return $this->lastUpdate;
@@ -159,7 +204,7 @@ class Current
     /**
      * Set the City instance
      *
-     * @param City $city
+     * @param City|null $city The City instance
      *
      * @return Current
      */
@@ -172,7 +217,7 @@ class Current
     /**
      * Set the Temperature instance
      *
-     * @param Temperature $temperature
+     * @param Temperature|null $temperature The Temperature instance
      *
      * @return Current
      */
@@ -185,7 +230,7 @@ class Current
     /**
      * Set the Pressure instance
      *
-     * @param Pressure $pressure
+     * @param Pressure|null $pressure The Pressure instance
      *
      * @return Current
      */
@@ -198,7 +243,7 @@ class Current
     /**
      * Set the Clouds instance
      *
-     * @param Clouds $clouds
+     * @param Clouds|null $clouds The Clouds instance
      *
      * @return Current
      */
@@ -234,29 +279,65 @@ class Current
         return $this;
     }
 
-    public function setLastUpdate($lastUpdate)
+    /**
+     * Set the lastUpdate value
+     *
+     * @param string|null $lastUpdate
+     *
+     * @return Current
+     */
+    public function setLastUpdate($lastUpdate = null)
     {
+        if (! is_null($lastUpdate)) {
+            if (! is_string($lastUpdate)) {
+                throw new InvalidArgumentException('Expects a string');
+            }
+        }
         $this->lastUpdate = $lastUpdate;
         return $this;
     }
 
+    /**
+     * Return the WindSpeed instance
+     *
+     * @return WindSpeed|null
+     */
     public function getWindSpeed()
     {
         return $this->windSpeed;
     }
 
+    /**
+     * Return the WindDirection instance
+     *
+     * @return WindDirection|null
+     */
     public function getWindDirection()
     {
         return $this->windDirection;
     }
 
-    public function setWindSpeed(WindSpeed $windSpeed)
+    /**
+     * Set the WindSpeed instance
+     *
+     * @param WindSpeed $windSpeed The WindSpeed instance
+     *
+     * @return Current
+     */
+    public function setWindSpeed(WindSpeed $windSpeed = null)
     {
         $this->windSpeed = $windSpeed;
         return $this;
     }
 
-    public function setWindDirection(WindDirection $windDirection)
+    /**
+     * Set the WindDirection instance
+     *
+     * @param WindDirection|null $windDirection The WindDirection instance
+     *
+     * @return Current
+     */
+    public function setWindDirection(WindDirection $windDirection = null)
     {
         $this->windDirection = $windDirection;
         return $this;
