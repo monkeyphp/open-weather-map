@@ -37,7 +37,7 @@ use InvalidArgumentException;
 class City
 {
     /**
-     * The id of the string
+     * The id of the City
      *
      * @var string|null
      */
@@ -124,7 +124,7 @@ class City
     /**
      * Set the Coord instance
      *
-     * @param Coord|null $coord
+     * @param Coord|null $coord The Coord value
      *
      * @return City
      */
@@ -137,7 +137,7 @@ class City
     /**
      * Set the country value
      *
-     * @param string|null $country
+     * @param string|null $country The value to set the country to
      *
      * @throws InvalidArgumentException
      * @return City
@@ -156,7 +156,7 @@ class City
     /**
      * Set the id value
      *
-     * @param string|null $id
+     * @param string|null $id The value to set the id to
      *
      * @throws InvalidArgumentException
      * @return City
@@ -164,7 +164,7 @@ class City
     public function setId($id = null)
     {
         if (! is_null($id)) {
-            if (! ctype_digit((string) $id)) {
+            if (! is_scalar($id) || ! ctype_digit((string) $id)) {
                 throw new InvalidArgumentException('Expects a numeric string');
             }
         }
@@ -175,7 +175,7 @@ class City
     /**
      * Set the name value
      *
-     * @param string|null $name The value to set the name value to
+     * @param string|null $name The value to set the name to
      *
      * @throws InvalidArgumentException
      * @return City

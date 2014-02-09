@@ -24,10 +24,12 @@
  */
 namespace OpenWeatherMapTest\Entity;
 
+use InvalidArgumentException;
 use OpenWeatherMap\Entity\City;
 use OpenWeatherMap\Entity\Coord;
 use OpenWeatherMap\Entity\Sun;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 /**
  * CityTest
@@ -40,6 +42,8 @@ use PHPUnit_Framework_TestCase;
 class CityTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Test that we can get and set the id value
+     *
      * @covers \OpenWeatherMap\Entity\City::getId
      * @covers \OpenWeatherMap\Entity\City::setId
      */
@@ -54,6 +58,22 @@ class CityTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that attempting to set the id value with a non digit
+     * value throws an exception
+     *
+     * @expectedException InvalidArgumentException
+     * @covers \OpenWeatherMap\Entity\City::setId
+     */
+    public function testSetIdThrowsException()
+    {
+        $city = new City();
+
+        $city->setId(new stdClass());
+    }
+
+    /**
+     * Test that we can get and set the name value
+     *
      * @covers \OpenWeatherMap\Entity\City::getName
      * @covers \OpenWeatherMap\Entity\City::setName
      */
@@ -68,6 +88,22 @@ class CityTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that attempting to set the name to a non string value
+     * results in an exception being thrown
+     *
+     * @expectedException \InvalidArgumentException
+     * @covers \OpenWeatherMap\Entity\City::setName
+     */
+    public function testSetNameThrowsException()
+    {
+        $city = new City();
+
+        $city->setName(new stdClass());
+    }
+
+    /**
+     * Test that we can get and set the Coord value
+     *
      * @covers \OpenWeatherMap\Entity\City::getCoord
      * @covers \OpenWeatherMap\Entity\City::setCoord
      */
@@ -98,6 +134,22 @@ class CityTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that attempting to set the country to a non string valid throws
+     * an exception
+     *
+     * @expectedException \InvalidArgumentException
+     * @covers \OpenWeatherMap\Entity\City::setCountry
+     */
+    public function testSetCountryThrowsException()
+    {
+        $city = new City();
+
+        $city->setCountry(new stdClass());
+    }
+
+    /**
+     * Test that we can get and set the Sun
+     *
      * @covers \OpenWeatherMap\Entity\City::getSun
      * @covers \OpenWeatherMap\Entity\City::setSun
      */
