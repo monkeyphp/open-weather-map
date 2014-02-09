@@ -38,6 +38,10 @@ use PHPUnit_Framework_TestCase;
  */
 class SunTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers \OpenWeatherMap\Entity\Sun::setRise
+     * @covers \OpenWeatherMap\Entity\Sun::setRise
+     */
     public function testGetSetRise()
     {
         $rise = '2014-01-27T08:00:14';
@@ -48,6 +52,10 @@ class SunTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DateTime', $sun->getRise());
     }
 
+    /**
+     * @covers \OpenWeatherMap\Entity\Sun::setSet
+     * @covers \OpenWeatherMap\Entity\Sun::setSet
+     */
     public function testGetSetSet()
     {
         $set = '2014-01-27T16:37:44';

@@ -25,6 +25,7 @@
 namespace OpenWeatherMapTest\Entity;
 
 use OpenWeatherMap\Entity\Pressure;
+use PHPUnit_Framework_TestCase;
 
 /**
  * PressureTest
@@ -34,8 +35,12 @@ use OpenWeatherMap\Entity\Pressure;
  * @subpackage OpenWeatherMapTest\Entity
  * @author     David White [monkeyphp] <david@monkeyphp.com>
  */
-class PressureTest
+class PressureTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers \OpenWeatherMap\Entity\Pressure::getValue
+     * @covers \OpenWeatherMap\Entity\Pressure::setValue
+     */
     public function testGetSetValue()
     {
         $value = "965.98";
@@ -46,6 +51,10 @@ class PressureTest
         $this->assertEquals($value, $pressure->getValue());
     }
 
+    /**
+     * @covers \OpenWeatherMap\Entity\Pressure::getUnit
+     * @covers \OpenWeatherMap\Entity\Pressure::setUnit
+     */
     public function testGetSetUnit()
     {
         $unit = 'hPa';
