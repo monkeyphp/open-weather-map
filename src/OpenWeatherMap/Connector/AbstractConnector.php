@@ -32,17 +32,10 @@ use OpenWeatherMap\Lock\LockInterface;
 use RuntimeException;
 use Zend\Config\Reader\Json;
 use Zend\Config\Reader\Xml;
-use Zend\Filter\StringToLower;
 use Zend\Http\Client;
 use Zend\Http\Request;
 use Zend\Http\Response;
-use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
-use Zend\Validator\Callback;
-use Zend\Validator\Digits;
-use Zend\Validator\InArray;
-use Zend\Validator\Regex;
-use Zend\Validator\StringLength;
 
 /**
  * AbstractConnector
@@ -651,121 +644,18 @@ abstract class AbstractConnector
     }
 
     /**
-     * Return an instance of InputFilter
+     * Return an instance of ParameterFilter
      *
-     * @return InputFilter
+     * @return ParameterFilter
      */
     public function getInputFilter()
     {
         if (! isset($this->inputFilter)) {
-            $inputFilter = new ParameterFilter();
-            // mode
-            $mode = new Input('mode');
-            $mode->allowEmpty(false);
-            $mode->getFilterChain()->attach(new StringToLower());
-            $mode->getValidatorChain()->attach(
-                new InArray(
-                    array(
-                        'haystack' => $this->getModes(),
-                        'messages' => array(
-                            InArray::NOT_IN_ARRAY => 'The supplied mode is not valid'
-                        )
-                    )
-                ),
-                true
+            $inputFilter = new ParameterFilter(
+                $this->getModes(),
+                $this->getUnits(),
+                $this->getLanguages()
             );
-            // units
-            $units = new Input('units');
-            $units->allowEmpty(false);
-            $units->getFilterChain()->attach(new StringToLower());
-            $units->getValidatorChain()->attach(
-                new InArray(
-                    array(
-                        'haystack' => $this->getUnits(),
-                        'messages' => array(
-                            InArray::NOT_IN_ARRAY => 'The supplied unit is not valid'
-                        )
-                    )
-                ),
-                true
-            );
-            // language
-            $language = new Input('language');
-            $language->allowEmpty(false);
-            $language->getFilterChain()->attach(new StringToLower());
-            $language->getValidatorChain()->attach(
-                new InArray(
-                    array(
-                        'haystack' => $this->getLanguages(),
-                        'messages' => array(
-                            InArray::NOT_IN_ARRAY => 'The supplied language is invalid'
-                        )
-                    )
-                ),
-                true
-            );
-            // query
-            $query = new Input('query');
-            $query->setAllowEmpty(true);
-            $query->getFilterChain()->attach(new StringToLower());
-            $query->getValidatorChain()->attach(
-                new StringLength(
-                    array(
-                        'min' => 1,
-                        'max' => 100,
-                        'encoding' => 'UTF-8',
-                        'messages' => array(
-                            StringLength::INVALID => 'The supplied query should be a string',
-                            StringLength::TOO_LONG => 'The supplied query should be no longer than 100 chars',
-                            StringLength::TOO_SHORT => 'The supplied query should be at least 1 character'
-                        )
-                    )
-                ),
-                true
-            );
-            // latitude
-            $latitude = new Input('latitude');
-            $latitude->setAllowEmpty(true);
-            $latitude->getValidatorChain()->attach(
-                new Regex(
-                    array(
-                        'pattern' => '#\A[-|+]?[\d]{1,2}(?:[\.][\d]*)?\z#'
-                    )
-                ),
-                true
-            );
-            // longitude
-            $longitude = new Input('longitude');
-            $longitude->setAllowEmpty(true);
-            $longitude->getValidatorChain()->attach(
-                new Regex(
-                    array(
-                        'pattern' => '#\A[-|+]?[\d]{1,3}(?:[\.][\d]*)?\z#'
-                    )
-                ),
-                true
-            );
-            // id
-            $id = new Input('id');
-            $id->setAllowEmpty(true);
-            $id->getValidatorChain()->attach(
-                new Digits(),
-                true
-            );
-            // apiKey
-            $apiKey = new Input('apiKey');
-            $apiKey->setAllowEmpty(true);
-
-            $inputFilter
-                ->add($mode)
-                ->add($units)
-                ->add($language)
-                ->add($query)
-                ->add($latitude)
-                ->add($longitude)
-                ->add($id)
-                ->add($apiKey);
-
             $this->inputFilter = $inputFilter;
         }
         return $this->inputFilter;
