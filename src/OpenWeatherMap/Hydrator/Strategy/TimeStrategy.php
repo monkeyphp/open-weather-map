@@ -203,7 +203,11 @@ class TimeStrategy implements StrategyInterface
 
             $main = $value['main'];
 
-            if ((isset($main['temp']) || isset($main['temp_min']) || isset($main['temp_max'])) && ! isset($tmp['temperature'])) {
+            if ((isset($main['temp']) ||
+                isset($main['temp_min']) ||
+                isset($main['temp_max'])) &&
+                ! isset($tmp['temperature'])
+            ) {
                 if (! is_array($tmp['temperature'])) {
                     $tmp['temperature'] = array();
                 }

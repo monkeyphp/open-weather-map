@@ -9,6 +9,7 @@ namespace OpenWeatherMap\InputFilter;
 
 use Zend\Validator\Callback;
 use Zend\InputFilter\InputFilter;
+
 /**
  * Description of ParameterFilter
  *

@@ -44,8 +44,49 @@ class TimeStrategyTest extends PHPUnit_Framework_TestCase
      */
     public function testHydrateWithDailyJson()
     {
-        
+        $tempDay = 277.58;
+        $tempMin = 277.48;
+        $tempMax = 277.58;
+        $tempNight = 277.56;
+        $tempEve = 277.58;
+        $tempMorn = 277.58;
+        $pressure = 956.65;
+        $humidity = 97;
+        $speed =  4.56;
+        $deg = 190;
+        $clouds = 88;
+        $rain = 3;
+        $id = 500;
+        $main = 'Rain';
+        $description = 'light rain';
+        $icon = '10d';
+        //
+        $dt = 1390824000;
+        $temp = array(
+            'day'   => $tempDay,
+            'min'   => $tempMin,
+            'max'   => $tempMax,
+            'night' => $tempNight,
+            'eve'   => $tempEve,
+            'morn'  => $tempMorn
+        );
+        $weather = array(
+            'id' => $id,
+            'main' => $main,
+            'description' => $description,
+            'icon' => $icon
+        );
+
+        $timeStrategy = new TimeStrategy();
+
+        /* @var $time \OpenWeatherMap\Entity\Time */
+        $time = $timeStrategy->hydrate(compact(
+            'dt', 'temp', 'pressure', 'humidity', 'weather', 'speed', 'deg', 'clouds', 'rain'
+        ));
+        $this->assertInstanceOf('\OpenWeatherMap\Entity\Time', $time);
+
     }
+
     /**
      * @covers \OpenWeatherMap\Hydrator\Strategy\TimeStrategy::hydrate
      */
@@ -145,8 +186,9 @@ class TimeStrategyTest extends PHPUnit_Framework_TestCase
      */
     public function testHydrateWithForecastXml()
     {
-        $from = null;
-        $to = null;
+        $from = '2014-01-29T00:00:00';
+        $to = '2014-01-29T03:00:00';
+        $day = '2014-01-27';
         $number = 803;
         $name = 'broken clouds';
         $var = '04d';
@@ -205,6 +247,9 @@ class TimeStrategyTest extends PHPUnit_Framework_TestCase
 
         /* @var $time \OpenWeatherMap\Entity\Time */
         $time = $timeStrategy->hydrate(compact(
+            'from',
+            'to',
+            'day',
             'symbol',
             'precipitation',
             'windDirection',
