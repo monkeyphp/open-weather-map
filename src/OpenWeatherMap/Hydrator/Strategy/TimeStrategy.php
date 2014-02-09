@@ -85,7 +85,14 @@ class TimeStrategy implements StrategyInterface
     /**
      * Hydrate and return an instance of Time using the supplied value array
      *
-     * @param array $value
+     * This method has to handle the differences between the array of values that
+     * are returned from each of the different modes (xml, json).
+     * So we create a temporary array and populate with the correct keys and
+     * values from the supplied array of values.
+     *
+     * This method does a lot of 'if' checking :)
+     *
+     * @param array $value The array of values to hydrate the Time instance with
      *
      * @return Time
      */
@@ -95,118 +102,239 @@ class TimeStrategy implements StrategyInterface
             return null;
         }
 
-        // handle the differences between xml and json response
-        // day/dt
-        if (isset($value['dt'])) {
-            $value['day'] = $value['dt'];
-            unset($value['dt']);
-        }
-        // temperature/temp
-        if (isset($value['temp'])) {
-            $value['temperature'] = $value['temp'];
-            unset($value['temp']);
-        }
-        // pressure
-        if (isset($value['pressure']) && ! is_array($value['pressure'])) {
-            $pressure = array('value' => $value['pressure']);
-            $value['pressure'] = $pressure;
-        }
-        // humidity
-        if (isset($value['humidity']) && ! is_array($value['humidity'])) {
-            $humidity = array('value' => $value['humidity']);
-            $value['humidity'] = $humidity;
+        $tmp = array(
+            'symbol' => null,
+            'precipitation' => null,
+            'windDirection' => null,
+            'windSpeed' => null,
+            'temperature' => null,
+            'pressure' => null,
+            'humidity' => null,
+            'clouds' => null,
+            'day' => null,
+            'from' => null,
+            'to' => null
+        );
+
+        if (isset($value['symbol'])) {
+            $tmp['symbol'] = $value['symbol'];
+            unset($value['symbol']);
         }
 
-        // speed
-        if (isset($value['speed']) && ! is_array($value['speed'])) {
-            $value['windSpeed'] = array('mps' => $value['speed']);
-            unset($value['speed']);
-        }
-        // deg
-        if (isset($value['deg'])) {
-            $value['windDirection'] = array('deg' => $value['deg']);
-            unset($value['deg']);
-        }
-        // clouds
-        if (isset($value['clouds']) && ! is_array($value['clouds'])) {
-            $value['clouds'] = array('all' => $value['clouds']);
-            unset($value['clouds']);
-        }
-        // precipitation/rain
-        if (isset($value['rain'])) {
-            if (is_array($value['rain'])) {
-                $x = each($value['rain']);
-                $value['precipitation'] = array('unit' => $x['key'], 'value' => $x['value']);
-            } else {
-                $value['precipitation'] = array('value' => $value['rain']);
-            }
-            unset($value['rain']);
-        }
-        // main
-        if (isset($value['main']) && is_array($value['main'])) {
-//        (
-//            [temp] => 274.967
-//            [temp_min] => 274.967
-//            [temp_max] => 274.967
-//            [pressure] => 989.44
-//            [sea_level] => 1025.23
-//            [grnd_level] => 989.44
-//            [humidity] => 95
-//        )
-            // temp
-
-            // temp_min
-
-            // temp_max
-
-            // pressure
-
-            // sea_level
-
-            // grnd_level
-
-            // humidity
-
-            // temp_kf
-            unset($value['main']);
+        if (isset($value['precipitation'])) {
+            $tmp['precipitation'] = $value['precipitation'];
+            unset($value['precipitation']);
         }
 
-        // wind
+        if (isset($value['windSpeed'])) {
+            $tmp['windSpeed'] = $value['windSpeed'];
+            unset($value['windSpeed']);
+        }
+
+        if (isset($value['windDirection'])) {
+            $tmp['windDirection'] = $value['windDirection'];
+            unset($value['windDirection']);
+        }
+
         if (isset($value['wind']) && is_array($value['wind'])) {
-
-//             (
-//            [speed] => 5.85
-//            [deg] => 182.502
-//        )
-
+            $wind = $value['wind'];
+            if (isset($wind['speed'])) {
+                $tmp['windSpeed'] = array('mps' => $wind['speed']);
+            }
+            if (isset($wind['deg'])) {
+                $tmp['windDirection'] = array('deg' => $wind['deg']);
+            }
             unset($value['wind']);
         }
 
-        // weather
-        if (isset($value['weather']) && is_array($value['weather'])) {
-            $weather = $value['weather'];
-            unset($value['weather']);
-            foreach ($weather as $index => $data) {
-                if (is_array($data)) {
-                    if (isset($data['id'])) {
-                        $value['symbol']['number'] = $data['id'];
-                    }
-                    if (isset($data['description'])) {
-                        $value['clouds']['value'] = $data['description'];
-                    }
-                    if (isset($data['icon'])) {
-                        $value['symbol']['icon'] = $data['icon'];
-                    }
-                    break;
-                }
-            }
+        if (isset($value['temperature'])) {
+            $tmp['temperature'] = $value['temperature'];
+            unset($value['temperature']);
         }
 
+        if (isset($value['pressure'])) {
+            $pressure = $value['pressure'];
+            if (! is_array($pressure)) {
+                $pressure = array('value' => $pressure);
+            }
+            $tmp['pressure'] = $pressure;
+            unset($value['pressure']);
+        }
 
-//        echo '<pre>';
-//        print_r($value);
-//        echo '</pre>';
-        //die();
-        return $this->getHydrator()->hydrate($value, new Time());
+        if (isset($value['humidity'])) {
+            $humidity = $value['humidity'];
+            if (! is_array($humidity)) {
+                $humidity = array('value' => $humidity);
+            }
+            $tmp['humidity'] = $humidity;
+            unset($value['humidity']);
+        }
+
+        if (isset($value['clouds'])) {
+            $clouds = $value['clouds'];
+            if (! is_array($value['clouds'])) {
+                $clouds = array('all' => $clouds);
+            }
+            $tmp['clouds'] = $clouds;
+            unset($value['clouds']);
+        }
+
+        if (isset($value['day'])) {
+            $tmp['day'] = $value['day'];
+            unset($value['day']);
+        }
+
+        if (isset($value['from'])) {
+            $tmp['from'] = $value['from'];
+            unset($value['from']);
+        }
+
+        if (isset($value['to'])) {
+            $tmp['to'] = $value['to'];
+            unset($value['to']);
+        }
+
+        if (isset($value['dt'])) {
+            $tmp['day'] = $value['dt'];
+            unset($value['dt']);
+        }
+
+        if (isset($value['main']) && is_array($value['main'])) {
+
+            $main = $value['main'];
+
+            if ((isset($main['temp']) || isset($main['temp_min']) || isset($main['temp_max'])) && ! isset($tmp['temperature'])) {
+                if (! is_array($tmp['temperature'])) {
+                    $tmp['temperature'] = array();
+                }
+
+                if (isset($main['temp'])) {
+                    $tmp['temperature']['value'] = $main['temp'];
+                }
+
+                if (isset($main['temp_min'])) {
+                    $tmp['temperature']['min'] = $main['temp_min'];
+                }
+
+                if (isset($main['temp_max'])) {
+                    $tmp['temperature']['max'] = $main['temp_max'];
+                }
+            }
+
+            if (isset($main['pressure'])) {
+                $tmp['pressure'] = array('value' => $main['pressure']);
+            }
+
+            if (isset($main['humidity'])) {
+                $tmp['humidity'] = array('value' => $main['humidity']);
+            }
+            // @todo sea_level
+            // @todo grnd_level
+            unset($value['main']);
+        }
+
+        if (isset($value['weather'])) {
+            $weather = $value['weather'];
+            if (is_array($weather)) {
+                foreach ($weather as $index => $data) {
+                    if (is_array($data)) {
+                        if (isset($data['id'])) {
+                            if (! is_array($tmp['symbol'])) {
+                                $tmp['symbol'] = array();
+                            }
+                            $tmp['symbol']['number'] = $data['id'];
+                        }
+                        if (isset($data['description'])) {
+                            if (! is_array($tmp['clouds'])) {
+                                $tmp['clouds'] = array();
+                            }
+                            $tmp['clouds']['value'] = $data['description'];
+                        }
+                        if (isset($data['icon'])) {
+                            if (! is_array($tmp['symbol'])) {
+                                $tmp['symbol'] = array();
+                            }
+                            $tmp['symbol']['icon'] = $data['icon'];
+                        }
+                        break;
+                    }
+                }
+                unset($index);
+                unset($data);
+            }
+            unset($weather);
+            unset($value['weather']);
+        }
+
+        if (isset($value['snow']) || isset($value['rain'])) {
+
+            if (! is_array($tmp['precipitation'])) {
+                $tmp['precipitation'] = array();
+            }
+
+            $snow = $rain = array('type' => null, 'unit' => null, 'value' => null);
+            $snow['type'] = 'snow';
+            $rain['type'] = 'rain';
+
+            if (isset($value['snow'])) {
+                if (is_array($value['snow'])) {
+                    $keys = each($value['snow']);
+                    $snow['unit'] = isset($keys['unit']) ? $keys['unit'] : null;
+                    $snow['value'] = isset($keys['value']) ? $keys['value'] : null;
+                } else {
+                    $snow['value'] = $value['snow'];
+                }
+            }
+            if (isset($value['rain'])) {
+                if (is_array($value['rain'])) {
+                    $keys = each($value['rain']);
+                    $rain['unit'] = isset($keys['unit']) ? $keys['unit'] : null;
+                    $rain['value'] = isset($keys['value']) ? $keys['value'] : null;
+                } else {
+                    $rain['value'] = $value['rain'];
+                }
+            }
+            $tmp['precipitation'] = ($snow['value'] < $rain['value']) ? $rain : $snow;
+        }
+
+        if (isset($value['temp'])) {
+            $temp = $value['temp'];
+
+            if (! is_array($tmp['temperature'])) {
+                $tmp['temperature'] = array();
+            }
+
+            $temperature = array(
+                'day' => (isset($temp['day'])) ? $temp['day'] : null,
+                'min' => (isset($temp['min'])) ? $temp['min'] : null,
+                'max' => (isset($temp['max'])) ? $temp['max'] : null,
+                'night' => (isset($temp['night'])) ? $temp['night'] : null,
+                'evening' => (isset($temp['eve'])) ? $temp['eve'] : null,
+                'morning' => (isset($temp['morn'])) ? $temp['morn'] : null
+            );
+            $tmp['temperature'] = $temperature;
+
+            unset($value['temp']);
+        }
+
+        if (isset($value['speed'])) {
+            $speed = $value['speed'];
+            if (! is_array($speed)) {
+                $speed = array('mps' => $speed);
+            }
+            $tmp['windSpeed'] = $speed;
+            unset($value['speed']);
+        }
+
+        if (isset($value['deg'])) {
+            $direction = $value['deg'];
+            if (! is_array($direction)) {
+                $direction = array('deg' => $direction);
+            }
+            $tmp['windDirection'] = $direction;
+            unset($value['deg']);
+        }
+
+        return $this->getHydrator()->hydrate($tmp, new Time());
     }
 }

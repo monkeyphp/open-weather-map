@@ -23,7 +23,10 @@
                 "humidity": 95
             }, 
             "weather": [{
-                "id": 500, "main": "Rain", "description": "light rain", "icon": "10n"
+                "id": 500, 
+                "main": "Rain", 
+                "description": "light rain", 
+                "icon": "10n"
             }], 
             "clouds": {
                 "all": 92
