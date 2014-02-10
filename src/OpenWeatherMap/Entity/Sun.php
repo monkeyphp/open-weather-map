@@ -73,6 +73,8 @@ class Sun
     /**
      * Set the rise value
      *
+     * @example 2014-02-09T11:56:27
+     *
      * @param string|null|DateTime $rise
      *
      * @return Sun
@@ -83,9 +85,9 @@ class Sun
         if (! is_null($rise)) {
             if (! $rise instanceof DateTime) {
                 try {
-                    $rise = new DateTime($rise);
+                    $rise = DateTime::createFromFormat('Y-m-d\TH:i:s', $rise);
                 } catch (Exception $exception) {
-                    throw new InvalidArgumentException('Expects a string');
+                    throw new InvalidArgumentException('Expects a string (' . $rise . ') supplied');
                 }
             }
         }
@@ -106,7 +108,7 @@ class Sun
         if (! is_null($set)) {
             if (! $set instanceof DateTime) {
                 try {
-                    $set = new DateTime($set);
+                    $set = DateTime::createFromFormat('Y-m-d\TH:i:s', $set);
                 } catch (Exception $exception) {
                     throw new InvalidArgumentException('Expects a string');
                 }

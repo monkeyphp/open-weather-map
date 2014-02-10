@@ -30,7 +30,7 @@ use OpenWeatherMap\Connector\ForecastConnector;
 use OpenWeatherMap\Connector\ForecastConnectorInterface;
 use OpenWeatherMap\Connector\WeatherConnector;
 use OpenWeatherMap\Connector\WeatherConnectorInterface;
-use OpenWeatherMap\Lock\Lock;
+use OpenWeatherMap\Lock\File;
 use OpenWeatherMap\Lock\LockInterface;
 use Traversable;
 
@@ -47,10 +47,10 @@ use Traversable;
 class ConnectorFactory implements ConnectorFactoryInterface
 {
     /**
-     * Instance of LockInterface, an array used to construct a Lock instsance
+     * Instance of LockInterface, an array used to construct a LockInterface instsance
      * with or null
      *
-     * @var Lock|array|null
+     * @var LockInterface|array|null
      */
     protected $lock;
 
@@ -93,7 +93,7 @@ class ConnectorFactory implements ConnectorFactoryInterface
      * Accepted options are:
      *
      * 'lock' - an instance of LockInterface or an array used to construct
-     * an instance of Lock with
+     * an instance of LockInterface with
      *
      * @param Traversable|array $options
      *
@@ -126,7 +126,7 @@ class ConnectorFactory implements ConnectorFactoryInterface
     public function getLock()
     {
         if (! isset($this->lock)) {
-            $lock = new Lock(array(
+            $lock = new File(array(
                 'minLifetime' => 600,
                 'maxLifetime' => 1000
             ));
@@ -145,7 +145,7 @@ class ConnectorFactory implements ConnectorFactoryInterface
     public function setLock($lock = array())
     {
         if (is_array($lock)) {
-            $lock = new Lock($lock);
+            $lock = new File($lock);
         }
         if ($lock instanceof LockInterface) {
             $this->lock = $lock;

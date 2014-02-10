@@ -39,7 +39,7 @@ use PHPUnit_Framework_TestCase;
 class SunTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \OpenWeatherMap\Entity\Sun::setRise
+     * @covers \OpenWeatherMap\Entity\Sun::getRise
      * @covers \OpenWeatherMap\Entity\Sun::setRise
      */
     public function testGetSetRise()
@@ -49,11 +49,11 @@ class SunTest extends PHPUnit_Framework_TestCase
 
         $this->assertNull($sun->getRise());
         $this->assertSame($sun, $sun->setRise($rise));
-        $this->assertInstanceOf('\DateTime', $sun->getRise());
+        $this->assertInstanceOf('DateTime', $sun->getRise());
     }
 
     /**
-     * @covers \OpenWeatherMap\Entity\Sun::setSet
+     * @covers \OpenWeatherMap\Entity\Sun::getSet
      * @covers \OpenWeatherMap\Entity\Sun::setSet
      */
     public function testGetSetSet()
@@ -63,6 +63,6 @@ class SunTest extends PHPUnit_Framework_TestCase
 
         $this->assertNull($sun->getSet());
         $this->assertSame($sun, $sun->setSet($set));
-        $this->assertInstanceOf('\DateTime', $sun->getSet());
+        $this->assertInstanceOf('DateTime', $sun->getSet());
     }
 }

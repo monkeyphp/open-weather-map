@@ -65,10 +65,10 @@ class ForecastConnectorTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($mockResponse));
         $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
         $mockLock->expects($this->once())
-            ->method('lock')
+            ->method('acquire')
             ->will($this->returnValue(true));
         $mockLock->expects($this->once())
-            ->method('unlock')
+            ->method('release')
             ->will($this->returnValue(true));
         $forecastConnector->setHttpClient($mockClient);
         $forecastConnector->setLock($mockLock);

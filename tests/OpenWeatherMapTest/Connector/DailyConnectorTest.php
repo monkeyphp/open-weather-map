@@ -122,12 +122,12 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with($this->isInstanceOf('\Zend\Http\Request'))
             ->will($this->returnValue($mockResponse));
-        $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\LockInterface', array(), array(), 'mockLock', false);
         $mockLock->expects($this->once())
-            ->method('lock')
+            ->method('acquire')
             ->will($this->returnValue(true));
         $mockLock->expects($this->once())
-            ->method('unlock')
+            ->method('release')
             ->will($this->returnValue(true));
         $dailyConnector->setHttpClient($mockClient);
         $dailyConnector->setLock($mockLock);
@@ -164,12 +164,12 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with($this->isInstanceOf('\Zend\Http\Request'))
             ->will($this->returnValue($mockResponse));
-        $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\LockInterface', array(), array(), 'mockLock', false);
         $mockLock->expects($this->once())
-            ->method('lock')
+            ->method('acquire')
             ->will($this->returnValue(true));
         $mockLock->expects($this->once())
-            ->method('unlock')
+            ->method('release')
             ->will($this->returnValue(true));
         $dailyConnector->setHttpClient($mockClient);
         $dailyConnector->setLock($mockLock);
@@ -218,12 +218,12 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with($this->isInstanceOf('\Zend\Http\Request'))
             ->will($this->returnValue($mockResponse));
-        $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\LockInterface', array(), array(), 'mockLock', false);
         $mockLock->expects($this->once())
-            ->method('lock')
+            ->method('acquire')
             ->will($this->returnValue(true));
         $mockLock->expects($this->once())
-            ->method('unlock')
+            ->method('release')
             ->will($this->returnValue(true));
         $dailyConnector->setHttpClient($mockClient);
         $dailyConnector->setLock($mockLock);
@@ -273,12 +273,12 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with($this->isInstanceOf('\Zend\Http\Request'))
             ->will($this->returnValue($mockResponse));
-        $mockLock = $this->getMock('\OpenWeatherMap\Lock\Lock', array(), array(), 'mockLock', false);
+        $mockLock = $this->getMock('\OpenWeatherMap\Lock\LockInterface', array(), array(), 'mockLock', false);
         $mockLock->expects($this->once())
-            ->method('lock')
+            ->method('acquire')
             ->will($this->returnValue(true));
         $mockLock->expects($this->once())
-            ->method('unlock')
+            ->method('release')
             ->will($this->returnValue(true));
         $dailyConnector->setHttpClient($mockClient);
         $dailyConnector->setLock($mockLock);

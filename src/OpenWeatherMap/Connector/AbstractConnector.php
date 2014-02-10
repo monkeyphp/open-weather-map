@@ -614,14 +614,14 @@ abstract class AbstractConnector
 
         try {
             $lock = $this->getLock();
-            if ($lock && (! $lock->lock())) {
+            if ($lock && (! $lock->acquire())) {
                 throw new LockException('Could not obtain the lock');
             }
 
             $response = $this->getResponse($request);
 
             if ($lock) {
-                $lock->unlock();
+                $lock->release();
             }
 
             $body = $response->getBody();
@@ -637,7 +637,7 @@ abstract class AbstractConnector
 
         } catch (\Exception $exception) {
             if ($lock) {
-                $lock->unlock();
+                $lock->release();
             }
             throw $exception;
         }

@@ -24,7 +24,9 @@
  */
 namespace OpenWeatherMapTest\Entity;
 
+use OpenWeatherMap\Entity\Meta;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 /**
  * MetaTest
@@ -37,16 +39,29 @@ use PHPUnit_Framework_TestCase;
 class MetaTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Test that we can get and set the calc time
+     *
      * @covers \OpenWeatherMap\Entity\Meta::getCalctime
      * @covers \OpenWeatherMap\Entity\Meta::setCalctime
      */
     public function testGetSetCalcTime()
     {
         $calcTime = 0.0154;
-        $meta = new \OpenWeatherMap\Entity\Meta();
+        $meta = new Meta();
 
         $this->assertNull($meta->getCalcTime());
         $this->assertSame($meta, $meta->setCalcTime($calcTime));
         $this->assertEquals($calcTime, $meta->getCalcTime());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @covers \OpenWeatherMap\Entity\Meta::setCalctime
+     */
+    public function testSetCalcTimeThrowsException()
+    {
+        $meta = new Meta();
+
+        $meta->setCalcTime(new stdClass());
     }
 }
