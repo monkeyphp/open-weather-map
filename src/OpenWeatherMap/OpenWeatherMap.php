@@ -278,6 +278,14 @@ class OpenWeatherMap implements OpenWeatherMapInterface
     /**
      * Return an instance of WeatherData
      *
+     * Accepted options are:
+     * - mode
+     * - language
+     * - units
+     * - apiKey
+     * - query|id|latitude & longitude
+     * - count (<= 14)
+     *
      * @param array $options
      *
      * @return WeatherData

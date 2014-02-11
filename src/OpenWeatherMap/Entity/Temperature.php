@@ -268,7 +268,7 @@ class Temperature
     {
         if (! is_null($day)) {
             if (is_scalar($day) && is_numeric($day)) {
-                $day = (float) $day;
+                $day = (float)$day;
             } else {
                 throw new InvalidArgumentException(
                     'Expects a numeric value. ' . gettype($day) . ' supplied'
@@ -291,7 +291,7 @@ class Temperature
     {
         if (! is_null($evening)) {
             if (is_scalar($evening) && is_numeric($evening)) {
-                $evening = (float) $evening;
+                $evening = (float)$evening;
             } else {
                 throw new InvalidArgumentException(
                     'Expects a numeric value. ' . gettype($evening) . ' supplied'
@@ -314,7 +314,7 @@ class Temperature
     {
         if (! is_null($morning)) {
             if (is_scalar($morning) && is_numeric($morning)) {
-                $morning = (float) $morning;
+                $morning = (float)$morning;
             } else {
                 throw new InvalidArgumentException(
                     'Expects a numeric value. ' . gettype($morning) . ' supplied'
@@ -347,7 +347,7 @@ class Temperature
     {
         if (! is_null($night)) {
             if (is_scalar($night) && is_numeric($night)) {
-                $night = (float) $night;
+                $night = (float)$night;
             } else {
                 throw new InvalidArgumentException(
                     'Expects a numeric value. ' . gettype($night) . ' supplied'

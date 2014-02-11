@@ -17,7 +17,7 @@ $current = $openWeatherMap->getWeather(array('query' => 'New York,US'));
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Basic</title>
+        <title>Basic 01</title>
     </head>
     <body>
         <h2>The Weather in <?php echo $current->getCity()->getName(); ?></h2>

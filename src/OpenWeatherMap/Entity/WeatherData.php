@@ -74,20 +74,20 @@ class WeatherData
      *
      * @var int|null
      */
-    protected $count;
+//    protected $count;
+//
+//    public function getCount()
+//    {
+//        return $this->count;
+//    }
+//
+//    public function setCount($count)
+//    {
+//        $this->count = $count;
+//        return $this;
+//    }
 
-    public function getCount()
-    {
-        return $this->count;
-    }
 
-    public function setCount($count)
-    {
-        $this->count = $count;
-        return $this;
-    }
-
-    
     /**
      * Return the Location instance
      *
