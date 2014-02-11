@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<current>
+    <city id="5128581" name="New York">
+        <coord lon="-74.01" lat="40.71"/>
+        <country>US</country>
+        <sun rise="2014-01-18T12:16:03" set="2014-01-18T21:57:16"/>
+    </city>
+    <temperature value="276.137" min="276.137" max="276.137" unit="kelvin"/>
+    <humidity value="70" unit="%"/>
+    <pressure value="1004.19" unit="hPa"/>
+    <wind>
+        <speed value="3.73" name="Gentle Breeze"/>
+        <direction value="264.5" code="W" name="West"/>
+    </wind>
+    <clouds value="24" name="few clouds"/>
+    <precipitation mode="no"/>
+    <weather number="801" value="few clouds" icon="02d"/>
+    <lastupdate value="2014-01-18T17:35:04"/>
+</current>
+

@@ -1,0 +1,41 @@
+{
+    "cod": "200", 
+    "message": 0.0377, 
+    "city": {
+        "id": 2647428, 
+        "name": "Harrogate", 
+        "coord": {
+            "lon": -1.5373, 
+            "lat": 53.99078
+        }, 
+        "country": "GB", 
+        "population": 87024
+    }, 
+    "cnt": 7, 
+    "list": [
+        {
+            "dt": 1390824000, 
+            "temp": {
+                "day": 277.58, 
+                "min": 277.48, 
+                "max": 277.58, 
+                "night": 277.56, 
+                "eve": 277.58, 
+                "morn": 277.58
+            }, 
+            "pressure": 965.65, 
+            "humidity": 97, 
+            "weather": [
+                {
+                    "id": 500, 
+                    "main": "Rain", 
+                    "description": "light rain", 
+                    "icon": "10d"
+                }
+            ], 
+            "speed": 4.56, 
+            "deg": 190, 
+            "clouds": 88, 
+            "rain": 3
+        }, {
+            "dt": 1390910400, "temp": {"day": 277.99, "min": 277.25, "max": 278.24, "night": 278.23, "eve": 278.15, "morn": 277.31}, "pressure": 961.79, "humidity": 98, "weather": [{"id": 501, "main": "Rain", "description": "moderate rain", "icon": "10d"}], "speed": 4.88, "deg": 129, "clouds": 92, "rain": 7}, {"dt": 1390996800, "temp": {"day": 277.11, "min": 274.39, "max": 277.88, "night": 274.39, "eve": 275.32, "morn": 277.88}, "pressure": 985, "humidity": 98, "weather": [{"id": 500, "main": "Rain", "description": "light rain", "icon": "10d"}], "speed": 7.36, "deg": 88, "clouds": 88, "rain": 2}, {"dt": 1391083200, "temp": {"day": 275.48, "min": 273.1, "max": 275.48, "night": 273.1, "eve": 273.74, "morn": 273.78}, "pressure": 996.45, "humidity": 99, "weather": [{"id": 600, "main": "Snow", "description": "light snow", "icon": "13d"}], "speed": 1.83, "deg": 102, "clouds": 68, "snow": 0.3}, {"dt": 1391169600, "temp": {"day": 275.03, "min": 273.29, "max": 281.69, "night": 279.29, "eve": 280.97, "morn": 273.29}, "pressure": 985.97, "humidity": 99, "weather": [{"id": 600, "main": "Snow", "description": "light snow", "icon": "13d"}], "speed": 3.96, "deg": 163, "clouds": 92, "rain": 12, "snow": 1}, {"dt": 1391256000, "temp": {"day": 277.78, "min": 275.42, "max": 277.78, "night": 275.42, "eve": 275.61, "morn": 275.82}, "pressure": 982.42, "humidity": 100, "weather": [{"id": 500, "main": "Rain", "description": "light rain", "icon": "10d"}], "speed": 3.7, "deg": 249, "clouds": 76, "rain": 2}, {"dt": 1391342400, "temp": {"day": 276.9, "min": 274.65, "max": 276.9, "night": 275.32, "eve": 275.3, "morn": 274.65}, "pressure": 990.6, "humidity": 0, "weather": [{"id": 500, "main": "Rain", "description": "light rain", "icon": "10d"}], "speed": 2.04, "deg": 227, "clouds": 0, "rain": 0.3}]}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<current>
+    <city id="1851632" name="Shuzenji">
+        <coord lon="139" lat="35"/>
+        <country>JP</country>
+        <sun rise="2014-01-17T21:50:27" set="2014-01-18T07:58:25"/>
+    </city>
+    <temperature value="263.937" min="263.937" max="263.937" unit="kelvin"/>
+    <humidity value="100" unit="%"/>
+    <pressure value="978.57" unit="hPa"/>
+    <wind>
+        <speed value="1.88" name="Light breeze"/>
+        <direction value="334" code="NNW" name="North-northwest"/>
+    </wind>
+    <clouds value="0" name="sky is clear"/>
+    <precipitation mode="no"/>
+    <weather number="800" value="Sky is Clear" icon="01n"/>
+    <lastupdate value="2014-01-18T17:44:18"/>
+</current>
+
