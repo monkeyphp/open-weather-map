@@ -235,8 +235,6 @@ class DailyConnectorTest extends PHPUnit_Framework_TestCase
         $location = $weatherData->getLocation();
         $this->assertInstanceOf('\OpenWeatherMap\Entity\Location', $location);
         $this->assertEquals(1851632, $location->getId());
-
-        $this->assertEquals(7, $weatherData->getCount());
     }
 
     /**
