@@ -24,10 +24,11 @@
  */
 namespace OpenWeatherMap\Lock;
 
+use InvalidArgumentException;
 use RuntimeException;
+use SplFileInfo;
 use SplFileObject;
 use Traversable;
-use InvalidArgumentException;
 
 /**
  * Lock
@@ -110,7 +111,7 @@ class File implements LockInterface
      *
      * @param array|Traversable $options
      *
-     * @return Lock
+     * @return File
      */
     public function setOptions($options = array())
     {
@@ -143,7 +144,7 @@ class File implements LockInterface
      *
      * @param string|null $filename
      *
-     * @return Lock
+     * @return File
      * @throws InvalidArgumentException
      */
     public function setFilename($filename = null)
@@ -176,15 +177,25 @@ class File implements LockInterface
         return $this->filename;
     }
 
+    /**
+     * Return an instance of SplFileInfo
+     *
+     * @return SplFileInfo
+     */
     protected function getFileInfo()
     {
         if (! isset($this->fileInfo)) {
-            $fileInfo = new \SplFileInfo($this->getFilename());
+            $fileInfo = new SplFileInfo($this->getFilename());
             $this->fileInfo = $fileInfo;
         }
         return $this->fileInfo;
     }
 
+    /**
+     * Check if the lock file exists or not
+     *
+     * @return boolean
+     */
     protected function fileExists()
     {
         return $this->getFileInfo()->isFile();
@@ -209,7 +220,11 @@ class File implements LockInterface
         return $this->file;
     }
 
-
+    /**
+     * Return a boolean indicating that the lock is locked
+     *
+     * @return boolean
+     */
     protected function getLocked()
     {
         if (! isset($this->locked)) {
@@ -218,6 +233,13 @@ class File implements LockInterface
         return $this->locked;
     }
 
+    /**
+     * Set the value of the locked value
+     *
+     * @param boolean $locked
+     *
+     * @return File
+     */
     protected function setLocked($locked)
     {
         $this->locked = (boolean) $locked;
@@ -271,13 +293,11 @@ class File implements LockInterface
                 $this->release();
             }
         }
-
         if (! $this->getLocked() && $this->getFile()->flock(LOCK_EX | LOCK_NB)) {
             if (null !== ($this->getFile()->fwrite(sha1(uniqid())))) {
                 $this->setLocked(true);
             }
         }
-
         return $this->getLocked();
     }
 
@@ -301,7 +321,6 @@ class File implements LockInterface
         return ! $this->getLocked();
     }
 
-
     /**
      * Return the max lock life time
      *
@@ -317,7 +336,7 @@ class File implements LockInterface
      *
      * @param int $seconds
      *
-     * @return Lock
+     * @return File
      */
     public function setMaxLifetime($seconds = null)
     {
@@ -340,7 +359,7 @@ class File implements LockInterface
      *
      * @param int $minLockLifetime
      *
-     * @return Lock
+     * @return File
      */
     public function setMinLifetime($minLifetime = null)
     {
