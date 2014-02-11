@@ -2,7 +2,7 @@
 
 A PHP client library for accessing the [OpenWeatherMap](http://openweathermap.org) Api.
 
-[![Build Status](https://travis-ci.org/monkeyphp/open-weather-map.png?branch=develop)](https://travis-ci.org/monkeyphp/open-weather-map)
+[![Build Status](https://travis-ci.org/monkeyphp/open-weather-map.png?branch=master)](https://travis-ci.org/monkeyphp/open-weather-map)
 [![Latest Stable Version](https://poser.pugx.org/monkeyphp/open-weather-map/v/stable.png)](https://packagist.org/packages/monkeyphp/open-weather-map) 
 [![Total Downloads](https://poser.pugx.org/monkeyphp/open-weather-map/downloads.png)](https://packagist.org/packages/monkeyphp/open-weather-map) 
 [![Latest Unstable Version](https://poser.pugx.org/monkeyphp/open-weather-map/v/unstable.png)](https://packagist.org/packages/monkeyphp/open-weather-map) 
